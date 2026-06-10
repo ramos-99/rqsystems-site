@@ -4,7 +4,29 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout>
   <main>
-    <section id="hero"></section>
+    <section id="hero" class="min-h-screen flex items-center">
+      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 px-8 md:px-16 lg:px-24 py-20">
+        <div class="flex flex-col gap-8 max-w-xl">
+          <span class="text-xs font-semibold tracking-widest uppercase text-[#0F6E56]">RQ Systems</span>
+          <div class="flex flex-col gap-5">
+            <h1 class="font-serif font-light text-5xl md:text-6xl lg:text-7xl text-neutral-900 leading-[1.1]">
+              Your operations,<br />automated.
+            </h1>
+            <p class="text-lg text-neutral-500 leading-relaxed">
+              We identify manual processes in your business and build the automation to eliminate them.
+              No generic software — a solution built around your operation.
+            </p>
+          </div>
+          <a
+            href="#contact"
+            class="self-start px-6 py-3 bg-[#0F6E56] text-white text-sm font-semibold tracking-wide rounded-sm"
+          >
+            Get in touch
+          </a>
+        </div>
+        <div id="sphere-container" class="hidden lg:block w-full lg:h-[500px]"></div>
+      </div>
+    </section>
     <section id="what-we-do"></section>
     <section id="case-study"></section>
     <section id="contact"></section>
