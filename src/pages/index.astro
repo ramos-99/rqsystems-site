@@ -4,60 +4,53 @@ import DisplacementSphere from '../components/DisplacementSphere.tsx'
 ---
 
 <Layout>
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 py-4 border-b border-[#1a1a1a]" style="background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
-    <span class="text-sm font-medium tracking-wide text-white">RQ Systems</span>
-    <a
-      href="#contact"
-      class="text-xs text-white px-4 py-2 border border-[#333] hover:border-white transition-colors"
-    >
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 py-4 border-b border-[#1a1a1a]" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+    <span class="text-sm font-medium text-white">RQ Systems</span>
+    <a href="#contact" class="text-xs text-white px-4 py-2 border border-[#333] hover:border-white transition-colors">
       Get in touch
     </a>
   </header>
 
   <main>
-    <!-- Hero -->
-    <section id="hero" class="min-h-screen flex items-end pb-24">
-      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 px-8 md:px-16">
-        <!-- Left -->
-        <div class="max-w-xl">
-          <h1 class="text-7xl md:text-8xl font-semibold text-white leading-none" style="font-family: 'Cormorant', serif;">
+    <section id="hero" class="relative min-h-screen flex items-center">
+
+      <!-- Background, Resend-style: near-black base, soft ambient lift, blurred diagonal light beams -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <!-- Base + ambient: gentle lift behind the object and headline, fading to pure black at the bottom edge -->
+        <div class="absolute inset-0" style="background:
+          radial-gradient(80% 70% at 70% 42%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%),
+          radial-gradient(55% 50% at 22% 45%, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 60%),
+          linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 72%, #000000 100%);"></div>
+        <!-- Diagonal light beams sweeping across the lower half -->
+        <div style="position: absolute; left: -15%; right: -15%; top: 60%; height: 160px; transform: rotate(-7deg); background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%); filter: blur(32px);"></div>
+        <div style="position: absolute; left: -15%; right: -15%; top: 76%; height: 100px; transform: rotate(-7deg); background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 100%); filter: blur(24px);"></div>
+        <!-- One brighter, tighter streak for definition -->
+        <div style="position: absolute; left: -15%; right: -15%; top: 68%; height: 24px; transform: rotate(-7deg); background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.08) 55%, rgba(255,255,255,0) 100%); filter: blur(10px);"></div>
+      </div>
+
+      <!-- 3D canvas: absolute, right half, full section height — never clips -->
+      <div class="absolute inset-y-0 right-0 hidden lg:block" style="width: 50%;">
+        <DisplacementSphere client:only="react" />
+      </div>
+
+      <!-- Text: sits in left half, vertically centered, above the canvas -->
+      <div class="relative w-full lg:w-1/2 px-8 md:px-16 pt-16 pb-16">
+        <div class="max-w-lg">
+          <h1 class="text-7xl md:text-8xl lg:text-8xl xl:text-9xl text-white leading-none" style="font-family: 'Gloock', serif; font-weight: 400;">
             Your operations,<br />automated.
           </h1>
-          <p class="text-base text-[#888888] mt-6 max-w-sm leading-relaxed">
-            We identify manual processes in your business and build the automation to eliminate them.
-            No generic software — a solution built around your operation.
+          <p class="text-sm text-[#888] mt-5 max-w-xs leading-relaxed">
+            We find what's still manual in your business and build the software to replace it.
           </p>
-          <a
-            href="#contact"
-            class="inline-block mt-8 px-6 py-3 bg-white text-black text-sm font-medium hover:bg-[#e5e5e5] transition-colors"
-          >
+          <a href="#contact" class="inline-block mt-8 px-5 py-2.5 bg-white text-black text-sm font-medium hover:bg-[#e5e5e5] transition-colors">
             Get in touch
           </a>
-        </div>
-
-        <!-- Right: 3D -->
-        <div class="relative hidden lg:block">
-          <!-- Ambient glow behind the 3D -->
-          <div class="absolute inset-0 z-0 pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 70%);"></div>
-
-          <div id="sphere-container" class="relative z-10 w-full h-[500px]">
-            <DisplacementSphere client:only="react" />
-          </div>
-
-          <!-- Floor glow line -->
-          <div class="pointer-events-none" style="position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);"></div>
         </div>
       </div>
     </section>
 
-    <!-- What we do -->
     <section id="what-we-do" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
-
-    <!-- Case study -->
     <section id="case-study" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
-
-    <!-- Contact -->
     <section id="contact" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
   </main>
 </Layout>
