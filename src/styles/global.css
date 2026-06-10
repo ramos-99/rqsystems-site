@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #0F6E56;
+  --font-sans: 'Inter Variable';
+}
