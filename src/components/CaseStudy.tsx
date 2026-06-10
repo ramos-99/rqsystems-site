@@ -1,101 +1,217 @@
-import React from 'react';
-import { Mail, ArrowRight, CheckCircle2, FileText, FolderSync } from 'lucide-react';
+'use client';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+
+const LOG_LINES = [
+  { t: 0,    text: '> inbox.poll()',                                      color: 'text-[#555]',     accent: '' },
+  { t: 500,  text: '  ↳ 3 new messages detected',                         color: 'text-blue-400/70', accent: '' },
+  { t: 1000, text: '> parse.bundle(msg_0x4f2a)',                          color: 'text-[#666]',     accent: '' },
+  { t: 1400, text: '  ↳ original_message.eml          [OK]',              color: 'text-[#888]',     accent: '' },
+  { t: 1800, text: '  ↳ message_body.pdf              [OK]',              color: 'text-[#888]',     accent: '' },
+  { t: 2200, text: '  ↳ invoice_Q3_final.pdf          [OK]',              color: 'text-blue-300',   accent: '' },
+  { t: 2700, text: '> classify(bundle)  scanning context...',             color: 'text-amber-400/80', accent: '' },
+  { t: 3200, text: '  ↳ match: "Project Alpha"  conf: 0.97',             color: 'text-amber-300',  accent: '' },
+  { t: 3700, text: '> route.resolve()',                                   color: 'text-[#666]',     accent: '' },
+  { t: 4100, text: '  ↳ /Dropbox/Projects/Alpha/Invoices/',               color: 'text-purple-400', accent: '' },
+  { t: 4600, text: '> dropbox.upload(bundle × 3)',                        color: 'text-[#666]',     accent: '' },
+  { t: 5100, text: '  ✓ archived   0.8s   3 files   2.4 MB',             color: 'text-emerald-400', accent: '' },
+  { t: 5800, text: '> inbox.poll()  standing by...',                      color: 'text-[#444]',     accent: '' },
+];
+
+function TerminalLog() {
+  const [visible, setVisible] = useState(0);
+  const [cycling, setCycling] = useState(false);
+
+  useEffect(() => {
+    if (visible >= LOG_LINES.length) {
+      const t = setTimeout(() => { setVisible(0); }, 2800);
+      return () => clearTimeout(t);
+    }
+    const delay = visible === 0 ? 300 : LOG_LINES[visible].t - LOG_LINES[visible - 1].t;
+    const t = setTimeout(() => setVisible(v => v + 1), delay);
+    return () => clearTimeout(t);
+  }, [visible]);
+
+  return (
+    <div className="space-y-[5px] min-h-[240px]">
+      {LOG_LINES.slice(0, visible).map((line, i) => (
+        <div
+          key={i}
+          className={`font-mono text-[11px] leading-relaxed ${line.color}`}
+          style={{ animation: 'fadeIn 0.2s ease-out' }}
+        >
+          {line.text}
+        </div>
+      ))}
+      {visible < LOG_LINES.length && (
+        <span className="inline-block w-[7px] h-[14px] bg-white/40 animate-pulse align-middle ml-0.5" />
+      )}
+    </div>
+  );
+}
 
 export default function CaseStudy() {
+  const [uptime, setUptime] = useState(0);
+  const [packets, setPackets] = useState(1284);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setUptime(u => u + 1);
+      setPackets(p => p + Math.floor(Math.random() * 3));
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const fmt = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  };
+
+  const onMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    setTilt({ x: dy * -6, y: dx * 6 });
+  }, []);
+
+  const onMouseLeave = useCallback(() => setTilt({ x: 0, y: 0 }), []);
+
   return (
-    <section id="case-study" className="border-t border-[#1a1a1a] py-32 px-8 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <h2 
-          className="text-4xl md:text-5xl lg:text-6xl text-white mb-16" 
+    <section
+      ref={sectionRef}
+      id="case-study"
+      className="border-t border-[#1a1a1a] py-16 px-6 md:py-32 md:px-16 relative overflow-hidden"
+      style={{ background: '#080808' }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      {/* Fine dot-grid texture */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.18 }}>
+        <defs>
+          <pattern id="csdots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" fill="white" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#csdots)" />
+      </svg>
+      {/* Subtle vignette to fade dots at edges */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, #080808 100%)' }} />
+
+      <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <h2
+          className="text-4xl md:text-5xl lg:text-6xl text-white mb-16"
           style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
         >
           Featured Work
         </h2>
-        
-        <div className="p-2 md:p-3 border border-white/10 rounded-3xl bg-white/[0.02] relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          
-          <div className="bg-[#050505] rounded-2xl border border-white/5 p-10 md:p-16 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/10">
+
+          {/* Left — copy */}
+          <div className="p-8 md:p-14 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between space-y-12">
             <div className="space-y-6">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 text-xs font-mono mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="flex items-center space-x-2 font-mono text-xs text-emerald-500 uppercase tracking-widest">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                 <span>System Operational</span>
               </div>
-              <h3 className="text-3xl text-white font-medium tracking-tight">Outlook to Dropbox Automation</h3>
-              <p className="text-[#888] leading-relaxed font-sans text-lg">
-                Our client was manually organizing project emails, invoices, and contracts into complex folder structures. 
-                We built a custom Outlook add-in with a dedicated interface, allowing their team to triage and archive emails directly to the correct Dropbox folders without ever leaving their inbox.
+              <h3
+                className="text-3xl md:text-4xl text-white leading-tight"
+                style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
+              >
+                Outlook to Dropbox<br />Automation
+              </h3>
+              <p className="text-[#777] leading-relaxed font-sans text-base max-w-md">
+                Our client was manually organising project emails, invoices, and contracts into complex folder structures.
+                We built a custom Outlook add-in that bundles the&nbsp;.eml, a generated PDF, and all attachments, archiving the full set to the correct Dropbox folder in one click, without ever leaving the inbox.
               </p>
             </div>
-            
-            {/* Outlook Add-in Interface Mockup */}
-            <div className="w-full max-w-sm mx-auto bg-[#1c1c1c] border border-white/10 rounded-xl overflow-hidden shadow-2xl relative flex flex-col h-[380px]">
-              {/* Add-in Header */}
-              <div className="h-12 border-b border-white/10 flex items-center px-4 space-x-3 bg-[#111]">
-                <div className="w-6 h-6 rounded bg-blue-600 flex items-center justify-center">
-                  <FolderSync className="w-3 h-3 text-white" />
+
+            {/* Stats row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+              {[
+                { label: 'Files / email', value: '3×', color: 'text-blue-400' },
+                { label: 'Click to archive', value: '1', color: 'text-purple-400' },
+                { label: 'Time saved', value: '~6 h/wk', color: 'text-emerald-400' },
+              ].map((stat, i) => (
+                <div key={i} className={`p-5 flex flex-col justify-center ${i < 2 ? 'border-b md:border-b-0 md:border-r border-white/10' : ''}`}>
+                  <div className={`text-2xl font-mono mb-1 ${stat.color}`}>{stat.value}</div>
+                  <div className="text-[10px] text-[#555] uppercase tracking-wider font-mono">{stat.label}</div>
                 </div>
-                <span className="text-sm font-medium text-white tracking-wide">Triage Assistant</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — terminal with 3D mouse tilt */}
+          <div style={{ perspective: '900px' }}>
+          <div
+            className="bg-[#050505] flex flex-col relative overflow-hidden h-full"
+            style={{
+              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+              transition: 'transform 0.15s ease-out',
+              willChange: 'transform',
+            }}
+          >
+
+            {/* Subtle scanline overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
+              style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, white 2px, white 3px)' }}
+            />
+
+            {/* Terminal top bar */}
+            <div className="relative z-10 flex items-center justify-between px-5 py-3 border-b border-white/10 bg-[#0a0a0a]">
+              <div className="flex items-center space-x-4">
+                <div className="flex space-x-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400/40" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/40" />
+                </div>
+                <span className="font-mono text-xs text-[#444] tracking-widest">[ TRIAGE.LOG ]  v1.2.0</span>
               </div>
-              
-              {/* Add-in Content */}
-              <div className="p-5 flex-1 flex flex-col space-y-6 bg-gradient-to-b from-[#161616] to-[#0a0a0a]">
-                
-                {/* Detected Context */}
-                <div className="space-y-3">
-                  <label className="text-xs text-[#666] uppercase tracking-wider font-semibold">Active Email Context</label>
-                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Mail className="w-4 h-4 text-[#888]" />
-                        <span className="text-xs text-[#aaa]">From: billing@acme.com</span>
-                      </div>
-                      <span className="text-[10px] uppercase font-mono bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">Bundle</span>
-                    </div>
-                    <div className="pl-6 border-l border-white/10 space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <FileText className="w-3 h-3 text-white/50" />
-                        <span className="text-xs text-white/80 font-mono">original_message.eml</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <FileText className="w-3 h-3 text-white/50" />
-                        <span className="text-xs text-white/80 font-mono">message_body.pdf</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <FileText className="w-3 h-3 text-blue-400/80" />
-                        <span className="text-xs text-white/80 font-mono">invoice_Q3_final.pdf</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Routing Suggestions */}
-                <div className="space-y-3">
-                  <label className="text-xs text-[#666] uppercase tracking-wider font-semibold">Suggested Destination</label>
-                  <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-emerald-400 font-mono">Project Alpha</span>
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div className="text-xs text-[#aaa] truncate font-mono">
-                      /Dropbox/Projects/Alpha/Invoices
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Button */}
-                <div className="mt-auto pt-2">
-                  <button className="w-full bg-white text-black text-sm font-medium py-3 rounded-lg flex items-center justify-center space-x-2 hover:bg-[#e5e5e5] transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                    <FolderSync className="w-4 h-4" />
-                    <span>Archive to Dropbox</span>
-                  </button>
-                </div>
-
+              <div className="flex items-center space-x-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
+                <span className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest">ONLINE</span>
               </div>
             </div>
 
-          </div>
+            {/* Live metrics bar */}
+            <div className="relative z-10 grid grid-cols-3 border-b border-white/10">
+              <div className="px-5 py-3 border-r border-white/10">
+                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Uptime</div>
+                <div className="font-mono text-sm text-amber-400">{fmt(uptime)}</div>
+              </div>
+              <div className="px-5 py-3 border-r border-white/10">
+                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Emails Proc.</div>
+                <div className="font-mono text-sm text-blue-400">{packets.toLocaleString()}</div>
+              </div>
+              <div className="px-5 py-3">
+                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Errors</div>
+                <div className="font-mono text-sm text-emerald-400">0</div>
+              </div>
+            </div>
+
+            {/* Terminal body */}
+            <div className="relative z-10 flex-1 p-6 md:p-8 overflow-hidden">
+              <TerminalLog />
+            </div>
+
+            {/* Bottom status bar */}
+            <div className="relative z-10 border-t border-white/10 px-5 py-2.5 flex items-center justify-between bg-[#0a0a0a]">
+              <span className="font-mono text-[10px] text-[#444] tracking-widest">tail -f /triage.log</span>
+              <div className="flex items-center space-x-4">
+                <span className="font-mono text-[10px] text-purple-400/60">↑ Dropbox API</span>
+                <span className="font-mono text-[10px] text-blue-400/60">Outlook Add-in</span>
+              </div>
+            </div>
+          </div>{/* end tilted inner div */}
+          </div>{/* end perspective wrapper */}
+
         </div>
       </div>
     </section>
