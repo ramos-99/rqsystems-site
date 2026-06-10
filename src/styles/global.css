@@ -2,7 +2,8 @@
 
 @theme {
   --color-accent: #0F6E56;
-  --font-sans: 'Inter Variable';
+  --font-sans: 'Outfit Variable', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
 }
 
 *, *::before, *::after {

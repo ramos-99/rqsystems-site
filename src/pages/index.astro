@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import DisplacementSphere from '../components/DisplacementSphere.tsx'
+import HowWeWork from '../components/HowWeWork.tsx'
+import CaseStudy from '../components/CaseStudy.tsx'
+import Footer from '../components/Footer.tsx'
 ---
 
 <Layout>
@@ -39,8 +42,8 @@ import DisplacementSphere from '../components/DisplacementSphere.tsx'
           <h1 class="text-7xl md:text-8xl lg:text-8xl xl:text-9xl text-white leading-none" style="font-family: 'Gloock', serif; font-weight: 400;">
             Your operations,<br />automated.
           </h1>
-          <p class="text-sm text-[#888] mt-5 max-w-xs leading-relaxed">
-            We find what's still manual in your business and build the software to replace it.
+          <p class="text-sm text-[#888] mt-5 max-w-sm leading-relaxed">
+            Built by two Computer Science and Engineering students from Técnico. We find what's still manual in your operations and build tailored software to replace it.
           </p>
           <a href="#contact" class="inline-block mt-8 px-5 py-2.5 bg-white text-black text-sm font-medium hover:bg-[#e5e5e5] transition-colors">
             Get in touch
@@ -49,8 +52,8 @@ import DisplacementSphere from '../components/DisplacementSphere.tsx'
       </div>
     </section>
 
-    <section id="what-we-do" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
-    <section id="case-study" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
-    <section id="contact" class="border-t border-[#1a1a1a] py-24 px-8 md:px-16"></section>
+    <HowWeWork client:only="react" />
+    <CaseStudy client:only="react" />
+    <Footer client:only="react" />
   </main>
 </Layout>
