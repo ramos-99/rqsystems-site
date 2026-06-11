@@ -13,21 +13,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative overflow-hidden" style={{ background: '#070609' }}>
-
-      {/* Fine cross-hatch texture */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.1 }}>
-        <defs>
-          <pattern id="ftgrid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#ftgrid)" />
-      </svg>
-      {/* Radial vignette to fade grid at edges */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 85% 70% at 50% 60%, transparent 30%, #070609 80%)' }} />
-      {/* Single diagonal light streak — top-left to mid, no color */}
-      <div className="absolute pointer-events-none" style={{ left: '-10%', right: '-10%', top: '15%', height: '80px', transform: 'rotate(-5deg)', background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.04) 50%, transparent)', filter: 'blur(20px)' }} />
+    <footer id="contact" className="relative overflow-hidden" style={{ background: '#000' }}>
 
       {/* ── Main content ── */}
       <div className="border-t border-[#1a1a1a] pt-16 pb-12 px-6 md:pt-32 md:pb-20 md:px-16 relative z-10">
@@ -148,14 +134,6 @@ export default function Footer() {
           }}
         />
 
-        {/* Floor spotlight rising from below */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full pointer-events-none"
-          style={{
-            height: '220px',
-            background: 'radial-gradient(ellipse 75% 100% at 50% 100%, rgba(255,255,255,0.17) 0%, rgba(255,255,255,0.06) 40%, transparent 70%)',
-          }}
-        />
 
         {/* Info bar: location · nav · LinkedIn */}
         <div className="relative z-10 px-6 md:px-16 pt-8 pb-10 md:pb-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-7 md:gap-6">

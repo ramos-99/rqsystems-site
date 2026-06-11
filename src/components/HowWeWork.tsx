@@ -179,15 +179,10 @@ export default function HowWeWork() {
       <div className="absolute pointer-events-none" style={{ left: '-15%', right: '-15%', top: '68%', height: '60px', transform: 'rotate(6deg)', background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.047) 40%, rgba(255,255,255,0.083) 60%, transparent 100%)', filter: 'blur(12px)' }} />
       <div className="max-w-7xl mx-auto">
 
-        <div className="mb-12 md:mb-20 flex items-end justify-between">
+        <div className="mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl text-white" style={GLOOCK}>
             How we work
           </h2>
-          {/* connector line */}
-          <div className="hidden md:block flex-1 mx-12 h-px bg-gradient-to-r from-white/[0.24] to-transparent" />
-          <span className="hidden md:block font-mono text-xs text-[#444] uppercase tracking-widest whitespace-nowrap">
-            3-phase process
-          </span>
         </div>
 
         {/* ─── 3 columns with connectors ─── */}
