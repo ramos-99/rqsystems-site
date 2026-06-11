@@ -145,14 +145,14 @@ function Step({
 
       {/* number */}
       <div className="flex items-baseline space-x-4 mb-4">
-        <span className="text-[64px] md:text-[80px] leading-none text-white/10 select-none" style={BEBAS}>
+        <span className="text-[36px] md:text-[80px] leading-none text-white/10 select-none" style={BEBAS}>
           {num}
         </span>
         <div className={`w-2 h-2 rounded-full ${accent} mt-auto mb-3`} />
       </div>
 
       {/* title */}
-      <h3 className="text-4xl sm:text-5xl md:text-6xl text-white mb-4 leading-none uppercase tracking-wide" style={BEBAS}>
+      <h3 className="text-2xl sm:text-4xl md:text-6xl text-white mb-4 leading-none uppercase tracking-wide" style={BEBAS}>
         {title}
       </h3>
 
