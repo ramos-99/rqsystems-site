@@ -70,6 +70,8 @@ export default function CaseStudy() {
   };
 
   const onMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    // Skip tilt on touch devices — emulated mouse events would jolt the card on tap.
+    if (!window.matchMedia('(hover: hover)').matches) return;
     const rect = sectionRef.current?.getBoundingClientRect();
     if (!rect) return;
     const cx = rect.left + rect.width / 2;
@@ -85,13 +87,13 @@ export default function CaseStudy() {
     <section
       ref={sectionRef}
       id="case-study"
-      className="border-t border-[#1a1a1a] py-16 px-6 md:py-32 md:px-16 relative overflow-hidden"
+      className="border-t border-[#1e1e1e] py-16 px-6 md:py-32 md:px-16 relative overflow-hidden"
       style={{ background: '#080808' }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       {/* Fine dot-grid texture */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.18 }}>
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.21 }}>
         <defs>
           <pattern id="csdots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="1" fill="white" />
@@ -105,16 +107,16 @@ export default function CaseStudy() {
       <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div className="max-w-7xl mx-auto relative z-10">
         <h2
-          className="text-4xl md:text-5xl lg:text-6xl text-white mb-16"
+          className="text-4xl md:text-5xl lg:text-6xl text-white mb-10 md:mb-16"
           style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
         >
           Featured Work
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-white/[0.12]">
 
           {/* Left — copy */}
-          <div className="p-8 md:p-14 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between space-y-12">
+          <div className="p-6 md:p-14 border-b lg:border-b-0 lg:border-r border-white/[0.12] flex flex-col justify-between space-y-10 md:space-y-12">
             <div className="space-y-6">
               <div className="flex items-center space-x-2 font-mono text-xs text-emerald-500 uppercase tracking-widest">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
@@ -133,13 +135,12 @@ export default function CaseStudy() {
             </div>
 
             {/* Stats row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-white/[0.12]">
               {[
                 { label: 'Files / email', value: '3×', color: 'text-blue-400' },
                 { label: 'Click to archive', value: '1', color: 'text-purple-400' },
-                { label: 'Time saved', value: '~6 h/wk', color: 'text-emerald-400' },
               ].map((stat, i) => (
-                <div key={i} className={`p-5 flex flex-col justify-center ${i < 2 ? 'border-b md:border-b-0 md:border-r border-white/10' : ''}`}>
+                <div key={i} className={`p-5 flex flex-col justify-center ${i < 1 ? 'border-b md:border-b-0 md:border-r border-white/[0.12]' : ''}`}>
                   <div className={`text-2xl font-mono mb-1 ${stat.color}`}>{stat.value}</div>
                   <div className="text-[10px] text-[#555] uppercase tracking-wider font-mono">{stat.label}</div>
                 </div>
@@ -160,19 +161,19 @@ export default function CaseStudy() {
 
             {/* Subtle scanline overlay */}
             <div
-              className="absolute inset-0 pointer-events-none z-0 opacity-[0.03]"
+              className="absolute inset-0 pointer-events-none z-0 opacity-[0.036]"
               style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, white 2px, white 3px)' }}
             />
 
             {/* Terminal top bar */}
-            <div className="relative z-10 flex items-center justify-between px-5 py-3 border-b border-white/10 bg-[#0a0a0a]">
+            <div className="relative z-10 flex items-center justify-between px-5 py-3 border-b border-white/[0.12] bg-[#0a0a0a]">
               <div className="flex items-center space-x-4">
                 <div className="flex space-x-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400/40" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/40" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
                 </div>
-                <span className="font-mono text-xs text-[#444] tracking-widest">[ TRIAGE.LOG ]  v1.2.0</span>
+                <span className="font-mono text-xs text-[#444] tracking-widest">[ TRIAGE.LOG ]<span className="hidden sm:inline">  v1.2.0</span></span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
@@ -181,23 +182,23 @@ export default function CaseStudy() {
             </div>
 
             {/* Live metrics bar */}
-            <div className="relative z-10 grid grid-cols-3 border-b border-white/10">
-              <div className="px-5 py-3 border-r border-white/10">
-                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Uptime</div>
+            <div className="relative z-10 grid grid-cols-3 border-b border-white/[0.12]">
+              <div className="px-3 md:px-5 py-3 border-r border-white/[0.12]">
+                <div className="font-mono text-[9px] md:text-[10px] text-[#555] uppercase tracking-wider md:tracking-widest mb-1">Uptime</div>
                 <div className="font-mono text-sm text-amber-400">{fmt(uptime)}</div>
               </div>
-              <div className="px-5 py-3 border-r border-white/10">
-                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Emails Proc.</div>
+              <div className="px-3 md:px-5 py-3 border-r border-white/[0.12]">
+                <div className="font-mono text-[9px] md:text-[10px] text-[#555] uppercase tracking-wider md:tracking-widest mb-1">Emails Proc.</div>
                 <div className="font-mono text-sm text-blue-400">{packets.toLocaleString()}</div>
               </div>
-              <div className="px-5 py-3">
-                <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-1">Errors</div>
+              <div className="px-3 md:px-5 py-3">
+                <div className="font-mono text-[9px] md:text-[10px] text-[#555] uppercase tracking-wider md:tracking-widest mb-1">Errors</div>
                 <div className="font-mono text-sm text-emerald-400">0</div>
               </div>
             </div>
 
             {/* Terminal body */}
-            <div className="relative z-10 flex-1 p-6 md:p-8 overflow-hidden">
+            <div className="relative z-10 flex-1 p-4 md:p-8 overflow-hidden">
               <TerminalLog />
             </div>
 

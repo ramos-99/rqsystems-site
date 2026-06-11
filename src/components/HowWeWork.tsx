@@ -50,7 +50,7 @@ function Checklist() {
     <ul className="space-y-2">
       {items.map((item, i) => (
         <li key={i} className="flex items-center space-x-3 font-mono text-xs">
-          <span className={`w-4 h-4 border flex items-center justify-center shrink-0 transition-colors duration-300 ${i < ticked ? 'border-white bg-white' : 'border-[#333]'}`}>
+          <span className={`w-4 h-4 border flex items-center justify-center shrink-0 transition-colors duration-300 ${i < ticked ? 'border-white bg-white' : 'border-[#3d3d3d]'}`}>
             {i < ticked && <span className="text-black text-[10px] font-bold">✓</span>}
           </span>
           <span className={`transition-colors duration-300 ${i < ticked ? 'text-white line-through decoration-[#555]' : 'text-[#555]'}`}>
@@ -145,14 +145,14 @@ function Step({
 
       {/* number */}
       <div className="flex items-baseline space-x-4 mb-4">
-        <span className="text-[80px] leading-none text-white/10 select-none" style={BEBAS}>
+        <span className="text-[64px] md:text-[80px] leading-none text-white/10 select-none" style={BEBAS}>
           {num}
         </span>
         <div className={`w-2 h-2 rounded-full ${accent} mt-auto mb-3`} />
       </div>
 
       {/* title */}
-      <h3 className="text-5xl md:text-6xl text-white mb-4 leading-none uppercase tracking-wide" style={BEBAS}>
+      <h3 className="text-4xl sm:text-5xl md:text-6xl text-white mb-4 leading-none uppercase tracking-wide" style={BEBAS}>
         {title}
       </h3>
 
@@ -161,7 +161,7 @@ function Step({
       </p>
 
       {/* visual area — fixed min-height so grid never shifts */}
-      <div className="p-5 border border-white/10 bg-white/[0.02]" style={{ minHeight: '180px' }}>
+      <div className="p-5 border border-white/[0.12] bg-white/[0.024]" style={{ minHeight: '180px' }}>
         {children}
       </div>
     </div>
@@ -170,13 +170,13 @@ function Step({
 
 export default function HowWeWork() {
   return (
-    <section id="what-we-do" className="border-t border-[#1a1a1a] py-16 px-6 md:py-32 md:px-16 relative overflow-hidden" style={{ background: '#0a0a0a' }}>
+    <section id="what-we-do" className="border-t border-[#1e1e1e] py-16 px-6 md:py-32 md:px-16 relative overflow-hidden" style={{ background: '#0a0a0a' }}>
       {/* Radial ambient: soft lift top-right, mimicking hero but from opposite corner */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(75% 60% at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 60%)' }} />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(50% 40% at 15% 80%, rgba(255,255,255,0.02) 0%, transparent 60%)' }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(75% 60% at 80% 20%, rgba(255,255,255,0.047) 0%, transparent 60%)' }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(50% 40% at 15% 80%, rgba(255,255,255,0.024) 0%, transparent 60%)' }} />
       {/* Diagonal light beam — opposite angle to hero (-7deg vs +6deg) */}
-      <div className="absolute pointer-events-none" style={{ left: '-15%', right: '-15%', top: '55%', height: '140px', transform: 'rotate(6deg)', background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)', filter: 'blur(28px)' }} />
-      <div className="absolute pointer-events-none" style={{ left: '-15%', right: '-15%', top: '68%', height: '60px', transform: 'rotate(6deg)', background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.07) 60%, transparent 100%)', filter: 'blur(12px)' }} />
+      <div className="absolute pointer-events-none" style={{ left: '-15%', right: '-15%', top: '55%', height: '140px', transform: 'rotate(6deg)', background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.059) 50%, transparent 100%)', filter: 'blur(28px)' }} />
+      <div className="absolute pointer-events-none" style={{ left: '-15%', right: '-15%', top: '68%', height: '60px', transform: 'rotate(6deg)', background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.047) 40%, rgba(255,255,255,0.083) 60%, transparent 100%)', filter: 'blur(12px)' }} />
       <div className="max-w-7xl mx-auto">
 
         <div className="mb-12 md:mb-20 flex items-end justify-between">
@@ -184,14 +184,14 @@ export default function HowWeWork() {
             How we work
           </h2>
           {/* connector line */}
-          <div className="hidden md:block flex-1 mx-12 h-px bg-gradient-to-r from-white/20 to-transparent" />
+          <div className="hidden md:block flex-1 mx-12 h-px bg-gradient-to-r from-white/[0.24] to-transparent" />
           <span className="hidden md:block font-mono text-xs text-[#444] uppercase tracking-widest whitespace-nowrap">
             3-phase process
           </span>
         </div>
 
         {/* ─── 3 columns with connectors ─── */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_40px_1fr_40px_1fr] gap-0 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_40px_1fr_40px_1fr] gap-y-16 md:gap-y-0 gap-x-0 items-start">
 
           <Step
             num="01"
@@ -201,7 +201,7 @@ export default function HowWeWork() {
             desc="We map every manual process in your operation and surface exactly where time is being lost before writing a single line of code."
           >
             <div className="space-y-3">
-              <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-3">Bottlenecks found</div>
+              <div className="font-mono text-[10px] text-[#555] uppercase tracking-wider sm:tracking-widest mb-3">Bottlenecks found</div>
               <Checklist />
             </div>
           </Step>
@@ -209,8 +209,8 @@ export default function HowWeWork() {
           {/* Arrow connector */}
           <div className="hidden md:flex items-start justify-center pt-[120px]">
             <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
-              <line x1="0" y1="10" x2="30" y2="10" stroke="#333" strokeWidth="1" />
-              <polyline points="24,4 32,10 24,16" stroke="#333" strokeWidth="1" fill="none" />
+              <line x1="0" y1="10" x2="30" y2="10" stroke="#3d3d3d" strokeWidth="1" />
+              <polyline points="24,4 32,10 24,16" stroke="#3d3d3d" strokeWidth="1" fill="none" />
             </svg>
           </div>
 
@@ -224,7 +224,7 @@ export default function HowWeWork() {
             <div className="space-y-3">
               <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-3">Build output</div>
               <CodeBlock />
-              <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-4 font-mono text-[10px]">
+              <div className="pt-3 border-t border-white/[0.12] grid grid-cols-2 gap-4 font-mono text-[10px]">
                 <div>
                   <div className="text-blue-400 text-lg"><Counter to={100} suffix="%" /></div>
                   <div className="text-[#555] uppercase tracking-wider">Custom</div>
@@ -240,8 +240,8 @@ export default function HowWeWork() {
           {/* Arrow connector */}
           <div className="hidden md:flex items-start justify-center pt-[120px]">
             <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
-              <line x1="0" y1="10" x2="30" y2="10" stroke="#333" strokeWidth="1" />
-              <polyline points="24,4 32,10 24,16" stroke="#333" strokeWidth="1" fill="none" />
+              <line x1="0" y1="10" x2="30" y2="10" stroke="#3d3d3d" strokeWidth="1" />
+              <polyline points="24,4 32,10 24,16" stroke="#3d3d3d" strokeWidth="1" fill="none" />
             </svg>
           </div>
 
@@ -255,7 +255,7 @@ export default function HowWeWork() {
             <div className="space-y-4">
               <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-3">System uptime / 6 months</div>
               <UptimeBar />
-              <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-4 font-mono text-[10px]">
+              <div className="pt-3 border-t border-white/[0.12] grid grid-cols-2 gap-4 font-mono text-[10px]">
                 <div>
                   <div className="text-emerald-400 text-lg"><Counter to={99} suffix=".4%" /></div>
                   <div className="text-[#555] uppercase tracking-wider">Uptime</div>
@@ -272,7 +272,7 @@ export default function HowWeWork() {
 
         {/* ── Skip the process callout ── */}
         <div className="mt-16 md:mt-24">
-          <div className="w-full h-px mb-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 70%, transparent)' }} />
+          <div className="w-full h-px mb-12" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.177) 30%, rgba(255,255,255,0.295) 50%, rgba(255,255,255,0.177) 70%, transparent)' }} />
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div className="space-y-3">
@@ -288,10 +288,10 @@ export default function HowWeWork() {
               </p>
             </div>
 
-            <div className="shrink-0">
+            <div className="shrink-0 w-full sm:w-auto">
               <a
                 href="#contact"
-                className="group inline-flex items-center space-x-3 border border-white/20 px-8 py-4 text-white text-sm font-mono uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+                className="group inline-flex w-full sm:w-auto justify-center items-center space-x-3 border border-white/[0.24] px-8 py-4 text-white text-sm font-mono uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
               >
                 <span>Let's talk</span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
