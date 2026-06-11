@@ -1,43 +1,39 @@
-# Astro Starter Kit: Minimal
+# rqsystems-site
+
+Marketing site for [RQ Systems](https://rqsystems.pt). Single-page landing with a hero, how-we-work section, a featured case study, and a contact/founders footer.
+
+## Stack
+
+- [Astro 6](https://astro.build) - page shell and static build
+- [React 19](https://react.dev) - interactive sections (client:only / client:visible)
+- [Tailwind CSS 4](https://tailwindcss.com) - utility styles via Vite plugin
+- [Three.js](https://threejs.org) via `@react-three/fiber` and `@react-three/drei` - 3D displacement sphere in the hero
+- TypeScript throughout
+
+Fonts: Gloock (serif headings), Inter, Outfit, Geist Sans/Mono.
+
+## Dev
+
+Node >= 22.12.0 required.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev       # localhost:4321
+npm run build     # output to ./dist
+npm run preview   # serve ./dist locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+src/
+  pages/index.astro       # page entry, static sections
+  layouts/Layout.astro    # html shell, global fonts
+  components/
+    DisplacementSphere.tsx  # Three.js hero object
+    HowWeWork.tsx
+    CaseStudy.tsx
+    Footer.tsx
+  styles/global.css
+public/                   # static assets
+```
