@@ -1,162 +1,283 @@
 import { useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { AdaptiveDpr, Environment } from '@react-three/drei'
+import { AdaptiveDpr, Billboard, Environment } from '@react-three/drei'
 import * as THREE from 'three'
 
-// Abstract network: 8 nodes connected by thin edges, black-on-black,
-// slow continuous rotation around the vertical axis.
-const NODES: [number, number, number][] = [
-  [0.0, 1.15, 0.0],
-  [0.95, 0.45, -0.5],
-  [-0.9, 0.55, 0.45],
-  [0.55, -0.25, 0.85],
-  [-0.6, -0.35, -0.8],
-  [1.05, -0.85, 0.15],
-  [-1.0, -0.95, -0.25],
-  [0.05, -1.2, -0.7],
+// Abstract network on an icosahedral skeleton: 12 vertices, 30 thin edges,
+// black-on-black, slow continuous rotation. Light pulses travel node-to-node
+// with a comet-like glow and tail, gently lifting whatever they pass.
+
+const RADIUS = 1.45
+const PHI = (1 + Math.sqrt(5)) / 2
+
+// Small fixed offsets so the solid reads organic, not CAD-perfect.
+const JITTER: [number, number, number][] = [
+  [0.06, -0.03, 0.04],
+  [-0.05, 0.05, -0.06],
+  [0.03, 0.06, 0.05],
+  [-0.06, -0.05, 0.02],
+  [0.05, 0.02, -0.05],
+  [-0.03, -0.06, -0.03],
+  [0.06, 0.04, 0.03],
+  [-0.04, 0.03, 0.06],
+  [0.02, -0.05, -0.06],
+  [-0.06, 0.02, 0.04],
+  [0.04, 0.06, -0.02],
+  [-0.02, -0.04, 0.05],
 ]
 
-const EDGES: [number, number][] = [
-  [0, 1],
-  [0, 2],
-  [1, 3],
-  [1, 5],
-  [2, 3],
-  [2, 4],
-  [3, 5],
-  [4, 6],
-  [4, 7],
-  [5, 7],
-  [6, 7],
-  [2, 6],
-]
+const NODES: THREE.Vector3[] = (
+  [
+    [-1, PHI, 0],
+    [1, PHI, 0],
+    [-1, -PHI, 0],
+    [1, -PHI, 0],
+    [0, -1, PHI],
+    [0, 1, PHI],
+    [0, -1, -PHI],
+    [0, 1, -PHI],
+    [PHI, 0, -1],
+    [PHI, 0, 1],
+    [-PHI, 0, -1],
+    [-PHI, 0, 1],
+  ] as [number, number, number][]
+).map((p, i) =>
+  new THREE.Vector3(...p).normalize().multiplyScalar(RADIUS).add(new THREE.Vector3(...JITTER[i]))
+)
 
-const NODE_RADII = [0.14, 0.11, 0.12, 0.1, 0.11, 0.13, 0.1, 0.09]
+// Icosahedron edges: every vertex pair at the minimal chord distance.
+const EDGES: [number, number][] = []
+for (let i = 0; i < NODES.length; i++) {
+  for (let j = i + 1; j < NODES.length; j++) {
+    if (NODES[i].distanceTo(NODES[j]) < RADIUS * 1.3) EDGES.push([i, j])
+  }
+}
+
+const NODE_RADII = [0.1, 0.075, 0.085, 0.07, 0.095, 0.08, 0.07, 0.09, 0.075, 0.085, 0.08, 0.07]
 
 const ADJACENCY: number[][] = NODES.map((_, i) =>
   EDGES.filter(([a, b]) => a === i || b === i).map(([a, b]) => (a === i ? b : a))
 )
 
-// A point of light travelling node-to-node along the edges, lighting
-// whatever it passes. Constant speed in world units per second.
+const edgeKey = (a: number, b: number) => (a < b ? `${a}-${b}` : `${b}-${a}`)
+const EDGE_INDEX = new Map<string, number>(EDGES.map(([a, b], i) => [edgeKey(a, b), i]))
+
+// Soft radial sprite for the additive glow around each pulse.
+function createGlowTexture(): THREE.CanvasTexture {
+  const S = 128
+  const canvas = document.createElement('canvas')
+  canvas.width = S
+  canvas.height = S
+  const ctx = canvas.getContext('2d')!
+  const g = ctx.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2)
+  g.addColorStop(0, 'rgba(255,255,255,1)')
+  g.addColorStop(0.25, 'rgba(255,255,255,0.55)')
+  g.addColorStop(0.6, 'rgba(255,255,255,0.12)')
+  g.addColorStop(1, 'rgba(255,255,255,0)')
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, S, S)
+  return new THREE.CanvasTexture(canvas)
+}
+
+// Per-frame energy written by pulses, read by nodes and edges.
+type Energy = { nodes: Float32Array; edges: Float32Array }
+
+const TRAIL = 7
+const TRAIL_SPACING = 3 // frames between trail samples
+
+// A point of light travelling node-to-node: white-hot core, soft additive
+// glow, and a fading comet tail tracing where it has just been.
 function Pulse({
-  points,
   start,
   speed,
+  energy,
+  glow,
 }: {
-  points: THREE.Vector3[]
   start: number
   speed: number
+  energy: Energy
+  glow: THREE.Texture
 }) {
   const ref = useRef<THREE.Group>(null)
+  const glowRef = useRef<THREE.Mesh>(null)
+  const trailRefs = useRef<(THREE.Mesh | null)[]>([])
   const state = useRef({
     from: start,
     to: ADJACENCY[start][0],
     t: Math.random(),
+    seed: Math.random() * 100,
   })
+  const history = useRef<THREE.Vector3[]>(
+    Array.from({ length: TRAIL * TRAIL_SPACING + 1 }, () => NODES[start].clone())
+  )
 
-  useFrame((_, delta) => {
+  useFrame(({ clock }, delta) => {
     const s = state.current
-    const edgeLength = points[s.from].distanceTo(points[s.to])
-    s.t += (delta * speed) / edgeLength
+    const time = clock.elapsedTime
+    const edgeLength = NODES[s.from].distanceTo(NODES[s.to])
+    s.t += (delta * speed) / Math.max(edgeLength, 0.001)
 
     while (s.t >= 1) {
       s.t -= 1
+      energy.nodes[s.to] = 1
       const options = ADJACENCY[s.to].filter((n) => n !== s.from)
       const next =
-        options.length > 0
-          ? options[Math.floor(Math.random() * options.length)]
-          : s.from
+        options.length > 0 ? options[Math.floor(Math.random() * options.length)] : s.from
       s.from = s.to
       s.to = next
     }
 
-    ref.current?.position.lerpVectors(points[s.from], points[s.to], s.t)
+    const ei = EDGE_INDEX.get(edgeKey(s.from, s.to))
+    if (ei !== undefined) energy.edges[ei] = 1
+
+    const g = ref.current
+    if (!g) return
+    g.position.lerpVectors(NODES[s.from], NODES[s.to], s.t)
+
+    // Record the tail: rotate the oldest sample to the front.
+    const h = history.current
+    const oldest = h.pop()!
+    oldest.copy(g.position)
+    h.unshift(oldest)
+    trailRefs.current.forEach((m, i) => {
+      m?.position.copy(h[(i + 1) * TRAIL_SPACING])
+    })
+
+    // Calm breathing on the glow — alive, not flickering.
+    if (glowRef.current) {
+      glowRef.current.scale.setScalar(1 + 0.12 * Math.sin(time * 4 + s.seed))
+    }
   })
 
   return (
-    <group ref={ref}>
-      <mesh>
-        <sphereGeometry args={[0.032, 16, 16]} />
-        <meshBasicMaterial color="#ffffff" />
-      </mesh>
-      <pointLight intensity={1.1} distance={1.7} decay={2} color="#ffffff" />
-    </group>
+    <>
+      <group ref={ref}>
+        <mesh>
+          <sphereGeometry args={[0.034, 16, 16]} />
+          <meshBasicMaterial color="#ffffff" toneMapped={false} />
+        </mesh>
+        <Billboard>
+          <mesh ref={glowRef}>
+            <planeGeometry args={[0.5, 0.5]} />
+            <meshBasicMaterial
+              map={glow}
+              transparent
+              opacity={0.85}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+              toneMapped={false}
+            />
+          </mesh>
+        </Billboard>
+        <pointLight intensity={1.5} distance={2.1} decay={2} color="#ffffff" />
+      </group>
+      {Array.from({ length: TRAIL }, (_, i) => (
+        <mesh key={i} ref={(m) => (trailRefs.current[i] = m)}>
+          <sphereGeometry args={[0.026 * (1 - i / TRAIL) + 0.004, 8, 8]} />
+          <meshBasicMaterial
+            color="#ffffff"
+            transparent
+            opacity={0.4 * (1 - i / TRAIL) ** 1.5}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
+    </>
   )
 }
 
-function Edge({
-  from,
-  to,
-  material,
-}: {
-  from: THREE.Vector3
-  to: THREE.Vector3
-  material: THREE.Material
-}) {
-  const { position, quaternion, length } = useMemo(() => {
-    const dir = new THREE.Vector3().subVectors(to, from)
-    const length = dir.length()
-    const position = new THREE.Vector3().addVectors(from, to).multiplyScalar(0.5)
-    const quaternion = new THREE.Quaternion().setFromUnitVectors(
-      new THREE.Vector3(0, 1, 0),
-      dir.clone().normalize()
-    )
-    return { position, quaternion, length }
-  }, [from, to])
+function Node({ index, energy }: { index: number; energy: Energy }) {
+  const matRef = useRef<THREE.MeshStandardMaterial>(null)
+
+  useFrame(() => {
+    if (matRef.current) matRef.current.emissiveIntensity = energy.nodes[index] * 1.6
+  })
 
   return (
-    <mesh position={position} quaternion={quaternion} material={material}>
-      <cylinderGeometry args={[0.016, 0.016, length, 10]} />
+    <mesh position={NODES[index]}>
+      <sphereGeometry args={[NODE_RADII[index], 40, 40]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color="#161616"
+        emissive="#ffffff"
+        emissiveIntensity={0}
+        metalness={0.2}
+        roughness={0.82}
+        envMapIntensity={0.45}
+      />
+    </mesh>
+  )
+}
+
+function Edge({ index, energy }: { index: number; energy: Energy }) {
+  const matRef = useRef<THREE.MeshStandardMaterial>(null)
+  const [a, b] = EDGES[index]
+  const { position, quaternion, length } = useMemo(() => {
+    const d = new THREE.Vector3().subVectors(NODES[b], NODES[a])
+    const length = d.length()
+    const position = new THREE.Vector3().addVectors(NODES[a], NODES[b]).multiplyScalar(0.5)
+    const quaternion = new THREE.Quaternion().setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      d.clone().normalize()
+    )
+    return { position, quaternion, length }
+  }, [a, b])
+
+  useFrame(() => {
+    if (matRef.current) matRef.current.emissiveIntensity = energy.edges[index] * 0.9
+  })
+
+  return (
+    <mesh position={position} quaternion={quaternion}>
+      <cylinderGeometry args={[0.012, 0.012, length, 8]} />
+      <meshStandardMaterial
+        ref={matRef}
+        color="#101010"
+        emissive="#ffffff"
+        emissiveIntensity={0}
+        metalness={0.15}
+        roughness={0.9}
+        envMapIntensity={0.3}
+      />
     </mesh>
   )
 }
 
 function NodeNetwork() {
   const groupRef = useRef<THREE.Group>(null)
-
-  const nodeMaterial = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#161616',
-        metalness: 0.2,
-        roughness: 0.82,
-        envMapIntensity: 0.45,
-      }),
+  const energy = useMemo<Energy>(
+    () => ({
+      nodes: new Float32Array(NODES.length),
+      edges: new Float32Array(EDGES.length),
+    }),
     []
   )
+  const glow = useMemo(() => createGlowTexture(), [])
 
-  const edgeMaterial = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color: '#101010',
-        metalness: 0.15,
-        roughness: 0.9,
-        envMapIntensity: 0.3,
-      }),
-    []
-  )
-
-  const points = useMemo(() => NODES.map((p) => new THREE.Vector3(...p)), [])
-
-  useFrame((_, delta) => {
+  useFrame(({ clock }, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.08
+      groupRef.current.rotation.x = 0.12 + Math.sin(clock.elapsedTime * 0.15) * 0.05
     }
+    // Fade the energy left behind by each pulse.
+    const nDecay = Math.exp(-delta * 2.6)
+    const eDecay = Math.exp(-delta * 3.6)
+    for (let i = 0; i < energy.nodes.length; i++) energy.nodes[i] *= nDecay
+    for (let i = 0; i < energy.edges.length; i++) energy.edges[i] *= eDecay
   })
 
   return (
     <group ref={groupRef} rotation={[0.12, 0, -0.04]}>
-      {points.map((p, i) => (
-        <mesh key={`n${i}`} position={p} material={nodeMaterial}>
-          <sphereGeometry args={[NODE_RADII[i], 40, 40]} />
-        </mesh>
+      {NODES.map((_, i) => (
+        <Node key={`n${i}`} index={i} energy={energy} />
       ))}
-      {EDGES.map(([a, b], i) => (
-        <Edge key={`e${i}`} from={points[a]} to={points[b]} material={edgeMaterial} />
+      {EDGES.map((_, i) => (
+        <Edge key={`e${i}`} index={i} energy={energy} />
       ))}
-      <Pulse points={points} start={0} speed={0.55} />
-      <Pulse points={points} start={5} speed={0.4} />
+      <Pulse start={0} speed={0.6} energy={energy} glow={glow} />
+      <Pulse start={6} speed={0.45} energy={energy} glow={glow} />
     </group>
   )
 }
