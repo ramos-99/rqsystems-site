@@ -250,7 +250,7 @@ export default function HowWeWork() {
             title="Maintenance"
             color="bg-emerald-500"
             accent="bg-emerald-400"
-            desc="Software evolves. We stay on as the system's owners, monitoring, iterating, and keeping everything running as your operations scale."
+            desc="Software evolves. We stay on to monitor, iterate, and keep everything running as your operations grow."
           >
             <div className="space-y-4">
               <div className="font-mono text-[10px] text-[#555] uppercase tracking-widest mb-3">System uptime / 6 months</div>

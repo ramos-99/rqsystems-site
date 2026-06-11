@@ -36,19 +36,19 @@ export default function Footer() {
 
             <div className="space-y-10">
               <h2
-                className="text-4xl md:text-5xl lg:text-6xl text-white"
+                className="text-3xl md:text-4xl text-white"
                 style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
               >
                 Founders
               </h2>
 
               <p className="text-[#888] text-lg leading-relaxed font-sans max-w-lg">
-                RQ Systems was founded by Martim Ramos and Afonso Quintas, Computer Science and Engineering students from Instituto Superior Técnico in Lisbon. We specialize in building custom automation infrastructure for businesses with complex operational needs.
+                Martim Ramos and Afonso Quintas — Computer Science and Engineering students from Instituto Superior Técnico, Lisbon. We build software that replaces the manual work costing your team hours every week.
               </p>
 
               <div className="pt-8 border-t border-white/10 space-y-6">
                 <p className="text-white text-xl font-medium tracking-tight">
-                  If you feel like you waste too much time on processes that should not be manual, contact us.
+                  If your team is spending hours on work that software could handle, let's talk.
                 </p>
                 <a
                   href="mailto:contact@rqsystems.pt"
@@ -60,30 +60,32 @@ export default function Footer() {
                   <span className="text-lg">contact@rqsystems.pt</span>
                   <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                 </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
-                >
-                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
-                    <LinkedinIcon className="w-4 h-4" />
-                  </div>
-                  <span className="text-lg">Martim Ramos</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
-                >
-                  <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
-                    <LinkedinIcon className="w-4 h-4" />
-                  </div>
-                  <span className="text-lg">Afonso Quintas</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                </a>
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
+                  >
+                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
+                      <LinkedinIcon className="w-4 h-4" />
+                    </div>
+                    <span className="text-lg">Martim Ramos</span>
+                    <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                  </a>
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
+                  >
+                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
+                      <LinkedinIcon className="w-4 h-4" />
+                    </div>
+                    <span className="text-lg">Afonso Quintas</span>
+                    <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -158,21 +160,8 @@ export default function Footer() {
         {/* Info bar: location · nav · LinkedIn */}
         <div className="relative z-10 px-6 md:px-16 pt-8 pb-10 md:pb-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-7 md:gap-6">
 
-          {/* Left: location + copyright + mail */}
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-3 h-3 text-[#555]" />
-              <span className="font-mono text-[10px] text-[#555] uppercase tracking-widest">Lisbon, Portugal</span>
-            </div>
-            <span className="text-sm text-[#444] block">© {new Date().getFullYear()} RQ Systems</span>
-            <a href="mailto:contact@rqsystems.pt" className="inline-flex items-center gap-1.5 text-sm text-[#555] hover:text-white transition-colors duration-200 font-sans py-1 -my-1">
-              <Mail className="w-3.5 h-3.5" />
-              contact@rqsystems.pt
-            </a>
-          </div>
-
-          {/* Center: navigation */}
-          <div className="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-2">
+          {/* Center: navigation — first on mobile */}
+          <div className="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-2 order-first md:order-2">
             {[
               { label: 'How we work', href: '#what-we-do' },
               { label: 'Featured work', href: '#case-study' },
@@ -184,8 +173,21 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Right: LinkedIn */}
-          <div className="flex gap-6 md:gap-5">
+          {/* Left: location + copyright + mail — second on mobile */}
+          <div className="space-y-1.5 order-2 md:order-1">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-3 h-3 text-[#555]" />
+              <span className="font-mono text-[10px] text-[#555] uppercase tracking-widest">Lisbon, Portugal</span>
+            </div>
+            <span className="text-sm text-[#444] block">© {new Date().getFullYear()} RQ Systems</span>
+            <a href="mailto:contact@rqsystems.pt" className="inline-flex items-center gap-1.5 text-sm text-[#555] hover:text-white transition-colors duration-200 font-sans py-1 -my-1">
+              <Mail className="w-3.5 h-3.5" />
+              contact@rqsystems.pt
+            </a>
+          </div>
+
+          {/* Right: LinkedIn — last on mobile */}
+          <div className="flex gap-6 md:gap-5 order-3">
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-white transition-colors duration-300 font-sans group py-1.5 -my-1.5">
               <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
               Martim

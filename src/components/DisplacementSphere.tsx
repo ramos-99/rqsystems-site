@@ -200,12 +200,12 @@ function Node({ index, energy }: { index: number; energy: Energy }) {
       <sphereGeometry args={[NODE_RADII[index], 40, 40]} />
       <meshStandardMaterial
         ref={matRef}
-        color="#161616"
+        color="#242424"
         emissive="#ffffff"
         emissiveIntensity={0}
-        metalness={0.2}
-        roughness={0.82}
-        envMapIntensity={0.45}
+        metalness={0.22}
+        roughness={0.62}
+        envMapIntensity={0.85}
       />
     </mesh>
   )
@@ -234,12 +234,12 @@ function Edge({ index, energy }: { index: number; energy: Energy }) {
       <cylinderGeometry args={[0.012, 0.012, length, 8]} />
       <meshStandardMaterial
         ref={matRef}
-        color="#101010"
+        color="#1c1c1c"
         emissive="#ffffff"
         emissiveIntensity={0}
-        metalness={0.15}
-        roughness={0.9}
-        envMapIntensity={0.3}
+        metalness={0.18}
+        roughness={0.68}
+        envMapIntensity={0.65}
       />
     </mesh>
   )
@@ -292,9 +292,13 @@ export default function NetworkHero() {
     >
       <AdaptiveDpr />
       <Environment preset="city" />
-      <ambientLight intensity={0.12} />
-      <pointLight position={[4, 5, 4]} intensity={1.4} color="#ffffff" />
-      <pointLight position={[-4, -2, 3]} intensity={0.35} color="#ffffff" />
+      <ambientLight intensity={0.22} />
+      {/* Key light: upper-right corner, strong directional source */}
+      <directionalLight position={[6, 7, 3]} intensity={3.2} color="#ffffff" />
+      {/* Secondary rim from upper-right but behind — catches back edges */}
+      <pointLight position={[5, 5, -2]} intensity={1.1} distance={14} decay={2} color="#e8eaf0" />
+      {/* Soft fill from lower-left to avoid pure black shadows */}
+      <pointLight position={[-4, -2, 4]} intensity={0.45} distance={12} decay={2} color="#ffffff" />
       <NodeNetwork />
     </Canvas>
   )
