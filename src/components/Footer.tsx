@@ -98,9 +98,13 @@ export default function Footer() {
 
                   {/* Afonso Quintas */}
                   <div className="flex flex-col items-center space-y-6">
-                    <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-white/10 bg-[#050505] flex items-center justify-center relative overflow-hidden group shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+                    <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-white/10 bg-[#050505] relative overflow-hidden group shadow-[0_0_40px_rgba(255,255,255,0.03)]">
+                      <img
+                        src="/quintas-perfil.png"
+                        alt="Afonso Quintas"
+                        className="w-full h-full object-cover object-center"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <User className="w-12 h-12 text-white/10" />
                     </div>
                     <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Gloock', serif" }}>
                       <span className="text-2xl text-[#666] mb-2">Afonso</span>
