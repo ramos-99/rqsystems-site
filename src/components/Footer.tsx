@@ -27,7 +27,7 @@ export default function Footer() {
             <div className="space-y-10">
               <h2
                 className="text-3xl md:text-4xl text-[#0a0a0a]"
-                style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
+                style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif", fontWeight: 600 }}
               >
                 Founders
               </h2>
@@ -94,7 +94,7 @@ export default function Footer() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-                    <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Gloock', serif" }}>
+                    <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif" }}>
                       <span className="text-2xl text-[#5a5a5a] mb-2">Martim</span>
                       <span className="text-5xl md:text-6xl text-[#8f8f8f]"><span className="text-7xl md:text-8xl text-[#0a0a0a]">R</span>amos</span>
                     </div>
@@ -110,7 +110,7 @@ export default function Footer() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-                    <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Gloock', serif" }}>
+                    <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif" }}>
                       <span className="text-2xl text-[#5a5a5a] mb-2">Afonso</span>
                       <span className="text-5xl md:text-6xl text-[#8f8f8f]"><span className="text-7xl md:text-8xl text-[#0a0a0a]">Q</span>uintas</span>
                     </div>

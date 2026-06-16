@@ -111,7 +111,7 @@ export default function CaseStudy() {
       <div className="max-w-7xl mx-auto relative z-10">
         <h2
           className="text-4xl md:text-5xl lg:text-6xl text-[#0a0a0a] mb-10 md:mb-16"
-          style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
+          style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif", fontWeight: 600 }}
         >
           Featured Work
         </h2>
@@ -127,7 +127,7 @@ export default function CaseStudy() {
               </div>
               <h3
                 className="text-3xl md:text-4xl text-[#0a0a0a] leading-tight"
-                style={{ fontFamily: "'Gloock', serif", fontWeight: 400 }}
+                style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif", fontWeight: 600 }}
               >
                 Outlook to Dropbox<br />Automation
               </h3>
