@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import DisplacementSphere from '../components/DisplacementSphere.tsx'
-import HowWeWork from '../components/HowWeWork.tsx'
+import WhatWeBuild from '../components/WhatWeBuild.tsx'
 import CaseStudy from '../components/CaseStudy.tsx'
 import Footer from '../components/Footer.tsx'
 ---
@@ -67,8 +67,8 @@ import Footer from '../components/Footer.tsx'
             <a href="#contact" class="px-5 py-2.5 bg-white text-black text-[13px] font-medium tracking-wide hover:bg-[#eaeaea] transition-colors duration-150">
               Contact us
             </a>
-            <a href="#what-we-do" class="px-5 py-2.5 border border-white/[0.18] text-[#999] text-[13px] font-medium tracking-wide hover:text-white hover:border-white/50 transition-colors duration-150">
-              How we work
+            <a href="#what-we-build" class="px-5 py-2.5 border border-white/[0.18] text-[#999] text-[13px] font-medium tracking-wide hover:text-white hover:border-white/50 transition-colors duration-150">
+              What we build
             </a>
             <a href="#case-study" class="px-5 py-2.5 border border-white/[0.18] text-[#999] text-[13px] font-medium tracking-wide hover:text-white hover:border-white/50 transition-colors duration-150">
               Featured work
@@ -82,7 +82,7 @@ import Footer from '../components/Footer.tsx'
       </div>
     </section>
 
-    <HowWeWork client:only="react" />
+    <WhatWeBuild client:only="react" />
     <CaseStudy client:only="react" />
     <Footer client:only="react" />
   </main>

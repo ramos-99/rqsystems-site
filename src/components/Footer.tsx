@@ -48,7 +48,7 @@ export default function Footer() {
                 </a>
                 <div className="flex flex-wrap gap-4">
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/martim-c-ramos/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
@@ -60,7 +60,7 @@ export default function Footer() {
                     <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                   </a>
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/afonsoquintas/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center space-x-3 text-[#888] hover:text-white transition-colors duration-300"
@@ -145,7 +145,7 @@ export default function Footer() {
           {/* Center: navigation — first on mobile */}
           <div className="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-2 order-first md:order-2">
             {[
-              { label: 'How we work', href: '#what-we-do' },
+              { label: 'What we build', href: '#what-we-build' },
               { label: 'Featured work', href: '#case-study' },
               { label: 'Contact', href: '#contact' },
             ].map(({ label, href }) => (
@@ -170,11 +170,11 @@ export default function Footer() {
 
           {/* Right: LinkedIn — last on mobile */}
           <div className="flex gap-6 md:gap-5 order-3">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-white transition-colors duration-300 font-sans group py-1.5 -my-1.5">
+            <a href="https://www.linkedin.com/in/martim-c-ramos/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-white transition-colors duration-300 font-sans group py-1.5 -my-1.5">
               <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
               Martim
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-white transition-colors duration-300 font-sans group py-1.5 -my-1.5">
+            <a href="https://www.linkedin.com/in/afonsoquintas/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-[#666] hover:text-white transition-colors duration-300 font-sans group py-1.5 -my-1.5">
               <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
               Afonso
             </a>
