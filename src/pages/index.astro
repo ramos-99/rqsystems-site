@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import DisplacementSphere from '../components/DisplacementSphere.tsx'
+import DeferredSphere from '../components/DeferredSphere.tsx'
 import WhatWeBuild from '../components/WhatWeBuild.tsx'
 import CaseStudy from '../components/CaseStudy.tsx'
 import Footer from '../components/Footer.tsx'
@@ -51,7 +51,7 @@ import Footer from '../components/Footer.tsx'
 
       <!-- 3D canvas: absolute, right half, full section height — never clips -->
       <div class="absolute inset-y-0 right-0 hidden lg:block" style="width: 50%;">
-        <DisplacementSphere client:visible />
+        <DeferredSphere client:only="react" />
       </div>
 
       <!-- Text: sits in left half, vertically centered, above the canvas -->

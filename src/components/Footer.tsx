@@ -87,11 +87,18 @@ export default function Footer() {
                   {/* Martim Ramos */}
                   <div className="flex flex-col items-center space-y-6">
                     <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-[#c7c7c7] bg-white relative overflow-hidden group shadow-[0_0_40px_rgba(10,10,10,0.06)]">
-                      <img
-                        src="/ramos-perfil.jpg"
-                        alt="Martim Ramos"
-                        className="w-full h-full object-cover object-center"
-                      />
+                      <picture>
+                        <source srcSet="/ramos-perfil.webp" type="image/webp" />
+                        <img
+                          src="/ramos-perfil.jpg"
+                          alt="Martim Ramos"
+                          className="w-full h-full object-cover object-center"
+                          width={192}
+                          height={192}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
                       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                     <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif" }}>
@@ -103,11 +110,18 @@ export default function Footer() {
                   {/* Afonso Quintas */}
                   <div className="flex flex-col items-center space-y-6">
                     <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border border-[#c7c7c7] bg-white relative overflow-hidden group shadow-[0_0_40px_rgba(10,10,10,0.06)]">
-                      <img
-                        src="/quintas-perfil.png"
-                        alt="Afonso Quintas"
-                        className="w-full h-full object-cover object-center"
-                      />
+                      <picture>
+                        <source srcSet="/quintas-perfil.webp" type="image/webp" />
+                        <img
+                          src="/quintas-perfil.png"
+                          alt="Afonso Quintas"
+                          className="w-full h-full object-cover object-center"
+                          width={192}
+                          height={192}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
                       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                     <div className="flex flex-col items-center text-center leading-none" style={{ fontFamily: "'Schibsted Grotesk Variable', sans-serif" }}>

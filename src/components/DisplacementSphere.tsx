@@ -258,7 +258,7 @@ function NodeNetwork() {
   )
   const glow = useMemo(() => createGlowTexture(), [])
 
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock, invalidate }, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.08
       groupRef.current.rotation.x = 0.12 + Math.sin(clock.elapsedTime * 0.15) * 0.05
@@ -268,6 +268,7 @@ function NodeNetwork() {
     const eDecay = Math.exp(-delta * 3.6)
     for (let i = 0; i < energy.nodes.length; i++) energy.nodes[i] *= nDecay
     for (let i = 0; i < energy.edges.length; i++) energy.edges[i] *= eDecay
+    invalidate()
   })
 
   return (
@@ -290,6 +291,8 @@ export default function NetworkHero() {
       gl={{ alpha: true }}
       camera={{ position: [0, 0, 7], fov: 42 }}
       dpr={[1, 1.5]}
+      frameloop="demand"
+      performance={{ min: 0.5 }}
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
     >
       <AdaptiveDpr />

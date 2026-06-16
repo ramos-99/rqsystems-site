@@ -2,17 +2,17 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 const LOG_LINES = [
-  { t: 0,    text: '> inbox.poll()',                                      color: 'text-[#666]' },
+  { t: 0,    text: '> inbox.poll()',                                      color: 'text-[#a3a3a3]' },
   { t: 500,  text: '  ↳ 3 new messages detected',                         color: 'text-blue-400/70' },
-  { t: 1000, text: '> parse.bundle(msg_0x4f2a)',                          color: 'text-[#777]' },
-  { t: 1400, text: '  ↳ original_message.eml          [OK]',              color: 'text-[#999]' },
-  { t: 1800, text: '  ↳ message_body.pdf              [OK]',              color: 'text-[#999]' },
+  { t: 1000, text: '> parse.bundle(msg_0x4f2a)',                          color: 'text-[#a3a3a3]' },
+  { t: 1400, text: '  ↳ original_message.eml          [OK]',              color: 'text-[#a3a3a3]' },
+  { t: 1800, text: '  ↳ message_body.pdf              [OK]',              color: 'text-[#a3a3a3]' },
   { t: 2200, text: '  ↳ invoice_Q3_final.pdf          [OK]',              color: 'text-blue-300' },
   { t: 2700, text: '> classify(bundle)  scanning context...',             color: 'text-amber-400/80' },
   { t: 3200, text: '  ↳ match: "Project Alpha"  conf: 0.97',             color: 'text-amber-300' },
-  { t: 3700, text: '> route.resolve()',                                   color: 'text-[#777]' },
+  { t: 3700, text: '> route.resolve()',                                   color: 'text-[#a3a3a3]' },
   { t: 4100, text: '  ↳ /Dropbox/Projects/Alpha/Invoices/',               color: 'text-purple-400' },
-  { t: 4600, text: '> dropbox.upload(bundle × 3)',                        color: 'text-[#777]' },
+  { t: 4600, text: '> dropbox.upload(bundle × 3)',                        color: 'text-[#a3a3a3]' },
   { t: 5100, text: '  ✓ archived   0.8s   3 files   2.4 MB',             color: 'text-emerald-400' },
   { t: 5800, text: '> inbox.poll()  standing by...',                      color: 'text-[#555]' },
 ];
@@ -180,7 +180,7 @@ export default function CaseStudy() {
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-400/50" />
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
                 </div>
-                <span className="font-mono text-xs text-[#666] tracking-widest">[ TRIAGE.LOG ]<span className="hidden sm:inline">  v1.2.0</span></span>
+                <span className="font-mono text-xs text-[#a3a3a3] tracking-widest">[ TRIAGE.LOG ]<span className="hidden sm:inline">  v1.2.0</span></span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
@@ -191,15 +191,15 @@ export default function CaseStudy() {
             {/* Live metrics bar */}
             <div className="relative z-10 grid grid-cols-3 border-b border-white/[0.12]">
               <div className="px-3 md:px-5 py-3 border-r border-white/[0.12]">
-                <div className="font-mono text-[9px] md:text-[10px] text-[#777] uppercase tracking-wider md:tracking-widest mb-1">Uptime</div>
+                <div className="font-mono text-[9px] md:text-[10px] text-[#a3a3a3] uppercase tracking-wider md:tracking-widest mb-1">Uptime</div>
                 <div className="font-mono text-sm text-amber-400">{fmt(uptime)}</div>
               </div>
               <div className="px-3 md:px-5 py-3 border-r border-white/[0.12]">
-                <div className="font-mono text-[9px] md:text-[10px] text-[#777] uppercase tracking-wider md:tracking-widest mb-1">Emails Proc.</div>
+                <div className="font-mono text-[9px] md:text-[10px] text-[#a3a3a3] uppercase tracking-wider md:tracking-widest mb-1">Emails Proc.</div>
                 <div className="font-mono text-sm text-blue-400">{packets.toLocaleString()}</div>
               </div>
               <div className="px-3 md:px-5 py-3">
-                <div className="font-mono text-[9px] md:text-[10px] text-[#777] uppercase tracking-wider md:tracking-widest mb-1">Errors</div>
+                <div className="font-mono text-[9px] md:text-[10px] text-[#a3a3a3] uppercase tracking-wider md:tracking-widest mb-1">Errors</div>
                 <div className="font-mono text-sm text-emerald-400">0</div>
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function CaseStudy() {
 
             {/* Bottom status bar */}
             <div className="relative z-10 border-t border-white/10 px-5 py-2.5 flex items-center justify-between bg-[#0a0a0a]">
-              <span className="font-mono text-[10px] text-[#666] tracking-widest">tail -f /triage.log</span>
+              <span className="font-mono text-[10px] text-[#a3a3a3] tracking-widest">tail -f /triage.log</span>
               <div className="flex items-center space-x-4">
                 <span className="font-mono text-[10px] text-purple-400/70">↑ Dropbox API</span>
                 <span className="font-mono text-[10px] text-blue-400/70">Outlook Add-in</span>
