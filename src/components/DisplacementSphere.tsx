@@ -70,10 +70,10 @@ function createGlowTexture(): THREE.CanvasTexture {
   canvas.height = S
   const ctx = canvas.getContext('2d')!
   const g = ctx.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2)
-  g.addColorStop(0, 'rgba(255,255,255,1)')
-  g.addColorStop(0.25, 'rgba(255,255,255,0.55)')
-  g.addColorStop(0.6, 'rgba(255,255,255,0.12)')
-  g.addColorStop(1, 'rgba(255,255,255,0)')
+  g.addColorStop(0, 'rgba(29,158,117,1)')
+  g.addColorStop(0.25, 'rgba(29,158,117,0.55)')
+  g.addColorStop(0.6, 'rgba(29,158,117,0.12)')
+  g.addColorStop(1, 'rgba(29,158,117,0)')
   ctx.fillStyle = g
   ctx.fillRect(0, 0, S, S)
   return new THREE.CanvasTexture(canvas)
@@ -154,7 +154,7 @@ function Pulse({
       <group ref={ref}>
         <mesh>
           <sphereGeometry args={[0.034, 16, 16]} />
-          <meshBasicMaterial color="#ffffff" toneMapped={false} />
+          <meshBasicMaterial color="#1D9E75" toneMapped={false} />
         </mesh>
         <Billboard>
           <mesh ref={glowRef}>
@@ -169,17 +169,17 @@ function Pulse({
             />
           </mesh>
         </Billboard>
-        <pointLight intensity={1.5} distance={2.1} decay={2} color="#ffffff" />
+        <pointLight intensity={1.5} distance={2.1} decay={2} color="#1D9E75" />
       </group>
       {Array.from({ length: TRAIL }, (_, i) => (
         <mesh key={i} ref={(m) => (trailRefs.current[i] = m)}>
           <sphereGeometry args={[0.026 * (1 - i / TRAIL) + 0.004, 8, 8]} />
           <meshBasicMaterial
-            color="#ffffff"
+            color="#1D9E75"
             transparent
-            opacity={0.4 * (1 - i / TRAIL) ** 1.5}
+            opacity={0.55 * (1 - i / TRAIL) ** 1.5}
             depthWrite={false}
-            blending={THREE.AdditiveBlending}
+            blending={THREE.NormalBlending}
             toneMapped={false}
           />
         </mesh>
@@ -200,8 +200,8 @@ function Node({ index, energy }: { index: number; energy: Energy }) {
       <sphereGeometry args={[NODE_RADII[index], 40, 40]} />
       <meshStandardMaterial
         ref={matRef}
-        color="#242424"
-        emissive="#ffffff"
+        color="#1a1a1a"
+        emissive="#1D9E75"
         emissiveIntensity={0}
         metalness={0.22}
         roughness={0.62}
@@ -234,12 +234,14 @@ function Edge({ index, energy }: { index: number; energy: Energy }) {
       <cylinderGeometry args={[0.012, 0.012, length, 8]} />
       <meshStandardMaterial
         ref={matRef}
-        color="#1c1c1c"
-        emissive="#ffffff"
+        color="#2a2a2a"
+        emissive="#1D9E75"
         emissiveIntensity={0}
         metalness={0.18}
         roughness={0.68}
         envMapIntensity={0.65}
+        transparent
+        opacity={0.5}
       />
     </mesh>
   )
