@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, ArrowRight, User, MapPin } from 'lucide-react';
+import { Mail, ArrowRight, MapPin } from 'lucide-react';
 import Backdrop from './Backdrop';
 
 function LinkedinIcon({ className }: { className?: string }) {

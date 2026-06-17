@@ -1,9 +1,8 @@
-'use client';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 const LOG_LINES = [
   { t: 0,    text: '> inbox.poll()',                                      color: 'text-[#a3a3a3]' },
-  { t: 500,  text: '  ↳ 3 new messages detected',                         color: 'text-blue-400/70' },
+  { t: 500,  text: '  ↳ 3 new messages detected',                         color: 'text-blue-400' },
   { t: 1000, text: '> parse.bundle(msg_0x4f2a)',                          color: 'text-[#a3a3a3]' },
   { t: 1400, text: '  ↳ original_message.eml          [OK]',              color: 'text-[#a3a3a3]' },
   { t: 1800, text: '  ↳ message_body.pdf              [OK]',              color: 'text-[#a3a3a3]' },
@@ -213,8 +212,8 @@ export default function CaseStudy() {
             <div className="relative z-10 border-t border-white/10 px-5 py-2.5 flex items-center justify-between bg-[#0a0a0a]">
               <span className="font-mono text-[10px] text-[#a3a3a3] tracking-widest">tail -f /triage.log</span>
               <div className="flex items-center space-x-4">
-                <span className="font-mono text-[10px] text-purple-400/70">↑ Dropbox API</span>
-                <span className="font-mono text-[10px] text-blue-400/70">Outlook Add-in</span>
+                <span className="font-mono text-[10px] text-purple-400">↑ Dropbox API</span>
+                <span className="font-mono text-[10px] text-blue-400">Outlook Add-in</span>
               </div>
             </div>
           </div>{/* end terminal */}

@@ -1,4 +1,3 @@
-'use client';
 import React, { useMemo } from 'react';
 
 /* Monochrome brand marks (single-path, filled with currentColor). */
