@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+// Geist Mono is only used below the fold (this terminal, the footer, the dome
+// pill), so it's loaded here instead of in the critical-path layout CSS.
+import '@fontsource/geist-mono/latin-400';
 
 const LOG_LINES = [
   { t: 0,    text: '> inbox.poll()',                                      color: 'text-[#a3a3a3]' },

@@ -43,17 +43,22 @@ export default function DeferredSphere() {
       return
     }
 
-    const rect = container.getBoundingClientRect()
     const getDpr = () => Math.min(window.devicePixelRatio || 1, 1.5)
     const offscreen = canvas.transferControlToOffscreen()
-    worker.postMessage(
-      { type: 'init', canvas: offscreen, width: rect.width, height: rect.height, dpr: getDpr() },
-      [offscreen],
-    )
+    let started = false
 
+    // ResizeObserver reports the initial size without a synchronous layout
+    // read, so we avoid a getBoundingClientRect() forced reflow on mount.
     const ro = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect
-      if (width > 0 && height > 0) {
+      if (width <= 0 || height <= 0) return
+      if (!started) {
+        started = true
+        worker.postMessage(
+          { type: 'init', canvas: offscreen, width, height, dpr: getDpr() },
+          [offscreen],
+        )
+      } else {
         worker.postMessage({ type: 'resize', width, height, dpr: getDpr() })
       }
     })

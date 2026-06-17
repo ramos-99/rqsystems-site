@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import '@fontsource/geist-mono/latin-400';
 
 /* Monochrome brand marks (single-path, filled with currentColor). */
 const PATHS: Record<string, string> = {

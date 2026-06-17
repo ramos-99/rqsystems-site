@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, ArrowRight, MapPin } from 'lucide-react';
 import Backdrop from './Backdrop';
+import '@fontsource/geist-mono/latin-400';
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
