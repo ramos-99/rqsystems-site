@@ -14,7 +14,7 @@
   --rule: rgb(243 245 255 / 0.2);
   --accent: var(--fg);
   --trace: var(--lime);
-  --chip: #020308;
+  --field: #020308;
 
   --font: 'Familjen Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --gutter: clamp(1.75rem, 4vw, 3.5rem);
@@ -28,7 +28,6 @@
   --rule: rgb(4 6 15 / 0.16);
   --accent: #2a39c9;
   --trace: #2a39c9;
-  --chip: #f6f7fb;
   color-scheme: light;
 }
 
@@ -81,30 +80,65 @@ a { color: inherit; }
 .lang a:hover, .lang a[aria-current] { color: var(--fg); }
 
 /* ── Pills ─────────────────────────────────────────── */
+/* Buttons speak the cable's language: the label runs along a short trace into
+   a round node. On hover the signal travels down the trace and lights it. */
 .pill {
+  --node: 3rem;
+  --run: 1.75rem;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  min-height: 3rem;
-  padding: 0 1.6rem;
-  border-radius: 999px;
-  border: 1px solid transparent;
+  min-height: var(--node);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
   font: inherit;
   font-size: 0.9375rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
-.pill svg { transition: transform 0.35s var(--ease); }
-.pill:hover svg { transform: translateX(3px); }
-.pill-lime { background: var(--lime); color: var(--ink); }
-.pill-lime:hover { background: var(--lime-hover); }
-.pill-line { background: none; color: var(--fg); border-color: var(--rule); }
-.pill-line:hover { border-color: var(--fg); }
-.pill-sm { min-height: 2.75rem; padding: 0 1.15rem; font-size: 0.875rem; }
-.pill-lg { min-height: 3.75rem; padding: 0 2rem; font-size: clamp(1.0625rem, 1.8vw, 1.375rem); }
+.pill::after {
+  content: "";
+  order: 1;
+  width: var(--run);
+  height: 1.5px;
+  margin-left: 0.85rem;
+  background: linear-gradient(90deg, var(--trace) 50%, var(--rule) 50%) 100% 0 / 200% 100%;
+  transition: background-position 0.3s var(--ease);
+}
+.pill-node {
+  order: 2;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--rule);
+  transition: background-color 0.25s var(--ease) 0.1s, box-shadow 0.25s var(--ease) 0.1s;
+}
+.pill-node svg { width: 40%; height: 40%; stroke-width: 1.75; transition: transform 0.3s var(--ease); }
+.pill-node svg + svg, .pill.is-done .pill-node svg:first-child { display: none; }
+.pill.is-done .pill-node svg + svg { display: block; }
+.pill.is-done .pill-node { box-shadow: inset 0 0 0 1.5px var(--trace); color: var(--trace); }
+.pill-lime .pill-node { background: var(--lime); color: var(--ink); box-shadow: none; }
+@media (hover: hover) and (pointer: fine) {
+  .pill:hover::after { background-position: 0 0; }
+  .pill:hover .pill-node { box-shadow: inset 0 0 0 1.5px var(--trace); }
+  .pill-lime:hover .pill-node { background: var(--lime-hover); box-shadow: none; }
+  .pill:hover .pill-node svg { transform: translateX(2px); }
+  .pill-down:hover .pill-node svg { transform: translateY(2px); }
+}
+.pill-sm { --node: 2.75rem; --run: 0.9rem; font-size: 0.875rem; }
+.pill-sm::after { margin-left: 0.6rem; }
+.pill-lg { --node: 3.75rem; --run: 2.5rem; font-size: clamp(1.0625rem, 1.8vw, 1.375rem); }
+.pill > span:first-child { white-space: nowrap; }
+@media (max-width: 40rem) {
+  /* The header is tight on a phone: the nav button is just its node. */
+  .pill-sm > span:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .pill-sm::after { display: none; }
+}
 
 /* ── Sections ──────────────────────────────────────── */
 .cue { position: relative; min-height: 100svh; padding: clamp(7rem, 18vh, 11rem) var(--gutter) clamp(5rem, 14vh, 9rem); }
@@ -127,10 +161,10 @@ p { margin: 0; text-wrap: pretty; }
 @keyframes settle { from { opacity: 0; transform: scale(1.08); } }
 .hero-copy { position: relative; display: grid; gap: 2rem; max-width: 62rem; }
 .hero h1 { font-size: clamp(3rem, 6.9vw, 7.5rem); line-height: 0.9; letter-spacing: -0.04em; }
-.lead { max-width: 30rem; color: var(--fg-2); font-size: clamp(1rem, 1.25vw, 1.125rem); }
+.lead { max-width: 30rem; text-wrap: pretty; color: var(--fg-2); font-size: clamp(1rem, 1.25vw, 1.125rem); }
 .lead a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--rule); text-decoration-thickness: 1px; text-underline-offset: 0.25em; transition: text-decoration-color 0.2s; }
 .lead a:hover { text-decoration-color: currentColor; }
-.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem 2.25rem; }
 .hero-foot {
   position: absolute;
   left: var(--gutter);
@@ -151,7 +185,7 @@ p { margin: 0; text-wrap: pretty; }
 @media (max-width: 40rem) {
   .hero { justify-content: flex-end; padding-bottom: 7rem; }
   .art { inset: 0 -45% 34% -10%; -webkit-mask-image: linear-gradient(0deg, transparent 0%, #000 45%); mask-image: linear-gradient(0deg, transparent 0%, #000 45%); }
-  .actions { flex-direction: column; }
+  .actions { flex-direction: column; align-items: flex-start; }
   .hero-foot span:last-child { display: none; }
 }
 
@@ -171,7 +205,7 @@ p { margin: 0; text-wrap: pretty; }
 .tags li { display: inline-flex; align-items: center; gap: 0.5rem; }
 .tags li::before { content: ""; width: 5px; height: 5px; background: currentColor; }
 @media (min-width: 64rem) {
-  .build { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 3rem; }
+  .build { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: 5rem; }
   .build-head { position: sticky; top: 7rem; }
 }
 
@@ -193,34 +227,46 @@ p { margin: 0; text-wrap: pretty; }
 .founders { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-content: center; }
 .founders-copy { display: grid; gap: 1.5rem; max-width: 34rem; }
 .founders-copy p { color: var(--fg-2); }
-.people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.5vw, 2rem); max-width: 44rem; }
-.people img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 1.25rem; outline: 1px solid var(--rule); outline-offset: -1px; }
-.people a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; margin-top: 0.5rem; font-size: clamp(1.0625rem, 1.6vw, 1.375rem); font-weight: 600; letter-spacing: -0.02em; text-decoration: none; }
+/* The founders' surname initials spell the mark: R, Q, then Systems. */
+.team { display: grid; justify-items: center; gap: clamp(1.5rem, 4vh, 2.5rem); }
+.people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 3rem clamp(2.5rem, 5vw, 4rem); }
+.people li { display: grid; justify-items: center; gap: 1.5rem; }
+.people img { display: block; width: clamp(8rem, 13vw, 12rem); height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; background: #f6f7fb; outline: 1px solid var(--rule); outline-offset: -1px; }
+.people a { display: grid; justify-items: center; line-height: 1; text-decoration: none; color: var(--fg-2); }
+.people .first { font-size: clamp(1rem, 1.25vw, 1.125rem); margin-bottom: 0.5rem; }
+.people .last { font-size: clamp(2.25rem, 3.8vw, 3.75rem); font-weight: 500; letter-spacing: -0.04em; color: color-mix(in oklab, var(--fg) 55%, transparent); transition: color 0.3s var(--ease); }
+.people .last b { font-size: 1.35em; font-weight: inherit; color: var(--fg); }
+.people a:hover .last { color: var(--fg); }
+.team-mark { margin: 0; padding-left: 1em; font-size: 0.875rem; font-weight: 500; letter-spacing: 1em; text-transform: uppercase; color: var(--fg-2); }
+@media (max-width: 40rem) {
+  .people { flex-wrap: nowrap; gap: 1.5rem; }
+  .people li { gap: 1rem; }
+  .people img { width: 7.5rem; }
+}
 @media (min-width: 64rem) {
   .founders { grid-template-columns: 1fr 1.1fr; align-items: center; }
-  .people { justify-self: end; width: 100%; }
+  .team { justify-self: end; }
 }
 
 /* Contact: full day. */
 .contact { display: flex; flex-direction: column; justify-content: center; padding-bottom: 4.5rem; }
 .cta { font-size: clamp(2.25rem, 5.6vw, 5rem); font-weight: 600; line-height: 1; letter-spacing: -0.04em; max-width: 16ch; text-wrap: balance; }
-.reach { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: clamp(2rem, 5vh, 3rem); }
-.reach .pill-line { min-height: 3.75rem; padding: 0 1.75rem; }
+.reach { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 3rem; margin-top: clamp(2rem, 5vh, 3rem); }
 .faces { list-style: none; margin: clamp(2rem, 5vh, 3rem) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
 .faces li { display: flex; align-items: center; gap: 0.9rem; }
-.faces img { width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover; object-position: 50% 22%; }
+.faces img { width: 3.5rem; height: 3.5rem; border-radius: 50%; background: color-mix(in oklab, var(--fg) 7%, transparent); object-fit: cover; }
 .faces a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 600; text-decoration: underline; text-decoration-color: var(--rule); text-decoration-thickness: 1px; text-underline-offset: 0.3em; }
 .faces a:hover { text-decoration-color: currentColor; }
-.foot { margin-top: auto; padding-top: clamp(4rem, 12vh, 7rem); display: grid; gap: 0.5rem; font-size: 0.875rem; color: var(--fg-2); }
+.foot { margin-top: auto; padding-top: 1rem; display: grid; gap: 0.5rem; font-size: 0.875rem; color: var(--fg-2); }
 .foot-meta, .foot-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; }
 .foot a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
 .foot a:hover { color: var(--fg); }
 @media (min-width: 64rem) {
-  .foot { grid-template-columns: 1fr auto; align-items: center; gap: 2.5rem; border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: clamp(4rem, 12vh, 7rem); }
+  .foot { grid-template-columns: 1fr auto; align-items: center; gap: 2.5rem; margin-top: clamp(4rem, 12vh, 7rem); }
 }
 @media (max-width: 40rem) {
   .contact { justify-content: flex-start; }
-  .foot { margin-top: 3rem; padding-top: 0; }
+  .foot { margin-top: 3rem; }
 }
 
 /* Each block eases in as it reaches the screen, where the browser supports
@@ -232,8 +278,8 @@ p { margin: 0; text-wrap: pretty; }
     .reveal { animation-name: reveal; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
     @keyframes reveal { from { opacity: 0; transform: translateY(28px); } }
 
-    /* Leaving the hero, the headline lifts away; the chip stays, wired into
-       the trace. */
+    /* Leaving the hero, the headline lifts away while the photo dissolves
+       into its line drawing (trace.ts). */
     .hero-copy, .hero-foot { animation-name: lift; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --hero; animation-range: exit 35% exit 95%; }
     @keyframes lift { to { opacity: 0; translate: 0 -6vh; } }
 
@@ -246,39 +292,46 @@ p { margin: 0; text-wrap: pretty; }
   .art, .art img, .rise { animation: none; transition: none; transform: none; }
 }
 
-/* ── The trace ─────────────────────────────────────── */
-/* One circuit trace runs the page: from the chip's pins along the hero's
-   foot rule, down the left bus through a chip at every step and section,
-   into the contact pill. */
+/* ── The cable ───────────────────────────────────── */
+/* The hero photo dissolves into its own line drawing; the tweezers become
+   one cable that runs the page through an illustrated node at every step
+   and ends as the footer's rule. Hairline when unlit, the signal colour with
+   a soft glow once lit. */
 .trace { position: absolute; top: 0; left: 0; width: 100%; z-index: 2; pointer-events: none; overflow: visible; }
-.trace path { fill: none; stroke-linejoin: round; }
+.trace path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .trace-base { stroke: var(--rule); stroke-width: 1.5; }
-.trace-fibre { stroke: var(--rule); stroke-width: 1; opacity: 0.6; }
-.trace-fibre:first-of-type { transform: translateX(-6px); }
-.trace-fibre:nth-of-type(2) { transform: translateX(6px); }
-.trace-lit { stroke: var(--trace); stroke-width: 2; transition: stroke 0.6s var(--ease); }
-.trace-head { fill: var(--trace); transition: fill 0.6s var(--ease); }
-.pin { position: absolute; }
-/* A chip footprint on the bus, centred on its heading's first line. */
-.pad { position: absolute; z-index: 3; left: calc(var(--gutter) / 2 - 11px); width: 22px; height: 22px; margin-top: calc(0.5lh - 11px); }
-.pad svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.pad rect { fill: var(--chip); stroke: var(--rule); stroke-width: 1.5; transition: fill 0.4s var(--ease), stroke 0.4s var(--ease); }
-.pad path { stroke: var(--rule); stroke-width: 1.5; transition: stroke 0.4s var(--ease); }
-.pad.on rect { fill: var(--trace); stroke: var(--trace); }
-.pad.on path { stroke: var(--trace); }
-/* The signal arrives: a socket lights where the trace plugs into the pill's
-   edge (focus keeps its own ring). */
-.pill[data-node="end"] { position: relative; }
-.pill[data-node="end"]::before { content: ""; position: absolute; left: -5px; top: 50%; width: 10px; height: 10px; margin-top: -5px; background: var(--chip); border: 2px solid var(--rule); transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease); }
-.pill.on::before { background: var(--trace); border-color: var(--trace); }
-/* On wide screens each step's chip sits just left of its heading, in the
-   gap between the pinned title and the steps. */
+.trace-glow { stroke: var(--trace); stroke-width: 7; opacity: 0.22; }
+.trace-lit { stroke: var(--trace); stroke-width: 2; }
+.trace-glow, .trace-lit, .trace-end { transition: stroke 0.6s var(--ease), fill 0.6s var(--ease); }
+.head-core { stop-color: var(--lime-hover); }
+.head-mid { stop-color: var(--trace); stop-opacity: 0.85; }
+.head-edge { stop-color: var(--trace); stop-opacity: 0; }
+.trace-end { fill: var(--trace); opacity: 0; transition: opacity 0.4s var(--ease); }
+.trace-end.on { opacity: 1; }
+.sketch path { stroke: var(--fg); stroke-width: 1.25; opacity: 0.7; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sketch .leg { stroke: url(#sketch-fade); opacity: 1; }
+.fade-top { stop-color: var(--fg); stop-opacity: 0.7; }
+.fade-bottom { stop-color: var(--fg); stop-opacity: 0; }
+.pin, .via { position: absolute; }
+.via { left: calc(var(--gutter) / 2); margin-top: 0.5lh; }
+
+/* An illustrated node on the cable, centred on its heading's first line: a
+   ringed terminal holding a line icon. Dim until the signal arrives, then the
+   ring takes the signal colour and the icon draws itself over 0.9s. */
+.node { position: absolute; z-index: 3; left: calc(var(--gutter) / 2 - 20px); width: 40px; height: 40px; margin-top: calc(0.5lh - 20px); display: grid; place-items: center; border-radius: 50%; background: var(--field); box-shadow: inset 0 0 0 1.5px var(--rule); transition: box-shadow 0.5s var(--ease); }
+.node svg { width: 20px; height: 20px; overflow: visible; }
+.node path, .node rect, .node circle { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.node-base { stroke: var(--fg); stroke-width: 1.5; opacity: 0.3; }
+.node-lit { stroke: var(--trace); stroke-width: 1.75; }
+.node-lit > * { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s var(--ease); }
+.node.on { box-shadow: inset 0 0 0 1.5px var(--trace); }
+.node.on .node-lit > * { stroke-dashoffset: 0; }
 @media (min-width: 64rem) {
   .steps h3 { position: relative; }
-  .steps h3 .pad { left: -36px; }
+  .steps h3 .node { width: 52px; height: 52px; left: -66px; margin-top: calc(0.5lh - 26px); }
+  .steps h3 .node svg { width: 26px; height: 26px; }
 }
 @media (max-width: 40rem) {
-  .trace-fibre { display: none; }
-  .pad { width: 16px; height: 16px; left: calc(var(--gutter) / 2 - 8px); margin-top: calc(0.5lh - 8px); }
+  .node { width: 26px; height: 26px; left: calc(var(--gutter) / 2 - 13px); margin-top: calc(0.5lh - 13px); }
+  .node svg { width: 14px; height: 14px; }
 }
-

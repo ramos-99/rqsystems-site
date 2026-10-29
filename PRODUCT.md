@@ -32,8 +32,8 @@ Visitors are evaluating, not operating anything. They arrive cold or by referral
 - The existing codebase sets the stack: Astro, React islands, Tailwind 4 and Three.js (r3f).
 - The site is a single landing page with these sections: hero, What we build, Featured work (case study) and a contact/founders footer.
 - **The copy stays as written unless the user asks for a change.** Redesigns change the presentation, not the words.
-- On 2026-10-29 the user asked for the "What we build" section to be rewritten. It is now "How we automate your operations": three steps (map, build, run), reviewed for SEO and truthfulness, plus new meta descriptions. Everything else keeps the original copy.
-- The site ships in English (`/`) and European Portuguese (`/pt/`), with an EN/PT switch. The Portuguese copy is a faithful translation of the English.
+- On 2026-10-29 the user asked for the "What we build" section to be rewritten. It is now "How we automate your operations": three steps (map, build, run), reviewed for SEO and truthfulness, plus new meta descriptions. Later the same day the user asked for no em dashes and no "AI tone" anywhere. Both languages were rewritten in plain, concrete sentences: no triplets, no "No X, no Y" slogans, no "without ever". The hero is now "We automate the manual work." / "Automatizamos o trabalho manual."
+- The site ships in English (`/`) and European Portuguese (`/pt/`), with an EN/PT switch. The Portuguese must be natural European Portuguese (pt-PT), never a literal calque of the English: on 2026-10-29 the user rejected "As suas operações, automatizadas" for that reason. The PT hero now reads "Automatizamos o trabalho manual.", and it uses pt-PT forms such as "e-mail".
 
 ## Brand Commitments
 
@@ -43,11 +43,12 @@ Visitors are evaluating, not operating anything. They arrive cold or by referral
 - Palette pinned by the user (2026-10-29): midnight black, electric cobalt blue, acid lime. Lime is used sparingly.
 - Rejected by the user, do not bring back: procedural 3D props or stages, glass and glow effects ("typical AI look"), flower or other non-tech imagery, square buttons, and dense text. Imagery must be real photography of technology, and the site must stay light and fast with no heavy animation.
 - Kept by the user's request: the smooth scroll-driven colour change that ends in whiter colours.
+- Approved by the user (2026-10-29): a cable that glows as it lights up with scroll, running through the page and ending in the footer. It grows out of the hero photo: the tweezers holding the chip become the cable as the photo dissolves into a line drawing of itself ("photorealistic to illustration"). Along the page, everything is clean line illustration from downloaded icon sets (Lucide). The user rejected photographed chips and a photographed wire-bundle footer on the line.
 
 ## Evidence on Hand
 
 - One case study: an Outlook-to-Dropbox automation, a custom Outlook add-in that archives the .eml, a generated PDF and all attachments to the correct Dropbox folder in one click. Its real stats are **3 files per email** and **1 click to archive**.
-- Founder portraits: originals in `assets/`, shipped as duotones in `public/founders/`.
+- Founder portraits: originals in `assets/`, shipped in full colour with the background removed (the user's request, 2026-10-29) in `public/founders/`.
 - There are no testimonials, client logos, press coverage, hours-saved figures or ROI figures. **Never invent metrics** or other proof.
 - The user has not said whether the case-study client can be named. Keep it unnamed until they confirm.
 

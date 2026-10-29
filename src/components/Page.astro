@@ -8,8 +8,8 @@ const t = copy[lang]
 const other: Lang = lang === 'en' ? 'pt' : 'en'
 const year = new Date().getFullYear()
 const founders = [
-  { name: 'Martim Ramos', href: 'https://www.linkedin.com/in/martim-c-ramos/', photo: '/founders/martim-ramos.webp' },
-  { name: 'Afonso Quintas', href: 'https://www.linkedin.com/in/afonsoquintas/', photo: '/founders/afonso-quintas.webp' },
+  { name: 'Martim Ramos', first: 'Martim', last: 'Ramos', href: 'https://www.linkedin.com/in/martim-c-ramos/', photo: '/founders/martim-ramos.webp' },
+  { name: 'Afonso Quintas', first: 'Afonso', last: 'Quintas', href: 'https://www.linkedin.com/in/afonsoquintas/', photo: '/founders/afonso-quintas.webp' },
 ]
 // Split a statement into words so each can light as it crosses the screen;
 // [[...]] marks the phrase lit in lime.
@@ -19,17 +19,33 @@ const words = (text: string) =>
     return part.replace(/\[\[|\]\]/g, '').split(/(\s+)/).filter(Boolean).map((w) => ({ w, em, space: /^\s+$/.test(w) }))
   })
 const plain = (text: string) => text.replace(/\[\[|\]\]/g, '')
-const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+// Lucide line icons (ISC, src/icons/LICENSE), inlined twice: a dim base and a
+// lit copy that draws itself when the signal reaches it.
+const icons = import.meta.glob('../icons/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>
+const icon = (name: string) => {
+  const inner = icons[`../icons/${name}.svg`]
+    .replace(/^[\s\S]*?<svg[^>]*>|<\/svg>\s*$/g, '')
+    .replace(/<(path|rect|circle|line|polyline|polygon)\b/g, '<$1 pathLength="1"')
+    .trim()
+  return `<svg viewBox="0 0 24 24"><g class="node-base">${inner}</g><g class="node-lit">${inner}</g></svg>`
+}
+const stepIcons = ['mouse-pointer-click', 'cpu', 'wrench']
+// A plain Lucide glyph for the nodes buttons end in.
+const glyph = (name: string) => icons[`../icons/${name}.svg`].replace(/^[\s\S]*?(?=<svg)/, '').replace(/\sclass="[^"]*"/, ' aria-hidden="true"')
 ---
 
 <Layout lang={lang}>
   <div class="field" aria-hidden="true"></div>
   <svg class="trace" aria-hidden="true" preserveAspectRatio="none">
-    <path class="trace-fibre" />
-    <path class="trace-fibre" />
+    <defs><radialGradient id="trace-head"><stop class="head-core" offset="0" /><stop class="head-mid" offset="0.3" /><stop class="head-edge" offset="1" /></radialGradient><linearGradient id="sketch-fade" gradientUnits="userSpaceOnUse" x1="0" x2="0"><stop class="fade-top" offset="0" /><stop class="fade-bottom" offset="1" /></linearGradient></defs>
+    <g class="sketch">
+      <path pathLength="1" /><path pathLength="1" /><path pathLength="1" /><path class="leg" pathLength="1" /><path class="leg" pathLength="1" />
+    </g>
     <path class="trace-base" />
+    <path class="trace-glow" />
     <path class="trace-lit" />
-    <circle class="trace-head" r="4.5" />
+    <circle class="trace-head" r="12" fill="url(#trace-head)" />
+    <circle class="trace-end" r="3.5" />
   </svg>
 
   <header class="bar">
@@ -42,7 +58,7 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
         <a href={paths.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
         <a href={paths.pt} hreflang="pt-PT" lang="pt-PT" aria-current={lang === 'pt' ? 'true' : undefined}>PT</a>
       </nav>
-      <a class="pill pill-lime pill-sm" href="#contact">{t.nav.contact}</a>
+      <a class="pill pill-lime pill-sm" href="#contact"><span>{t.nav.contact}</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
     </div>
   </header>
 
@@ -66,8 +82,8 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
           {t.hero.leadBefore}<a href="#founders">{t.hero.leadLink}</a>{t.hero.leadAfter}
         </p>
         <div class="actions rise">
-          <a class="pill pill-lime" href="#contact">{t.hero.contact}<Fragment set:html={arrow} /></a>
-          <a class="pill pill-line" href="#how-we-work">{t.hero.build}</a>
+          <a class="pill pill-lime" href="#contact"><span>{t.hero.contact}</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
+          <a class="pill pill-line pill-down" href="#how-we-work"><span>{t.hero.build}</span><span class="pill-node" set:html={glyph('arrow-down')} /></a>
         </div>
       </div>
       <div class="hero-foot">
@@ -82,10 +98,10 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
         <p class="build-lead">{t.build.lead}</p>
       </div>
       <ol class="steps">
-        {t.build.steps.map((step) => (
+        {t.build.steps.map((step, i) => (
           <li>
             <h3>
-              <span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>
+              <span class="node" data-node aria-hidden="true" set:html={icon(stepIcons[i])} />
               <span class="sr">{plain(step.line)}</span>
               {words(step.line).map((x) => (x.space ? ' ' : <span class:list={['w', { em: x.em }]} aria-hidden="true">{x.w}</span>))}
             </h3>
@@ -99,7 +115,7 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
     </section>
 
     <section id="case-study" class="cue work" data-cue="2">
-      <h2><span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>{t.work.title}</h2>
+      <h2><span class="node" data-node aria-hidden="true" set:html={icon('mail')} />{t.work.title}</h2>
       <div class="case">
         <div class="case-copy reveal">
           <h3>{t.work.caseTitle[0]} {t.work.caseTitle[1]}</h3>
@@ -118,24 +134,31 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
 
     <section id="founders" class="cue founders" data-cue="3">
       <div class="founders-copy">
-        <h2><span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>{t.founders.title}</h2>
+        <h2><span class="via" data-node aria-hidden="true"></span>{t.founders.title}</h2>
         <p>{t.founders.body}</p>
       </div>
-      <ul class="people">
-        {founders.map((f) => (
-          <li class="reveal">
-            <img src={f.photo} alt={f.name} width="640" height="800" loading="lazy" decoding="async" />
-            <a href={f.href} target="_blank" rel="noopener noreferrer">{f.name}<span class="sr"> · LinkedIn</span><Fragment set:html={arrow} /></a>
-          </li>
-        ))}
-      </ul>
+      <div class="team">
+        <ul class="people">
+          {founders.map((f) => (
+            <li class="reveal">
+              <img src={f.photo} alt={f.name} width="480" height="480" loading="lazy" decoding="async" />
+              <a href={f.href} target="_blank" rel="noopener noreferrer">
+                <span class="first">{f.first}</span>
+                <span class="last"><b>{f.last[0]}</b>{f.last.slice(1)}</span>
+                <span class="sr"> · LinkedIn</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="team-mark" aria-hidden="true">Systems</p>
+      </div>
     </section>
 
     <section id="contact" class="cue contact" data-cue="4">
       <p class="cta reveal">{t.contact.cta}</p>
       <div class="reach">
-        <a class="pill pill-lime pill-lg" data-node="end" href="mailto:contact@rqsystems.pt">contact@rqsystems.pt<Fragment set:html={arrow} /></a>
-        <button class="pill pill-line" type="button" data-copy="contact@rqsystems.pt" data-copied={t.contact.copied}>{t.contact.copy}</button>
+        <a class="pill pill-lime pill-lg" href="mailto:contact@rqsystems.pt"><span>contact@rqsystems.pt</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
+        <button class="pill pill-line" type="button" data-copy="contact@rqsystems.pt" data-copied={t.contact.copied}><span>{t.contact.copy}</span><span class="pill-node" set:html={glyph('copy') + glyph('check')} /></button>
       </div>
       <ul class="faces reveal">
         {founders.map((f) => (
@@ -145,7 +168,7 @@ const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14
           </li>
         ))}
       </ul>
-      <footer class="foot">
+      <footer class="foot" data-node="end">
         <div class="foot-meta">
           <span>{t.contact.location}</span>
           <span>© {year} RQ Systems</span>

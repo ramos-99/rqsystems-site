@@ -25,7 +25,7 @@ STORY: The visitor reads the offer over the chip and follows the signal down. Th
 FIRST VIEWPORT:
 - The chip photo fills the right two-thirds, feathered into black on the left and the bottom.
 - The headline sits left at up to 7.5rem, with "automated." in lime, then the lead and a lime Contact pill plus a How we work outline pill.
-- The trace leaves the chip's lower-left pin edge and drops through the hero foot into the gap beside the How-we-work steps. A chip sits at each step heading. It then jogs back to the left bus at the top of Featured work and ends in a socket on the contact pill.
+- As you leave the hero, the photo dissolves into a line drawing of itself (chip outline, die, tweezer legs) and the tweezers become the cable, which starts at the tip pinching the chip. It drops into the gap beside the How-we-work steps through an illustrated node (Lucide line icon) at each step, jogs back to the left bus at Featured work (mail node), and bends into the footer, becoming its rule.
 - The bar holds the logo, EN/PT and a small lime pill.
 
 FORM: user-pinned (photo-led midnight/cobalt/lime, hero A, the chip), extended by the user's circuit-trace idea.

@@ -41,6 +41,8 @@ function update() {
   const p = cueAt(scrollY)
   const c = colourAt(p)
   field?.style.setProperty('background-color', c)
+  // Nodes on the cable sit on the field's colour so the cable passes beneath.
+  root.style.setProperty('--field', c)
   bar?.style.setProperty('background-color', scrollY > 8 ? c : 'transparent')
   root.classList.toggle('is-day', p >= DAY_FROM)
 }
@@ -68,12 +70,17 @@ update()
 
 // Copy the address for anyone whose mailto link opens nothing.
 for (const b of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
-  const label = b.textContent
+  const text = b.querySelector('span')!
+  const label = text.textContent
   b.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(b.dataset.copy!)
-      b.textContent = b.dataset.copied ?? label
-      setTimeout(() => (b.textContent = label), 1800)
+      text.textContent = b.dataset.copied ?? label
+      b.classList.add('is-done')
+      setTimeout(() => {
+        text.textContent = label
+        b.classList.remove('is-done')
+      }, 1800)
     } catch {
       getSelection()?.selectAllChildren(b.previousElementSibling!)
     }
