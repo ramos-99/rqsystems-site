@@ -1,0 +1,167 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { copy, paths, type Lang } from '../i18n'
+
+interface Props { lang: Lang }
+const { lang } = Astro.props
+const t = copy[lang]
+const other: Lang = lang === 'en' ? 'pt' : 'en'
+const year = new Date().getFullYear()
+const founders = [
+  { name: 'Martim Ramos', href: 'https://www.linkedin.com/in/martim-c-ramos/', photo: '/founders/martim-ramos.webp' },
+  { name: 'Afonso Quintas', href: 'https://www.linkedin.com/in/afonsoquintas/', photo: '/founders/afonso-quintas.webp' },
+]
+// Split a statement into words so each can light as it crosses the screen;
+// [[...]] marks the phrase lit in lime.
+const words = (text: string) =>
+  text.split(/(\[\[.*?\]\])/).filter(Boolean).flatMap((part) => {
+    const em = part.startsWith('[[')
+    return part.replace(/\[\[|\]\]/g, '').split(/(\s+)/).filter(Boolean).map((w) => ({ w, em, space: /^\s+$/.test(w) }))
+  })
+const plain = (text: string) => text.replace(/\[\[|\]\]/g, '')
+const arrow = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+---
+
+<Layout lang={lang}>
+  <div class="field" aria-hidden="true"></div>
+  <svg class="trace" aria-hidden="true" preserveAspectRatio="none">
+    <path class="trace-fibre" />
+    <path class="trace-fibre" />
+    <path class="trace-base" />
+    <path class="trace-lit" />
+    <circle class="trace-head" r="4.5" />
+  </svg>
+
+  <header class="bar">
+    <a class="brand" href={paths[lang]} aria-label={t.nav.home}>
+      <img src="/logo.svg" alt="" width="28" height="28" />
+      <span>Systems</span>
+    </a>
+    <div class="bar-end">
+      <nav class="lang" aria-label={t.nav.language}>
+        <a href={paths.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        <a href={paths.pt} hreflang="pt-PT" lang="pt-PT" aria-current={lang === 'pt' ? 'true' : undefined}>PT</a>
+      </nav>
+      <a class="pill pill-lime pill-sm" href="#contact">{t.nav.contact}</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="cue hero" data-cue="0">
+      <div class="art" aria-hidden="true">
+        <img
+          src="/hero/chip-2000.webp"
+          srcset="/hero/chip-1100.webp 1100w, /hero/chip-2000.webp 2000w"
+          sizes="(max-width: 40rem) 140vw, 70vw"
+          alt=""
+          width="2000"
+          height="1331"
+          fetchpriority="high"
+        />
+      </div>
+      <span class="pin" data-node="pin" aria-hidden="true"></span>
+      <div class="hero-copy">
+        <h1 class="rise">{t.hero.title[0]}<br /><span class="lime">{t.hero.title[1]}</span></h1>
+        <p class="lead rise">
+          {t.hero.leadBefore}<a href="#founders">{t.hero.leadLink}</a>{t.hero.leadAfter}
+        </p>
+        <div class="actions rise">
+          <a class="pill pill-lime" href="#contact">{t.hero.contact}<Fragment set:html={arrow} /></a>
+          <a class="pill pill-line" href="#how-we-work">{t.hero.build}</a>
+        </div>
+      </div>
+      <div class="hero-foot">
+        <span>{t.hero.note}</span>
+        <span>{t.contact.location}</span>
+      </div>
+    </section>
+
+    <section id="how-we-work" class="cue build" data-cue="1">
+      <div class="build-head">
+        <h2>{t.build.title}</h2>
+        <p class="build-lead">{t.build.lead}</p>
+      </div>
+      <ol class="steps">
+        {t.build.steps.map((step) => (
+          <li>
+            <h3>
+              <span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>
+              <span class="sr">{plain(step.line)}</span>
+              {words(step.line).map((x) => (x.space ? ' ' : <span class:list={['w', { em: x.em }]} aria-hidden="true">{x.w}</span>))}
+            </h3>
+            <p class="step-body">{step.body}</p>
+            <ul class="tags">
+              {step.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="case-study" class="cue work" data-cue="2">
+      <h2><span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>{t.work.title}</h2>
+      <div class="case">
+        <div class="case-copy reveal">
+          <h3>{t.work.caseTitle[0]} {t.work.caseTitle[1]}</h3>
+          {t.work.body.map((para) => <p>{para}</p>)}
+        </div>
+        <dl class="figures">
+          {t.work.stats.map((s) => (
+            <div class="figure reveal">
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <section id="founders" class="cue founders" data-cue="3">
+      <div class="founders-copy">
+        <h2><span class="pad" data-node aria-hidden="true"><svg viewBox="0 0 22 22" width="22" height="22"><path d="M8 1v4M11 1v4M14 1v4M8 17v4M11 17v4M14 17v4M1 8h4M1 11h4M1 14h4M17 8h4M17 11h4M17 14h4"/><rect x="5" y="5" width="12" height="12"/></svg></span>{t.founders.title}</h2>
+        <p>{t.founders.body}</p>
+      </div>
+      <ul class="people">
+        {founders.map((f) => (
+          <li class="reveal">
+            <img src={f.photo} alt={f.name} width="640" height="800" loading="lazy" decoding="async" />
+            <a href={f.href} target="_blank" rel="noopener noreferrer">{f.name}<span class="sr"> · LinkedIn</span><Fragment set:html={arrow} /></a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section id="contact" class="cue contact" data-cue="4">
+      <p class="cta reveal">{t.contact.cta}</p>
+      <div class="reach">
+        <a class="pill pill-lime pill-lg" data-node="end" href="mailto:contact@rqsystems.pt">contact@rqsystems.pt<Fragment set:html={arrow} /></a>
+        <button class="pill pill-line" type="button" data-copy="contact@rqsystems.pt" data-copied={t.contact.copied}>{t.contact.copy}</button>
+      </div>
+      <ul class="faces reveal">
+        {founders.map((f) => (
+          <li>
+            <img src={f.photo} alt="" width="640" height="800" loading="lazy" decoding="async" />
+            <a href={f.href} target="_blank" rel="noopener noreferrer">{f.name}<span class="sr"> · LinkedIn</span></a>
+          </li>
+        ))}
+      </ul>
+      <footer class="foot">
+        <div class="foot-meta">
+          <span>{t.contact.location}</span>
+          <span>© {year} RQ Systems</span>
+        </div>
+        <nav class="foot-nav" aria-label={t.contact.footer}>
+          <a href="#how-we-work">{t.contact.nav.build}</a>
+          <a href="#case-study">{t.contact.nav.work}</a>
+          <a href={paths[other]} hreflang={other === 'pt' ? 'pt-PT' : 'en'} lang={other === 'pt' ? 'pt-PT' : 'en'}>{other === 'pt' ? 'Português' : 'English'}</a>
+        </nav>
+      </footer>
+    </section>
+  </main>
+
+
+  <script>
+    import '../scripts/cues'
+    import '../scripts/trace'
+  </script>
+</Layout>

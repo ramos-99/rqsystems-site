@@ -1,0 +1,61 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      ".impeccable/mocks/**"
+    ],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/map.html"
+        ],
+        "createdAt": "2026-10-28T21:04:21.995Z",
+        "reason": "Claude: decision-round sketch reproducing the aww2-zoo-gardens-guide-map catalog world's specified water colour #F5F1E4; not shipping UI"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-dive.html"
+        ],
+        "createdAt": "2026-10-28T21:06:24.485Z",
+        "reason": "Claude: decision-round sketch; detector samples body-gradient endpoints, not the mid-gradient each label sits on; page renders sub-22px text as bars; not shipping UI"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-cyclorama.html"
+        ],
+        "createdAt": "2026-10-28T21:11:35.706Z",
+        "reason": "Claude: decision sketch stand-in for the WebGL-lit cyclorama; the build must use modelled 3D light, named as the direction's risk"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-kraftwerk.html"
+        ],
+        "createdAt": "2026-10-28T21:11:35.715Z",
+        "reason": "Claude: false positive; detector merged the tracked-caps nav row (RQ Systems / Contact us) into an eyebrow"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "dist/**/index.html"
+        ],
+        "createdAt": "2026-10-28T21:34:08.122Z",
+        "reason": "Claude: only hit is the two-line display h1 at 6rem, set at 0.95 leading by design; body copy runs 1.5"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "createdAt": "2026-10-29T11:32:29.166Z",
+        "reason": "Claude: #000 appears only as the alpha stop of the hero photo's mask-image gradient, not a visible colour"
+      }
+    ]
+  }
+}

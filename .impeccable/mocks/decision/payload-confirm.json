@@ -1,0 +1,9 @@
+{
+  "title": "Cyclorama Dawn: confirm the brief",
+  "question": "The full brief is in the chat. Approve it as written, or send one correction.",
+  "options": [
+    { "id": "approve", "label": "Approve the brief", "thesis": "Five light cues from night to day, a real lit Three.js stage, and copy unchanged. Next step is the build." },
+    { "id": "correct", "label": "Correct something", "thesis": "Type the correction in the steer box." }
+  ],
+  "steer": true
+}

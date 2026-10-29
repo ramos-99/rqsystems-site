@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catalogue Wall sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@900&family=Schibsted+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ground:#121417;--text:#F3F4F6;--focus:#FFD23F;--blue:#2B5CE6;--coral:#E8553A}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--ground);color:var(--text);font-family:'Schibsted Grotesk',sans-serif}
+  .bill{position:absolute;inset:0 0 230px 0;background:
+    radial-gradient(60% 80% at 78% 45%,#2B5CE6 0%,#1b2f6e 35%,transparent 70%),
+    linear-gradient(90deg,var(--ground) 18%,transparent 60%),var(--ground)}
+  .env{position:absolute;right:300px;top:240px;width:220px;height:150px;background:#F3F4F6;transform:rotate(-8deg)}
+  .box{position:absolute;right:140px;top:330px;width:200px;height:160px;background:var(--coral);transform:rotate(4deg)}
+  nav{position:absolute;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;z-index:2}
+  nav b{font-size:20px;font-weight:600}nav a{color:var(--text);text-decoration:none;font-size:15px}
+  .copy{position:absolute;left:64px;top:190px;width:640px;z-index:2}
+  .kick{font-size:14px;font-weight:600;color:var(--focus);letter-spacing:.04em}
+  h1{font-family:'Sofia Sans Extra Condensed';font-weight:900;font-size:150px;line-height:.86;text-transform:uppercase;margin-top:14px}
+  p{font-size:18px;line-height:1.5;margin-top:20px;max-width:500px;color:#C9CDD4}
+  .btns{display:flex;gap:12px;margin-top:28px}
+  .btns a{padding:14px 26px;border-radius:6px;font-weight:600;text-decoration:none;font-size:16px}
+  .play{background:var(--text);color:var(--ground)}.info{background:rgba(243,244,246,.18);color:var(--text)}
+  .row{position:absolute;left:64px;right:0;bottom:36px}
+  .row h2{font-size:18px;font-weight:600;margin-bottom:12px}
+  .tiles{display:flex;gap:10px}
+  .t{width:250px;height:140px;border-radius:6px;flex:none}
+  .t.f{outline:3px solid var(--focus);transform:scale(1.08);transform-origin:left bottom}
+</style></head><body>
+<div class="bill"><div class="env"></div><div class="box"></div></div>
+<nav><b>RQ Systems</b><a href="#">Contact us</a></nav>
+<div class="copy">
+  <div class="kick">FEATURED · OUTLOOK TO DROPBOX</div>
+  <h1>Your operations, automated.</h1>
+  <p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+  <div class="btns"><a class="play" href="#">▶ Contact us</a><a class="info" href="#">What we build</a></div>
+</div>
+<div class="row"><h2>What we build</h2><div class="tiles">
+  <div class="t f" style="background:#E8553A"></div><div class="t" style="background:#2B5CE6"></div><div class="t" style="background:#3A7D5C"></div><div class="t" style="background:#7A4FD1"></div><div class="t" style="background:#C79A2A"></div><div class="t" style="background:#2B5CE6"></div>
+</div></div>
+</body></html>

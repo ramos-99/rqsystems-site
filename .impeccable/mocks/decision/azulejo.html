@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tile Wall sketch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=Schibsted+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--glaze:#F2F4F3;--cobalt:#1F3FA8;--ochre:#D99A2B;--ink:#101321;--grout:#C9CDD2;--u:90px}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--glaze);font-family:'Schibsted Grotesk',sans-serif;color:var(--ink)}
+  .wall{position:absolute;inset:0;display:grid;grid-template-columns:repeat(16,var(--u));grid-template-rows:repeat(10,var(--u));gap:0;
+    background-image:linear-gradient(var(--grout) 1px,transparent 1px),linear-gradient(90deg,var(--grout) 1px,transparent 1px);background-size:var(--u) var(--u)}
+  nav{grid-column:1/17;grid-row:1;display:flex;align-items:center;justify-content:space-between;padding:0 var(--u)}
+  nav b{font-family:Archivo;font-stretch:125%;font-weight:800;font-size:22px;letter-spacing:-.01em}
+  nav a{font-size:15px;color:var(--ink);text-decoration:none}
+  .copy{grid-column:2/9;grid-row:3/9;display:flex;flex-direction:column;justify-content:space-between}
+  h1{font-family:Archivo;font-stretch:125%;font-weight:800;font-size:108px;line-height:.92;letter-spacing:-.035em}
+  p{font-size:18px;line-height:1.5;max-width:470px;color:#2b2f3d}
+  .ctas{display:flex;gap:0}
+  .ctas a{height:var(--u);width:calc(var(--u)*2);display:flex;align-items:flex-end;padding:14px;font-weight:500;font-size:15px;text-decoration:none;color:var(--ink)}
+  .t-ochre{background:var(--ochre)}.t-line{box-shadow:inset 0 0 0 1px var(--ink)}
+  .tiles{grid-column:10/17;grid-row:1/11;display:grid;grid-template-columns:repeat(7,var(--u));grid-auto-rows:var(--u);background:var(--cobalt)}
+  .tile{position:relative;overflow:hidden}
+  .tile::before{content:"";position:absolute;inset:12px;border-radius:50% 0;background:var(--glaze)}
+  .tile::after{content:"";position:absolute;width:30px;height:30px;left:30px;top:30px;background:var(--ochre);transform:rotate(45deg)}
+  .tile:nth-child(2n)::before{border-radius:0 50%}
+  .hand::before{inset:16px 9px 11px 18px;border-radius:46% 8% 52% 5%;transform:rotate(-4deg)}
+  .blank::before,.blank::after{display:none}
+</style></head><body>
+<div class="wall">
+  <nav><b>RQ Systems</b><a href="#">Contact us</a></nav>
+  <div class="copy">
+    <h1>Your operations, automated.</h1>
+    <p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+    <div class="ctas"><a class="t-ochre" href="#">Contact us</a><a class="t-line" href="#">What we build</a><a class="t-line" href="#">Featured work</a></div>
+  </div>
+  <div class="tiles" id="t"></div>
+</div>
+<script>
+  const t=document.getElementById('t');
+  for(let i=0;i<70;i++){const d=document.createElement('div');d.className='tile';
+    const r=Math.floor(i/7),c=i%7;if(i===0)d.classList.add('hand');else if(r+c>8)d.classList.add('blank');t.appendChild(d)}
+</script>
+</body></html>
