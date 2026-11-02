@@ -1,14 +1,11 @@
 import { defineConfig } from 'astro/config'
-import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
-import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   site: 'https://rqsystems.pt',
-  integrations: [react(), sitemap()],
+  integrations: [sitemap({
+    i18n: { defaultLocale: 'en', locales: { en: 'en', pt: 'pt-PT' } },
+  })],
   // Inline the page CSS into the HTML so it isn't a render-blocking request.
-  build: { inlineStylesheets: 'always' },
-  vite: {
-    plugins: [tailwindcss()]
-  }
+  build: { inlineStylesheets: 'always' }
 })

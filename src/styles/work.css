@@ -1,0 +1,74 @@
+/* The second screen: the one piece of previous work, shown working
+   (scripts/work.ts). One email, one click, three files along one trace
+   into one folder. */
+.work { min-height: calc(100svh - 3rem); display: grid; align-content: center; gap: clamp(2.5rem, 5vw, 4rem); padding: 5rem var(--gutter) 2rem; }
+@media (min-width: 64rem) {
+  .work { grid-template-columns: minmax(18rem, 26rem) minmax(0, 1fr); align-items: center; }
+}
+.work-copy { display: grid; gap: 1.5rem; justify-items: start; }
+.work h2 { margin: 0; font-size: clamp(2.25rem, 3.6vw, 3.5rem); font-weight: 600; line-height: 1; letter-spacing: -0.04em; text-wrap: balance; }
+.work-body { margin: 0; max-width: 30rem; color: var(--fg-2); text-wrap: pretty; }
+.work-body + .work-body { margin-top: -0.5rem; }
+/* The line that matters past this one client. */
+.work-body:last-of-type { color: var(--fg); font-weight: 500; }
+/* Room for the button's brackets. */
+.work-copy > .btn { margin-top: 1rem; }
+
+/* Two plain windows side by side, stacked on narrow screens. */
+.flow { margin: 0; min-width: 0; }
+.flow-stage { display: grid; gap: 1.25rem; font-size: 13px; line-height: 1.4; user-select: none; }
+@media (min-width: 40rem) { .flow-stage { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; } }
+.flow-stage svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.card { position: relative; overflow: hidden; background: #070a14; border-radius: 16px; box-shadow: inset 0 0 0 1px var(--line); }
+.card-top { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 14px 0 18px; border-bottom: 1px solid var(--line); }
+.app { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.app > svg { width: 16px; height: 16px; color: var(--cobalt); stroke-width: 2; }
+
+/* Outlook: one email at a time. */
+.addin { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 13px 0 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgb(196 255 26 / 0.45); color: var(--lime); font-size: 12.5px; font-weight: 600;  }
+.addin svg { width: 14px; height: 14px; fill: currentColor; stroke: none; }
+.addin.on { background: var(--lime); color: var(--ink); }
+.fm-view { position: relative; }
+.fm { display: flex; flex-direction: column; gap: 14px; min-height: 340px; padding: 22px 24px; }
+.fm-from { display: flex; align-items: center; gap: 10px; }
+.fm-from b { font-weight: 600; }
+.fm-from time { margin-left: auto; color: var(--dim); font-size: 12px; }
+.avatar { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: rgb(31 75 255 / 0.22); color: #c9d4ff; font-size: 11px; font-weight: 600; }
+.fm-subj { font-size: 21px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+.fm-body { margin: 0; color: rgb(221 227 255 / 0.78); font-size: 13.5px; line-height: 1.6; }
+.fm-att { display: flex; align-items: center; gap: 10px; width: 240px; height: 50px; margin-top: auto; padding: 0 12px 0 8px; border-radius: 10px; box-shadow: inset 0 0 0 1px var(--line); }
+.fm-att-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: rgb(243 245 255 / 0.06); }
+.fm-att-icon svg { width: 15px; height: 15px; }
+.fm-att > span:last-child { display: grid; min-width: 0; }
+.fm-att b { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12.5px; font-weight: 600; }
+.fm-att small { color: var(--dim); font-size: 11.5px; }
+/* Filed, once: the badge replaces the time. */
+.fm-filed { position: absolute; right: 24px; top: 29px; display: inline-flex; align-items: center; gap: 5px; color: var(--lime); font-size: 12px; font-weight: 600; }
+.fm-filed svg { width: 13px; height: 13px; stroke-width: 2.5; }
+.fm-from time { visibility: hidden; }
+
+/* Dropbox: the project folders. */
+.db-mark svg { width: 17px; height: 17px; fill: #0061ff; stroke: none; }
+.crumb { height: 40px; padding: 14px 18px 0; color: var(--dim); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.ff { display: flex; align-items: center; gap: 11px; height: 56px; padding: 0 18px; border-top: 1px solid var(--line-2); }
+.ff svg { width: 17px; height: 17px; color: var(--dim); }
+.ff-name { flex: 1; }
+.ff-n { min-width: 2ch; color: var(--dim); font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; }
+.ff.target svg, .ff.target .ff-n { color: var(--lime); }
+
+/* Stacked, the proof comes before the ask: text, then the demo, then the
+   button. */
+@media (max-width: 63.99rem) {
+  .work-copy { display: contents; }
+  .work > .work-copy > .btn { order: 2; justify-self: start; }
+  .flow { order: 1; }
+  .work h2, .work-body { margin: 0; }
+  .work-copy > .btn { margin-top: 0; }
+}
+
+
+/* One snap between the two screens. */
+@media (min-width: 64rem) and (min-height: 40rem) {
+  html:has(.work) { scroll-snap-type: y mandatory; }
+  .typed, .work { scroll-snap-align: start; }
+}

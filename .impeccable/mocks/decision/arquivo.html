@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archive Shelf sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Schibsted+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--steel:#D9DCDF;--ox:#7A1F2B;--green:#1E4D3A;--navy:#1D2A4D;--violet:#5B3FD1;--label:#FAFAF7;--ink:#14161A}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--steel);font-family:'Schibsted Grotesk',sans-serif;color:var(--ink)}
+  nav{height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 72px}
+  nav b{font-family:'Big Shoulders Display';font-size:30px;letter-spacing:.02em;text-transform:uppercase}
+  nav a{color:var(--ink);text-decoration:none;font-size:15px}
+  .head{padding:28px 72px 0;display:flex;justify-content:space-between;align-items:flex-end}
+  h1{font-family:'Big Shoulders Display';font-weight:800;font-size:150px;line-height:.84;text-transform:uppercase;letter-spacing:-.005em}
+  .side{width:400px;padding-bottom:12px}
+  .side p{font-size:18px;line-height:1.5}
+  .side a{display:inline-block;margin-top:24px;background:var(--violet);color:#fff;padding:14px 22px;text-decoration:none;font-weight:500}
+  .shelf{position:absolute;left:0;right:0;bottom:0;height:430px;display:flex;align-items:flex-end;gap:6px;padding:0 72px;border-bottom:26px solid #9aa0a6}
+  .b{width:120px;height:400px;position:relative;border-radius:3px 3px 0 0}
+  .b i{position:absolute;left:18px;right:18px;top:60px;height:150px;background:var(--label);display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-style:normal;font-family:'Big Shoulders Display';font-size:30px;text-transform:uppercase}
+  .b::after{content:"";position:absolute;left:44px;bottom:60px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.35)}
+  .stamp{position:absolute;left:420px;bottom:180px;transform:rotate(-8deg);border:6px solid var(--violet);color:var(--violet);font-family:'Big Shoulders Display';font-size:92px;padding:14px 36px;letter-spacing:.06em;mix-blend-mode:multiply;opacity:.9}
+</style></head><body>
+<nav><b>RQ Systems</b><a href="#">Contact us</a></nav>
+<div class="head">
+  <h1>Your operations,<br>automated.</h1>
+  <div class="side"><p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p><a href="#">Contact us</a></div>
+</div>
+<div class="shelf">
+  <div class="b" style="background:var(--ox)"><i>Emails</i></div>
+  <div class="b" style="background:var(--green)"><i>Invoices</i></div>
+  <div class="b" style="background:var(--navy)"><i>Contracts</i></div>
+  <div class="b" style="background:var(--ox)"><i>Orders</i></div>
+  <div class="b" style="background:var(--green)"><i>Reports</i></div>
+  <div class="b" style="background:var(--navy)"><i>Clients</i></div>
+  <div class="b" style="background:var(--ox)"><i>Stock</i></div>
+  <div class="b" style="background:var(--green)"><i>Payroll</i></div>
+  <div class="b" style="background:var(--navy)"><i>Archive</i></div>
+  <div class="b" style="background:var(--ox)"><i>Quotes</i></div>
+  <div class="stamp">AUTOMATED</div>
+</div>
+</body></html>

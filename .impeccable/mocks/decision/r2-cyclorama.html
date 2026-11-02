@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cyclorama Dawn sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{--cyc:#050608;--cobalt:#1C3FD6;--rose:#F0A3B5;--day:#F7F8FA}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--cyc);color:var(--day);font-family:'Schibsted Grotesk',sans-serif}
+  .wall{position:absolute;inset:0;background:
+    radial-gradient(120% 38% at 50% 74%,rgba(28,63,214,.95) 0%,rgba(28,63,214,.35) 30%,transparent 60%),
+    radial-gradient(90% 30% at 50% 58%,rgba(240,163,181,.22) 0%,transparent 60%),var(--cyc)}
+  .floor{position:absolute;left:0;right:0;top:700px;bottom:0;background:linear-gradient(180deg,#0b0f1e,#030405)}
+  .actor{position:absolute;background:#020203;bottom:200px}
+  nav{position:absolute;top:0;left:0;right:0;height:84px;display:flex;justify-content:space-between;align-items:center;padding:0 64px;font-size:15px}
+  nav b{font-weight:600;font-size:18px}nav a{color:var(--day);text-decoration:none}
+  .cue{position:absolute;left:64px;bottom:40px;font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:.08em;color:var(--rose)}
+  h1{position:absolute;left:0;right:0;top:220px;text-align:center;font-weight:600;font-size:128px;line-height:.95;letter-spacing:-.04em}
+  p{position:absolute;left:470px;width:500px;top:500px;text-align:center;font-size:18px;line-height:1.5;color:#C8CCDA}
+  .cta{position:absolute;left:640px;top:600px;width:160px;text-align:center;background:var(--day);color:var(--cyc);padding:14px 0;text-decoration:none;font-weight:600;font-size:16px;box-shadow:0 0 40px rgba(247,248,250,.35)}
+</style></head><body>
+<div class="wall"></div><div class="floor"></div>
+<div class="actor" style="left:380px;width:120px;height:84px;transform:skewY(-4deg)"></div>
+<div class="actor" style="left:640px;width:90px;height:120px"></div>
+<div class="actor" style="left:930px;width:150px;height:110px;clip-path:polygon(0 18%,40% 18%,48% 0,100% 0,100% 100%,0 100%)"></div>
+<nav><b>RQ Systems</b><a href="#">Contact us</a></nav>
+<h1>Your operations,<br>automated.</h1>
+<p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+<a class="cta" href="#">Contact us</a>
+<div class="cue">Cue 01 · Night</div>
+</body></html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero A · Chip</title>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_base.css">
+<style>
+  .hero { position: relative; min-height: 100svh; overflow: hidden; }
+  .art { inset: -4% -6% -4% 34%; }
+  .art img { object-position: 70% 50%; transform-origin: 70% 40%; }
+  .art { -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%); mask-image: linear-gradient(90deg, transparent 0%, #000 42%); }
+  .copy { position: relative; z-index: 2; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 2rem; padding: 7rem clamp(1.25rem, 4vw, 3.5rem) 4rem; max-width: 62rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .foot { position: absolute; z-index: 2; left: clamp(1.25rem, 4vw, 3.5rem); right: clamp(1.25rem, 4vw, 3.5rem); bottom: 1.75rem; display: flex; justify-content: space-between; color: var(--fg-2); font-size: 0.875rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+  @media (max-width: 40rem) {
+    .art { inset: 0 -40% 30% 0; }
+    .art::after { background: linear-gradient(0deg, var(--night) 8%, transparent 60%); }
+    .copy { justify-content: flex-end; padding-bottom: 6rem; }
+  }
+</style></head>
+<body>
+<header class="bar">
+  <a class="brand" href="#"><img src="logo.svg" alt="">Systems</a>
+  <div class="bar-end"><nav class="lang"><a aria-current="true" href="#">EN</a><a href="#">PT</a></nav><a class="pill pill-lime pill-sm" href="#">Contact us</a></div>
+</header>
+<main class="hero">
+  <div class="art"><img src="chip.webp" alt="" width="2000" height="1333"></div>
+  <div class="copy">
+    <h1 class="rise">Your operations,<br><span class="lime">automated.</span></h1>
+    <p class="lead rise">Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+    <div class="actions rise">
+      <a class="pill pill-lime" href="#">Contact us <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      <a class="pill pill-line" href="#">What we build</a>
+    </div>
+  </div>
+  <div class="foot"><span>We work with whatever software you already use.</span><span>Lisbon</span></div>
+</main>
+<script>
+  addEventListener('pointermove', (e) => { document.documentElement.style.setProperty('--mx', (e.clientX / innerWidth - 0.5).toFixed(3)); document.documentElement.style.setProperty('--my', (e.clientY / innerHeight - 0.5).toFixed(3)) }, { passive: true })
+</script>
+</body></html>

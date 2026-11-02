@@ -1,16 +1,14 @@
 # rqsystems-site
 
-Marketing site for [RQ Systems](https://rqsystems.pt). Single-page landing with a hero, how-we-work section, a featured case study, and a contact/founders footer.
+Marketing site for [RQ Systems](https://rqsystems.pt). A single-page landing in English (`/`) and European Portuguese (`/pt/`) in midnight, electric cobalt and acid lime. A fixed colour field blends from midnight through cobalt into day as you scroll.
 
 ## Stack
 
-- [Astro 6](https://astro.build) - page shell and static build
-- [React 19](https://react.dev) - interactive sections (client:only / client:visible)
-- [Tailwind CSS 4](https://tailwindcss.com) - utility styles via Vite plugin
-- [Three.js](https://threejs.org) via `@react-three/fiber` and `@react-three/drei` - 3D displacement sphere in the hero
+- [Astro 7](https://astro.build) - static pages, no UI framework, no client libraries
+- Plain CSS in `src/styles/global.css`; the design system is documented in `DESIGN.md`
 - TypeScript throughout
 
-Fonts: Gloock (serif headings), Inter, Outfit, Geist Sans/Mono.
+Font: Familjen Grotesk. Hero photo: Brian Kostiuk on Unsplash, graded cobalt and lime.
 
 ## Dev
 
@@ -27,13 +25,13 @@ npm run preview   # serve ./dist locally
 
 ```
 src/
-  pages/index.astro       # page entry, static sections
-  layouts/Layout.astro    # html shell, global fonts
-  components/
-    DisplacementSphere.tsx  # Three.js hero object
-    HowWeWork.tsx
-    CaseStudy.tsx
-    Footer.tsx
+  i18n.ts                 # all copy, en + pt-PT
+  pages/index.astro       # English
+  pages/pt/index.astro    # Portuguese
+  components/Page.astro   # the page, rendered per locale
+  layouts/Layout.astro    # html shell, meta, hreflang, fonts
+  scripts/cues.ts         # scroll -> colour field, ink flip, section ticks, copy button
   styles/global.css
-public/                   # static assets
+public/                   # static assets (hero/ photo, founders/ portraits)
+assets/                   # original photos
 ```

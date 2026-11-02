@@ -1,0 +1,4 @@
+{
+  "prompt": "Origin: founder's own photo assets/quintas-perfil.png, flat background keyed out (corner flood fill at 9% plus a per-column shoulder trace so the white stripes survive, mask eroded 2px and feathered), square crop 600x600 at +100+30 (tight on the face), scaled to 480x480, full colour (ImageMagick, PIL)",
+  "createdAt": "2026-10-29T18:40:00Z"
+}

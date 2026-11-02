@@ -1,0 +1,108 @@
+---
+import '../styles/work.css'
+import type { Lang } from '../i18n'
+import { glyph } from '../glyph'
+import { email } from '../drafts'
+
+interface Props { lang: Lang }
+const { lang } = Astro.props
+
+// The one piece of previous work, shown working: an email is saved, as
+// three files, into the right Dropbox folder.
+const copy = {
+  en: {
+    title: ['One click', ' files every email in the right Dropbox folder.'],
+    body: [
+      'Our client sorted project emails, invoices and contracts into a deep folder structure by hand. We built them an Outlook add-in that files the email, a PDF copy and its attachments in the right project folder, named by date.',
+      'For an invoice, an AI model reads the PDF, pulls out the number, the total and the payment deadline, and drafts the reply.',
+      'Their tools were Outlook and Dropbox. We build into whatever yours are.',
+    ],
+    send: 'Send us a task',
+    addin: 'Save to Dropbox',
+    filed: 'Filed',
+    projects: 'Projects',
+    mails: [
+      { from: 'Ana Ferreira', time: '09:41', subject: 'Revised plan, level 2', body: 'The level 2 plan with the changes from Tuesday’s meeting is attached.', file: ['Planta_P2_rev3.pdf', '1.2 MB'], folder: 0 },
+      { from: 'João Matos', time: '09:12', subject: 'Invoice 2026/418', body: 'Please find attached the invoice for the October works on site.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
+      { from: 'Rita Lopes', time: '08:55', subject: 'Signed contract', body: 'The lease is now signed by both parties. Your copy is attached.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
+    ],
+  },
+  pt: {
+    title: ['Um clique', ' arquiva cada e-mail na pasta certa do Dropbox.'],
+    body: [
+      'O nosso cliente arrumava à mão e-mails de projeto, faturas e contratos numa estrutura de pastas com muitos níveis. Criámos um suplemento para o Outlook que guarda o e-mail, uma cópia em PDF e os anexos na pasta certa do projeto, com a data no nome.',
+      'Numa fatura, um modelo de IA lê o PDF, retira o número, o total e o prazo de pagamento, e prepara a resposta.',
+      'As ferramentas deles eram o Outlook e o Dropbox. Nós integramos nas suas, sejam elas quais forem.',
+    ],
+    send: 'Envie-nos uma tarefa',
+    addin: 'Guardar no Dropbox',
+    filed: 'Arquivado',
+    projects: 'Projetos',
+    mails: [
+      { from: 'Ana Ferreira', time: '09:41', subject: 'Planta revista, piso 2', body: 'Segue em anexo a planta do piso 2 com as alterações da reunião de terça.', file: ['Planta_P2_rev3.pdf', '1,2 MB'], folder: 0 },
+      { from: 'João Matos', time: '09:12', subject: 'Fatura 2026/418', body: 'Envio em anexo a fatura dos trabalhos de outubro em obra.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
+      { from: 'Rita Lopes', time: '08:55', subject: 'Contrato assinado', body: 'O contrato de arrendamento já está assinado pelas duas partes. Segue a sua cópia.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
+    ],
+  },
+}[lang]
+
+const folders = [
+  { name: 'Obra Benfica', count: 14 },
+  { name: 'Moradia Cascais', count: 9 },
+  { name: 'Loja Chiado', count: 22 },
+  { name: 'Escritório Oeiras', count: 6 },
+]
+const initials = (name: string) => name.split(' ').map((w) => w[0]).join('')
+---
+
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="work-copy">
+    <h2 id="work-title"><span class="lime">{copy.title[0]}</span>{copy.title[1]}</h2>
+    {copy.body.map((p) => <p class="work-body">{p}</p>)}
+    <a class="btn btn-lime" href={`mailto:${email}`} data-mail><span>{copy.send}</span><Fragment set:html={glyph('arrow-up-right')} /></a>
+  </div>
+
+  <figure class="flow" aria-hidden="true">
+    <div class="flow-fit">
+      <div class="flow-stage">
+
+        <div class="card fm-card">
+          <div class="card-top">
+            <span class="app"><Fragment set:html={glyph('mail')} />Outlook</span>
+            <span class="addin on"><Fragment set:html={glyph('brands/dropbox')} />{copy.addin}</span>
+          </div>
+          <div class="fm-view">
+            {copy.mails.slice(0, 1).map((m) => (
+              <article class="fm on filed">
+                <div class="fm-from">
+                  <span class="avatar">{initials(m.from)}</span>
+                  <b>{m.from}</b>
+                  <time>{m.time}</time>
+                </div>
+                <strong class="fm-subj">{m.subject}</strong>
+                <p class="fm-body">{m.body}</p>
+                <div class="fm-att">
+                  <span class="fm-att-icon" set:html={glyph('paperclip')} />
+                  <span><b>{m.file[0]}</b><small>{m.file[1]}</small></span>
+                </div>
+                <span class="fm-filed"><Fragment set:html={glyph('check')} />{copy.filed} · {folders[m.folder].name}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="card db-card">
+          <div class="card-top"><span class="app"><span class="db-mark" set:html={glyph('brands/dropbox')} />Dropbox</span></div>
+          <div class="crumb">{copy.projects}</div>
+          {folders.map((f, i) => (
+            <div class={`ff${i === copy.mails[0].folder ? ' target' : ''}`}>
+              <Fragment set:html={glyph('folder')} />
+              <span class="ff-name">{f.name}</span>
+              <span class="ff-n">{i === copy.mails[0].folder ? f.count + 3 : f.count}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </figure>
+</section>

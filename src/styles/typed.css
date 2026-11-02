@@ -1,0 +1,111 @@
+/* The home page. The headline's task is written by hand, then read by
+   software into clean type (scripts/typed.ts); the visitor can write their
+   own. The band at the foot carries the contact. */
+.typed {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+  padding: 6rem var(--gutter) clamp(1.75rem, 5vh, 3rem);
+}
+.say-wrap { align-self: center; }
+
+.say {
+  position: relative;
+  margin: 0;
+  font-size: min(clamp(3rem, 7.6vw, 8.75rem), 14vh);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+.say-verb { display: block; font: inherit; letter-spacing: inherit; }
+/* Two lines of room for the task, so the page never jumps. */
+.slot { position: relative; display: block; max-width: 100%; min-height: 1.84em; color: var(--lime); cursor: text; }
+.ink { display: block; }
+.word { display: inline-block; white-space: nowrap; }
+.ch { display: inline-block; white-space: pre; }
+
+/* The handwriting, over the same spot: pale pencil, every word at its own
+   angle and size. The handwriting face is set per variant below. */
+.typed { --hand: 'Reenie Beanie', cursive; --hand-size: 1.32em; --hand-lead: 0.7; }
+.typed[data-hand='pen'] { --hand: 'Nanum Pen Script', cursive; --hand-size: 1.22em; --hand-lead: 0.76; }
+.hand { position: absolute; top: 0.02em; left: 0; right: 0; font-family: var(--hand); font-size: var(--hand-size); font-weight: 400; line-height: var(--hand-lead); letter-spacing: 0; word-spacing: -0.12em; color: rgb(221 227 255 / 0.62); }
+.hw { position: relative; display: inline-block; white-space: nowrap; }
+.hc { display: inline-block; white-space: pre; }
+/* A wrong word, scribbled out. */
+.scribble { position: absolute; top: 22%; left: -5%; width: 110%; height: 56%; overflow: visible; pointer-events: none; }
+.scribble path { fill: none; stroke: rgb(221 227 255 / 0.7); stroke-width: 2.25px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+
+.caret { display: none; width: 0.035em; height: 0.62em; margin-left: 0.06em; vertical-align: -0.02em; background: var(--fg-2); animation: blink 1.06s steps(1) infinite; }
+.slot.typing .caret { display: inline-block; }
+.slot.busy .caret { animation: none; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* The software reading it: a scan line runs across, the handwriting goes
+   and clean type resolves in its place. */
+.sweep { position: absolute; z-index: 2; top: -0.14em; left: 0; width: 3px; height: calc(100% + 0.28em); background: var(--lime); pointer-events: none; }
+/* The band the beam leaves behind it. */
+.sweep::before { content: ""; position: absolute; top: 0; right: 3px; width: 3.2em; height: 100%; background: linear-gradient(90deg, transparent, rgb(196 255 26 / 0.2)); }
+
+/* Recognition: corner brackets around each word the software found, and
+   a tag with what it read. */
+.found {
+  --c: var(--lime);
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 12px 2px,
+    linear-gradient(var(--c), var(--c)) top left / 2px 12px,
+    linear-gradient(var(--c), var(--c)) top right / 12px 2px,
+    linear-gradient(var(--c), var(--c)) top right / 2px 12px,
+    linear-gradient(var(--c), var(--c)) bottom left / 12px 2px,
+    linear-gradient(var(--c), var(--c)) bottom left / 2px 12px,
+    linear-gradient(var(--c), var(--c)) bottom right / 12px 2px,
+    linear-gradient(var(--c), var(--c)) bottom right / 2px 12px;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgb(196 255 26 / 0.14);
+}
+.found.ignored { --c: rgb(221 227 255 / 0.4); box-shadow: none; }
+.tag { position: absolute; left: 0; top: calc(100% + 5px); padding: 3px 6px 4px; border-radius: 4px; background: var(--lime); color: var(--ink); font-family: var(--font); font-size: 12px; font-weight: 600; line-height: 1; letter-spacing: 0; white-space: nowrap; }
+.found.ignored .tag { background: rgb(221 227 255 / 0.14); color: var(--fg-2); }
+.read { position: absolute; left: 0; top: 100%; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.35rem; font-family: var(--font); font-size: 0.8125rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; color: var(--lime); opacity: 0; white-space: nowrap; }
+.read::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+/* The invitation sits in the same spot, and steps aside while it reads. */
+.try-hint { position: absolute; z-index: 1; left: 0; top: 100%; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.6rem; font-family: var(--font); font-size: 0.875rem; font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg-2); white-space: nowrap; transition: opacity 0.25s var(--ease-out); }
+.try-hint span { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 0.3em; transition: text-decoration-color 160ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .try-hint:hover span { text-decoration-color: currentColor; }
+}
+.try-hint svg { width: 15px; height: 15px; fill: none; stroke: var(--lime); stroke-width: 1.75; }
+.slot.reading .try-hint, .slot.typing .try-hint { opacity: 0; }
+
+/* A real text field over the slot: the visitor types into it, the slot
+   draws what they type. */
+.say-wrap { position: relative; }
+.try { position: absolute; inset: 0; width: 100%; height: 100%; cursor: text; opacity: 0; font-size: 16px; border: 0; padding: 0; background: none; color: transparent; caret-color: transparent; }
+/* The caret in the slot is the field's focus indicator. */
+.try:focus-visible { outline: none; }
+
+/* The foot of the hero: a hairline strip pinned to the bottom. The contact
+   is set at headline grade on the left; who we are sits on the right; the
+   way down is a tab on the rule. */
+.band { position: relative; display: grid; gap: 2rem; padding-top: clamp(1.75rem, 4vh, 2.5rem); border-top: 1px solid var(--rule); }
+@media (min-width: 64rem) {
+  .band { grid-template-columns: auto minmax(0, 32rem); justify-content: space-between; align-items: end; column-gap: clamp(3rem, 6vw, 6rem); }
+}
+.band-who { display: grid; gap: 1.125rem; align-content: end; }
+.band-lead { margin: 0; max-width: 34ch; font-size: clamp(1.0625rem, 1.4vw, 1.3125rem); line-height: 1.4; letter-spacing: -0.01em; color: var(--fg); text-wrap: pretty; }
+.band-next { position: absolute; top: 0; left: 50%; translate: -50% -50%; }
+
+@media (max-width: 40rem) {
+  .typed { grid-template-rows: none; align-content: start; gap: 3rem; padding-top: 7rem; padding-bottom: 2.5rem; }
+  .band { gap: 1.75rem; padding-top: 1.5rem; }
+  .band-next { position: static; translate: none; justify-self: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}

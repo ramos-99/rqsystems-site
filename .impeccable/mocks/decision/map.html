@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guide Map sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--land:#8ED462;--water:#F5F1E4;--ink:#2C2E2A;--yellow:#F5E211;--coral:#FF705D;--blue:#2BA0FF;--lilac:#EBC1FF}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--water);font-family:'Schibsted Grotesk',sans-serif;font-weight:700;color:var(--ink)}
+  svg{position:absolute;inset:0}
+  nav{position:absolute;top:32px;left:56px;right:56px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+  nav b{font-size:24px;letter-spacing:-.04em}
+  .cap{display:inline-flex;align-items:center;gap:12px;border-radius:999px;padding:10px 10px 10px 22px;font-size:16px;text-decoration:none;color:var(--ink)}
+  .cap span{width:28px;height:28px;border-radius:50%;background:var(--ink)}
+  h1{position:absolute;left:120px;top:220px;font-size:150px;line-height:.95;letter-spacing:-.06em;z-index:2;width:900px}
+  p{position:absolute;left:124px;top:540px;width:520px;font-size:20px;line-height:1.4;letter-spacing:-.02em;z-index:2}
+  .gate{position:absolute;left:1040px;top:640px;z-index:2;background:var(--yellow)}
+  .pin{position:absolute;z-index:2;font-size:14px;padding:6px 14px;border-radius:999px}
+</style></head><body>
+<svg viewBox="0 0 1440 900"><path fill="#8ED462" d="M-40 120 C 300 60, 620 150, 900 110 S 1380 40, 1520 160 L 1520 470 C 1340 520, 1240 690, 1080 700 C 860 720, 760 860, 520 900 L -40 960 Z"/>
+<path fill="#F5F1E4" d="M1180 300 c 60 -40 150 -20 170 40 s -40 120 -110 110 s -110 -110 -60 -150z"/></svg>
+<nav><b>RQ Systems</b><a class="cap" style="background:var(--lilac)" href="#">Contact us<span></span></a></nav>
+<h1>Your operations, automated.</h1>
+<p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+<a class="cap gate" href="#">Contact us<span></span></a>
+<div class="pin" style="left:1210px;top:250px;background:var(--coral)">What we build</div>
+<div class="pin" style="left:1260px;top:470px;background:var(--blue)">Featured work</div>
+</body></html>

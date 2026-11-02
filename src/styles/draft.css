@@ -1,0 +1,15 @@
+/* What every one-screen variant shares: the bar, the founders' faces and the
+   footer line. Each variant's own idea lives in its own stylesheet. */
+:root {
+  --cobalt: #1f4bff;
+  --line: rgb(243 245 255 / 0.1);
+  --line-2: rgb(243 245 255 / 0.06);
+  --dim: rgb(221 227 255 / 0.56);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* One screen: the bar scrolls away with the page instead of floating. */
+.bar { position: absolute; }
+
+.tiny { display: flex; justify-content: space-between; gap: 1rem; padding: 0 var(--gutter) 1.5rem; font-size: 0.8125rem; color: var(--dim); }

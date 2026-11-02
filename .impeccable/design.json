@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T20:00:00Z",
+  "title": "Design System: RQ Systems",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Midnight",
+        "tonalRamp": [
+          "#020308",
+          "#1f4bff",
+          "#f6f7fb"
+        ]
+      },
+      "electric": {
+        "role": "secondary",
+        "displayName": "Electric Cobalt",
+        "tonalRamp": [
+          "#020308",
+          "#1f4bff",
+          "#f6f7fb"
+        ]
+      },
+      "day": {
+        "role": "neutral",
+        "displayName": "Daylight",
+        "tonalRamp": [
+          "#020308",
+          "#1f4bff",
+          "#f6f7fb"
+        ]
+      },
+      "lime": {
+        "role": "primary",
+        "displayName": "Acid Lime",
+        "tonalRamp": [
+          "#1f2a00",
+          "#3a4f00",
+          "#5a7a00",
+          "#7fab00",
+          "#a3dd00",
+          "#c4ff1a",
+          "#d8ff5c",
+          "#ecffad"
+        ]
+      },
+      "lime-hover": {
+        "role": "primary",
+        "displayName": "Lime Glare",
+        "tonalRamp": [
+          "#c4ff1a",
+          "#d8ff5c",
+          "#ecffad"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "#04060f"
+        ]
+      },
+      "fg-night": {
+        "role": "neutral",
+        "displayName": "Starlight",
+        "tonalRamp": [
+          "#f3f5ff"
+        ]
+      },
+      "fg-2-night": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "tonalRamp": [
+          "#dde3ff"
+        ]
+      },
+      "fg-2-day": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "tonalRamp": [
+          "#39405c"
+        ]
+      },
+      "accent-day": {
+        "role": "secondary",
+        "displayName": "Day Accent",
+        "tonalRamp": [
+          "#2a39c9"
+        ]
+      },
+      "rule-night": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "tonalRamp": [
+          "rgb(243 245 255 / 0.2)"
+        ]
+      },
+      "rule-day": {
+        "role": "neutral",
+        "displayName": "Day Hairline",
+        "tonalRamp": [
+          "rgb(4 6 15 / 0.16)"
+        ]
+      }
+    },
+    "scrollField": {
+      "stops": [
+        {
+          "name": "night",
+          "value": "#020308",
+          "section": "hero"
+        },
+        {
+          "name": "night",
+          "value": "#020308",
+          "section": "how-we-work"
+        },
+        {
+          "name": "electric",
+          "value": "#1f4bff",
+          "section": "case-study"
+        },
+        {
+          "name": "day",
+          "value": "#f6f7fb",
+          "section": "founders"
+        },
+        {
+          "name": "day",
+          "value": "#f6f7fb",
+          "section": "contact"
+        }
+      ],
+      "anchor": "next section's top, from viewport bottom to viewport top",
+      "hold": "equal neighbours (night-night, day-day)",
+      "blend": "across the whole climb of the next section, smoothstep t*t*(3-2t), color-mix in oklab",
+      "inkFlipAt": 2.21,
+      "inkFlipNote": "Equal-contrast crossover (about 4.3:1 each) on the OKLab electric-to-day blend.",
+      "bar": "transparent at scrollY<=8, then the field's current colour",
+      "reducedMotion": "snap to nearest stop, no blend"
+    },
+    "imageryGrades": {
+      "hero": {
+        "luminanceRamp": [
+          "#020308",
+          "#06103a",
+          "#1534d6",
+          "#3d6bff",
+          "#d7e2ff"
+        ],
+        "accentRamp": "warm/green pixels mapped to an acid-lime ramp",
+        "formats": "WebP 1100w + 2000w, preloaded, fetchpriority high"
+      },
+      "portrait": {
+        "crop": "square, 480x480, matched head scale, background removed where possible",
+        "grade": "full colour, background removed, on a soft frame of fg at 7%",
+        "formats": "WebP, lazy"
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The single easing curve."
+      },
+      {
+        "name": "rise",
+        "value": "translateY(18px)->0, opacity, 1.2s, stagger 0.12s",
+        "purpose": "Hero text on load."
+      },
+      {
+        "name": "reveal",
+        "value": "translateY(28px)->0, opacity, view() timeline, entry 0-70%, longhands",
+        "purpose": "Blocks entering; only with animation-timeline support and no-preference."
+      },
+      {
+        "name": "settle",
+        "value": "scale(1.08)->1, opacity, 2.4s",
+        "purpose": "Hero photo entrance; the photo then holds still."
+      },
+      {
+        "name": "lift",
+        "value": "translate 0 -6vh, opacity 0, timeline --hero, exit 35-95%, longhands",
+        "purpose": "Hero copy and foot as the hero leaves; the photo stays."
+      },
+      {
+        "name": "lit",
+        "value": "opacity 0.16->1, view() timeline, entry 100% to cover 50%",
+        "purpose": "How we work step-line words, one span each."
+      },
+      {
+        "name": "ink",
+        "value": "color, stroke, fill 0.6s",
+        "purpose": "Ink and signal flip."
+      },
+      {
+        "name": "pill",
+        "value": "background/color/border 0.25s; arrow translateX(3px) 0.35s",
+        "purpose": "Pill hover."
+      },
+      {
+        "name": "trace",
+        "value": "hero photo dissolves into its sketch; cable lit by scroll, eased per frame; node icons draw 0.9s",
+        "purpose": "The cable, its sketch and its nodes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "no reveal, lift, word light, settle or rise; no dissolve; cable fully lit; field snaps; scroll-behavior auto",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "40rem"
+      },
+      {
+        "name": "two-column",
+        "value": "64rem"
+      }
+    ],
+    "implementation": [
+      "Scroll-driven animations are written as longhands (animation-name, animation-timing-function, animation-fill-mode, animation-timeline, animation-range); the minifier folds animation-timeline into the shorthand, which browsers reject.",
+      "One owner per transform channel: scroll lift on the hero copy wrapper's translate, load rise on its children's transform, settle on the inner photo's transform.",
+      "Cable geometry is read from offsetLeft/offsetTop, never getBoundingClientRect, so transforms from reveal animations do not move the route.",
+      "No CSS framework; a minimal reset lives in global.css."
+    ],
+    "signal": {
+      "night": "var(--trace) = #c4ff1a, var(--field) = the field colour (nodes)",
+      "day": "var(--trace) = #2a39c9",
+      "flip": "swaps with the ink at field position 2.21, 0.6s ease"
+    },
+    "trace": {
+      "sketch": "chip outline, die (0.38), pin-1 mark and two tweezer legs mapped from the photo (2000x1331, cover 70% 50%); 1.25px fg at 0.7; legs fade via #sketch-fade; drawn by dash offset as .art fades over the first 50% of the hero",
+      "strokes": "base 1.5px rule; glow 7px var(--trace) at 0.22; lit 2px var(--trace)",
+      "head": "radial pulse r 12; terminal dot r 3.5 at the right end of the footer rule",
+      "drawing": "reading line scrollY + vh*(0.62 + 0.38q) over the last screen; lit length eases 16%/frame; footer rule keyed across the last stretch of the page",
+      "nodes": "Lucide icons (src/icons, ISC) inlined twice (base at 0.3, lit copy draws via pathLength 1 over 0.9s); ring = inset box-shadow; body var(--field) set by cues.ts",
+      "end": "footer.foot[data-node=end]; the cable bends into its top edge and runs to the right gutter"
+    }
+  },
+  "components": [
+    {
+      "name": "Lime Pill",
+      "kind": "button",
+      "refersTo": "pill-lime",
+      "description": "Primary action; the main carrier of lime.",
+      "html": "<a class=\"ds-pill ds-pill-lime\" href=\"#\">Contact us <svg aria-hidden=\"true\" width=\"14\" height=\"14\" viewBox=\"0 0 14 14\"><path d=\"M1 7h11M8 3l4 4-4 4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"/></svg></a>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:3rem;padding:0 1.6rem;border-radius:999px;border:1px solid transparent;font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif;font-size:.9375rem;font-weight:600;text-decoration:none;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}.ds-pill svg{transition:transform .35s cubic-bezier(.16,1,.3,1)}.ds-pill:hover svg{transform:translateX(3px)}.ds-pill:focus-visible{outline:2px solid #f3f5ff;outline-offset:4px}.ds-pill-lime{background:#c4ff1a;color:#04060f}.ds-pill-lime:hover{background:#d8ff5c}"
+    },
+    {
+      "name": "Line Pill",
+      "kind": "button",
+      "refersTo": "pill-line",
+      "description": "Secondary action; hairline outline that flips with the ink.",
+      "html": "<div style=\"background:#020308;padding:1.5rem\"><button class=\"ds-pill-line\" type=\"button\">How we work</button></div>",
+      "css": ".ds-pill-line{display:inline-flex;align-items:center;min-height:3rem;padding:0 1.6rem;border-radius:999px;background:none;color:#f3f5ff;border:1px solid rgb(243 245 255 / .2);font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif;font-size:.9375rem;font-weight:600;cursor:pointer;transition:border-color .25s}.ds-pill-line:hover{border-color:#f3f5ff}.ds-pill-line:focus-visible{outline:2px solid #f3f5ff;outline-offset:4px}"
+    },
+    {
+      "name": "Bar",
+      "kind": "nav",
+      "refersTo": "lang-link",
+      "description": "Fixed bar: mark, EN/PT, small lime pill; takes the field colour after 8px of scroll.",
+      "html": "<header class=\"ds-bar\"><span class=\"ds-brand\">RQ Systems</span><nav class=\"ds-lang\"><a href=\"#\" aria-current=\"true\">EN</a><a href=\"#\">PT</a></nav></header>",
+      "css": ".ds-bar{display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:#020308;color:#f3f5ff;font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif}.ds-brand{font-weight:600;letter-spacing:-.01em}.ds-lang{display:flex;font-size:.875rem;font-weight:500}.ds-lang a{display:grid;place-items:center;min-width:2.75rem;min-height:2.75rem;color:#dde3ff;text-decoration:none;transition:color .2s}.ds-lang a:hover,.ds-lang a[aria-current]{color:#f3f5ff}.ds-lang a:focus-visible{outline:2px solid #f3f5ff;outline-offset:4px}"
+    },
+    {
+      "name": "Case Figure",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Hairline, lime proof number at Figure size, label beneath. Real numbers only.",
+      "html": "<div class=\"ds-fig\"><dd>3</dd><dt>Files / email</dt></div>",
+      "css": ".ds-fig{display:flex;flex-direction:column;gap:.75rem;padding:1.25rem 1.5rem;border-top:1px solid rgb(243 245 255 / .2);background:#1f4bff;font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif}.ds-fig dd{margin:0;font-size:9rem;font-weight:600;line-height:.8;letter-spacing:-.06em;font-variant-numeric:tabular-nums;color:#c4ff1a}.ds-fig dt{color:#dde3ff;font-size:.9375rem}"
+    },
+    {
+      "name": "Node",
+      "kind": "custom",
+      "refersTo": "node",
+      "description": "A ringed terminal on the cable holding a Lucide line icon; dim until the signal arrives, then the ring and icon take the signal colour. Left unlit, right lit.",
+      "html": "<div class=\"ds-nodes\"><span class=\"ds-node\"><svg viewBox=\"0 0 24 24\"><rect width=\"16\" height=\"16\" x=\"4\" y=\"4\" rx=\"2\"/><rect width=\"6\" height=\"6\" x=\"9\" y=\"9\" rx=\"1\"/><path d=\"M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2\"/></svg></span><span class=\"ds-node ds-on\"><svg viewBox=\"0 0 24 24\"><rect width=\"16\" height=\"16\" x=\"4\" y=\"4\" rx=\"2\"/><rect width=\"6\" height=\"6\" x=\"9\" y=\"9\" rx=\"1\"/><path d=\"M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2\"/></svg></span></div>",
+      "css": ".ds-nodes{display:flex;gap:2rem;padding:2rem;background:#020308}.ds-node{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;box-shadow:inset 0 0 0 1.5px rgb(243 245 255 / .2)}.ds-node svg{width:26px;height:26px;fill:none;stroke:#f3f5ff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.3}.ds-node.ds-on{box-shadow:inset 0 0 0 1.5px #c4ff1a}.ds-node.ds-on svg{stroke:#c4ff1a;stroke-width:1.75;opacity:1}"
+    },
+    {
+      "name": "Step",
+      "kind": "custom",
+      "refersTo": "step",
+      "description": "One How we work step per 85svh screen: a step line lit word by word with the [[key phrase]] in lime, one body sentence, and a tags list with 5px square bullets.",
+      "html": "<div class=\"ds-step\"><h3><span class=\"ds-w\">We</span> <span class=\"ds-w\">follow</span> <span class=\"ds-w\">the</span> <span class=\"ds-w\">work,</span> <span class=\"ds-w ds-em\">click</span> <span class=\"ds-w ds-em\">by</span> <span class=\"ds-w ds-em ds-dim\">click.</span></h3><p>Every email filed, every attachment saved, every number retyped between tools.</p><ul class=\"ds-tags\"><li>process mapping</li><li>requirements analysis</li></ul></div>",
+      "css": ".ds-step{display:flex;flex-direction:column;gap:1.25rem;padding:3rem 2rem;background:#020308;color:#f3f5ff;font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif;}.ds-step h3{margin:0;max-width:20ch;font-size:3rem;font-weight:500;line-height:1.05;letter-spacing:-.035em}.ds-em{color:#c4ff1a}.ds-dim{opacity:.16}.ds-step p{margin:0;max-width:46ch;color:#dde3ff;font-size:1.125rem;line-height:1.55}.ds-tags{list-style:none;margin:.25rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;font-size:.875rem;font-weight:500;color:#dde3ff}.ds-tags li{display:inline-flex;align-items:center;gap:.5rem}.ds-tags li::before{content:'';width:5px;height:5px;background:currentColor}"
+    },
+    {
+      "name": "Founder Portrait",
+      "kind": "card",
+      "refersTo": "portrait",
+      "description": "Circular colour portrait on the day colour with a hairline; first name small, surname large with its initial in full ink, the initials R and Q followed by spaced capital Systems.",
+      "html": "<figure class=\"ds-person\"><div class=\"ds-photo\"></div><a href=\"#\">Martim Ramos &rarr;</a></figure>",
+      "css": ".ds-person{margin:0;width:14rem;font-family:'Familjen Grotesk Variable',ui-sans-serif,system-ui,sans-serif;color:#04060f}.ds-photo{aspect-ratio:4/5;border-radius:1.25rem;background:#39405c;outline:1px solid rgb(4 6 15 / .16);outline-offset:-1px}.ds-person a{display:inline-flex;min-height:2.75rem;align-items:center;margin-top:.5rem;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:inherit;text-decoration:none}.ds-person a:focus-visible{outline:2px solid #2a39c9;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Night Into Day",
+    "overview": "The page is a lit stage. One fixed colour field sits behind everything and carries the light: it holds midnight under the hero and How we work, flares once into electric cobalt for the proof in Featured work, and ends in daylight for Founders and Contact. Page surfaces are transparent so the field reads through every section. Nothing sits on a card. Depth comes from the field and from one real photograph, a processor held in tweezers, never from shadows or effects.\n\nOne cable wires the page together, and it starts as the photograph. As you leave the hero, the photo of the chip in tweezers dissolves into a line drawing of itself, and the tweezers become a cable. The cable runs through an illustrated node at every step and at Featured work, jogs back to the left bus, and ends as the footer's rule. Scroll lights it, and each node's icon draws itself when the signal reaches it. Automation reads as one signal running from the real thing to the drawing of how it works.\n\nThere is one typeface, Familjen Grotesk, set heavy and tight at display sizes and plain at reading sizes. Each section holds a single idea at large scale, with a lot of air around it, so the page reads quickly and never gets dense. Acid lime is the one loud note. It goes on the actions, the signal, and a small number of words and figures, and it stays rare so it keeps its charge.\n\nMotion is slow and tied to scroll: the hero photo settles in once; the hero copy lifts away as you leave while the photo dissolves into its drawing; the cable lights itself; step lines light word by word as you read; blocks ease in as they enter. The colour field and the cable are the signature interactions. Everything else stays still enough that the site feels light and fast.",
+    "keyCharacteristics": [
+      "A single fixed scroll field of three colours (night, electric, day) across five sections is the only background; surfaces are transparent.",
+      "One scroll-lit cable grows out of the hero photo's tweezers, passes an illustrated node at each step and at Featured work, and ends as the footer's rule.",
+      "Ink flips from light to dark at the equal-contrast point of the electric-to-day blend, and the signal flips from lime to cobalt with it.",
+      "Acid lime is reserved for pill fills, the signal, one key word or phrase, and the case figures.",
+      "One face, Familjen Grotesk, at weight 600 with negative tracking for display, and 400 for reading.",
+      "Every action ends in a round node on a short trace. There are no square buttons and no stock pills.",
+      "Imagery is real photography of technology, graded into the palette.",
+      "Hairline rules instead of cards. No shadows, glass, glow, or decorative gradients."
+    ],
+    "rules": [
+      {
+        "name": "The One Field Rule",
+        "body": "The colour field is the only background. Sections, bars and blocks stay transparent. A new section adds a stop to the field. It never gets a painted panel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Flip Rule",
+        "body": "Ink flips from light (`fg-night`) to dark (`ink`) when the field position reaches 2.21, where both inks have equal contrast (about 4.3:1) on the OKLab electric-to-day blend. The flip toggles a day class on the root, which swaps text, secondary text, rules, accent, and signal together, and colour eases over 0.6s. When the field colours change, move the flip to the new contrast crossover.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rare Lime Rule",
+        "body": "Lime is used for pill fills, the signal, the one key word of a headline, the one key phrase of a step line, and the hero numbers of proof, and nowhere else. Use one lime word or phrase per headline or step line at most. Lime text and lime strokes only go on night or electric grounds (5:1 or better). On day grounds lime is a pill fill with ink text only, because lime there measures 1.1:1; the signal turns Day Accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Face Rule",
+        "body": "Familjen Grotesk is the only family. Build hierarchy from size, weight (400/500/600) and tracking. Text is balanced at headline sizes and pretty-wrapped in paragraphs.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tight Display Rule",
+        "body": "Headings and figures at 1.75rem or larger are set at weight 600 with a line height of 1.05 or less and negative tracking that grows with size (-0.03em to -0.06em). The Step line is the one exception at weight 500 (1.05, -0.035em), because it is read as a sentence rather than scanned.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Lift Rule",
+        "body": "Don't use box-shadow, glass, backdrop blur, glow or decorative gradients. The only gradient allowed is a mask that feathers a photograph into the field.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Longhand Rule",
+        "body": "Write every scroll-driven animation as longhands (`animation-name`, `animation-timing-function`, `animation-fill-mode`, `animation-timeline`, `animation-range`), never the `animation` shorthand. The CSS minifier otherwise folds `animation-timeline` into the shorthand, which browsers reject, and the animation silently does nothing.",
+        "section": "components"
+      },
+      {
+        "name": "The Split Transform Rule",
+        "body": "One element, one owner per transform channel. The scroll lift writes the individual `translate` property on the hero copy wrapper, the load rise writes `transform` on its children, and the settle owns the inner photo's `transform`, so no animation overwrites another. A new animation on an element that already moves takes a channel nobody else writes.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** put every background change on the single scroll field, as a new stop in section order.",
+      "**Do** flip the ink at the contrast crossover of the blend (currently position 2.21).",
+      "**Do** wire every action to a node: a lime node for the primary, a hairline ring for the secondary.",
+      "**Do** limit lime to pill fills, the signal, one key headline word or step phrase, and proof figures. Use lime text and strokes only on night or electric grounds.",
+      "**Do** set display type in Familjen Grotesk 600 with tight negative tracking, and give each section one idea at large scale.",
+      "**Do** use real photography of technology, graded with the cobalt and lime ramps, and show people in full colour, cut out from their backgrounds.",
+      "**Do** route a new section onto the cable through a node (a Lucide line icon) or a waypoint on the left bus, and jog sideways only inside the top of the section entered.",
+      "**Do** keep every target at least 2.75rem, and turn off all decorative motion under reduced motion.",
+      "**Do** write scroll-driven animations as longhands, and give each transform channel one owner."
+    ],
+    "donts": [
+      "**Don't** bring back procedural 3D props or stages (rejected by the user).",
+      "**Don't** use glass, glow or blur effects, the \"typical AI look\" (rejected by the user).",
+      "**Don't** use flower or other non-tech imagery (rejected by the user).",
+      "**Don't** use square or square-cornered buttons (rejected by the user).",
+      "**Don't** set dense text. One idea per screen (rejected by the user).",
+      "**Don't** add heavy animation, WebGL, or an animation library. The site stays light and fast (user requirement).",
+      "**Don't** paint section backgrounds, cards or shadows. Surfaces stay transparent over the field; the nodes are the only filled shapes, and they belong to the cable.",
+      "**Don't** add a second typeface or set lime text on day grounds.",
+      "**Don't** invent figures. A lime number has to be a real one."
+    ]
+  }
+}

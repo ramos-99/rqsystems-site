@@ -1,39 +1,81 @@
 ---
-import '@fontsource-variable/outfit'
-import '@fontsource-variable/schibsted-grotesk'
+import '@fontsource-variable/familjen-grotesk/wght.css'
 import '../styles/global.css'
-import schibstedGroteskUrl from '@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url'
-import outfitUrl from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url'
+import familjenUrl from '@fontsource-variable/familjen-grotesk/files/familjen-grotesk-latin-wght-normal.woff2?url'
+import { copy, type Lang } from '../i18n'
+
+// paths: this page in each language. A page still in the running as an
+// alternative design is kept out of search.
+// theme: 'light' sets the light palette (styles/light.css).
+interface Props { lang: Lang; paths: Record<Lang, string>; noindex?: boolean; theme?: 'light' }
+const { lang, paths: urls, noindex, theme } = Astro.props
+const t = copy[lang]
+const site = 'https://rqsystems.pt'
+const other: Lang = lang === 'en' ? 'pt' : 'en'
+
+// Who the business is, for search engines. The founders are current
+// students, so IST is their affiliation, not alumniOf.
+const ist = { '@type': 'CollegeOrUniversity', '@id': 'https://tecnico.ulisboa.pt/#org', name: 'Instituto Superior Técnico', url: 'https://tecnico.ulisboa.pt/' }
+const founder = (name: string, sameAs: string) => ({ '@type': 'Person', name, jobTitle: 'Co-founder, software engineer', sameAs, affiliation: { '@id': ist['@id'] } })
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site}/#org`,
+      name: 'RQ Systems',
+      url: `${site}/`,
+      logo: `${site}/logo.png`,
+      image: `${site}/og-image.png`,
+      email: 'contact@rqsystems.pt',
+      description: t.about,
+      address: { '@type': 'PostalAddress', addressLocality: 'Lisboa', addressCountry: 'PT' },
+      areaServed: { '@type': 'Country', name: 'Portugal' },
+      knowsLanguage: ['en', 'pt-PT'],
+      contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: 'contact@rqsystems.pt', availableLanguage: ['English', 'Portuguese'] },
+      founder: [founder('Martim Ramos', 'https://www.linkedin.com/in/martim-c-ramos/'), founder('Afonso Quintas', 'https://www.linkedin.com/in/afonsoquintas/')],
+    },
+    ist,
+    { '@type': 'WebSite', '@id': `${site}/#site`, url: `${site}/`, name: 'RQ Systems', publisher: { '@id': `${site}/#org` }, inLanguage: ['en', 'pt-PT'] },
+    { '@type': 'WebPage', url: site + urls[lang], name: t.title, inLanguage: t.htmlLang, isPartOf: { '@id': `${site}/#site` }, about: { '@id': `${site}/#org` } },
+  ],
+}
 ---
 
-<html lang="en">
+<html lang={t.htmlLang} data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preload" as="font" type="font/woff2" href={schibstedGroteskUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={outfitUrl} crossorigin />
-    <title>RQ Systems</title>
+    <meta name="theme-color" content={theme === 'light' ? '#f5f5f7' : '#020308'} />
+    <link rel="preload" as="font" type="font/woff2" href={familjenUrl} crossorigin />
+    {noindex && <meta name="robots" content="noindex" />}
+    <title>{t.title}</title>
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
-    <meta name="description" content="RQ Systems builds custom automation for businesses. We find what's still manual in your operation and build the software to replace it." />
-    <link rel="canonical" href="https://rqsystems.pt" />
+    <meta name="description" content={t.description} />
+    <link rel="canonical" href={site + urls[lang]} />
+    <link rel="alternate" hreflang="en" href={site + urls.en} />
+    <link rel="alternate" hreflang="pt-PT" href={site + urls.pt} />
+    <link rel="alternate" hreflang="x-default" href={site + urls.en} />
 
     <meta property="og:site_name" content="RQ Systems" />
-    <meta property="og:title" content="RQ Systems — Your operations, automated." />
-    <meta property="og:description" content="RQ Systems builds custom automation for businesses. We find what's still manual in your operation and build the software to replace it." />
-    <meta property="og:url" content="https://rqsystems.pt" />
+    <meta property="og:title" content={t.ogTitle} />
+    <meta property="og:description" content={t.description} />
+    <meta property="og:url" content={site + urls[lang]} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en" />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={copy[other].ogLocale} />
     <meta property="og:image" content="https://rqsystems.pt/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="RQ Systems — Your operations, automated." />
-    <meta name="twitter:description" content="RQ Systems builds custom automation for businesses." />
+    <meta name="twitter:title" content={t.ogTitle} />
+    <meta name="twitter:description" content={t.description} />
     <meta name="twitter:image" content="https://rqsystems.pt/og-image.png" />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
   </head>
-  <body class="bg-[#f5f5f5] text-[#0a0a0a] antialiased font-sans">
+  <body>
     <slot />
   </body>
 </html>

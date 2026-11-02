@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Man-Machine sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@600&family=Schibsted+Grotesk:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0A0A0A;--paper:#F2F2EE;--red:#E3001B;--amber:#FFB000;--green:#00A651}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--black);color:var(--paper);font-family:'Schibsted Grotesk',sans-serif}
+  svg{position:absolute;inset:0}
+  nav{position:absolute;top:0;left:0;right:0;height:84px;display:flex;justify-content:space-between;align-items:center;padding:0 64px;font-family:Jost;font-weight:600;text-transform:uppercase;letter-spacing:.18em;font-size:14px}
+  nav a{color:var(--paper);text-decoration:none}
+  h1{position:absolute;left:64px;top:170px;font-family:Jost;font-weight:600;font-size:96px;line-height:1;text-transform:uppercase;letter-spacing:.04em;width:760px}
+  p{position:absolute;left:66px;top:420px;width:440px;font-size:18px;line-height:1.5;color:#CFCFCA}
+  .node{position:absolute;font-family:Jost;font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:10px 14px;border:2px solid currentColor}
+  .cta{background:var(--red);color:#fff;border-color:var(--red);font-size:16px;padding:16px 22px;text-decoration:none}
+</style></head><body>
+<svg viewBox="0 0 1440 900" fill="none" stroke-width="3">
+  <path d="M960 260 H1240 V480 H1040 V700" stroke="#E3001B"/>
+  <path d="M960 260 V560 H1240" stroke="#FFB000" opacity=".9"/>
+  <path d="M260 680 H960 V560" stroke="#00A651"/>
+  <path d="M0 820 H1440" stroke="#E3001B" stroke-width="2"/>
+</svg>
+<nav><span>RQ Systems</span><a href="#">Contact us</a></nav>
+<h1>Your operations, automated.</h1>
+<p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+<div class="node" style="left:900px;top:236px;color:var(--amber)">Outlook</div>
+<div class="node" style="left:1190px;top:456px;color:var(--paper)">Excel</div>
+<div class="node" style="left:1190px;top:536px;color:var(--green)">Dropbox</div>
+<div class="node" style="left:990px;top:676px;color:var(--amber)">Invoicing</div>
+<a class="node cta" style="left:64px;top:654px" href="#">Contact us</a>
+</body></html>

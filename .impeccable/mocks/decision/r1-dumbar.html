@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snap to System sketch</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--grey:#D7DADD;--cyan:#00A3E0;--mag:#E6007E;--yel:#FFE500;--grn:#3DAE2B;--ink:#111}
+  *{box-sizing:border-box;margin:0}
+  body{width:1440px;height:900px;overflow:hidden;background:var(--grey);font-family:'Schibsted Grotesk',sans-serif;color:var(--ink)}
+  nav{position:absolute;top:0;left:0;right:0;height:80px;display:flex;justify-content:space-between;align-items:center;padding:0 60px;font-size:15px;z-index:3}
+  nav b{font-weight:800;font-size:18px}nav a{color:var(--ink);text-decoration:none}
+  .photo{position:absolute;left:600px;top:110px;width:640px;height:560px;transform:rotate(-4deg);
+    background:linear-gradient(160deg,#9aa3ab,#5d666e 55%,#3b4248)}
+  .bar{position:absolute;mix-blend-mode:multiply}
+  .b1{left:0;top:180px;width:1020px;height:200px;background:var(--cyan)}
+  .b2{left:420px;top:380px;width:900px;height:120px;background:var(--mag)}
+  .b3{left:860px;top:500px;width:420px;height:200px;background:var(--grn)}
+  h1{position:absolute;left:60px;top:212px;font-weight:800;font-size:120px;line-height:.9;letter-spacing:-.04em;z-index:2;width:900px;color:var(--ink)}
+  p{position:absolute;left:60px;top:560px;width:380px;font-size:16px;line-height:1.5;z-index:2}
+  .cta{position:absolute;left:60px;top:700px;width:340px;height:84px;background:var(--yel);display:flex;align-items:center;padding:0 24px;font-weight:600;font-size:18px;text-decoration:none;color:var(--ink);z-index:2}
+  .frag{position:absolute;width:26px;height:26px;background:var(--ink);z-index:2}
+</style></head><body>
+<nav><b>RQ Systems</b><a href="#">Contact us</a></nav>
+<div class="photo"></div>
+<div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div>
+<h1>Your operations, automated.</h1>
+<p>Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+<a class="cta" href="#">Contact us →</a>
+<div class="frag" style="left:1300px;top:150px"></div><div class="frag" style="left:1340px;top:150px;background:var(--mag)"></div><div class="frag" style="left:520px;top:760px;background:var(--cyan)"></div>
+</body></html>

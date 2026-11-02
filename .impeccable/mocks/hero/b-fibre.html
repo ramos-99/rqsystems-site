@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero B · Fibre</title>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_base.css">
+<style>
+  .hero { position: relative; min-height: 100svh; overflow: hidden; display: grid; }
+  .art { left: 50%; top: 50%; width: min(78vw, 112svh); aspect-ratio: 2000 / 1333; translate: -50% -48%; }
+  .art img { object-fit: contain; }
+  .art { -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
+  h1 { position: relative; z-index: 2; font-size: clamp(3rem, 9.5vw, 10rem); }
+  .l1 { position: absolute; z-index: 2; top: 15svh; left: clamp(1.25rem, 4vw, 3.5rem); }
+  .l2 { position: absolute; z-index: 2; bottom: 9svh; right: clamp(1.25rem, 4vw, 3.5rem); text-align: right; display: grid; justify-items: end; gap: 1.5rem; }
+  .side { position: absolute; z-index: 2; left: clamp(1.25rem, 4vw, 3.5rem); bottom: 9svh; display: grid; gap: 1.25rem; max-width: 22rem; }
+  .side .lead { font-size: 0.9375rem; }
+  @media (max-width: 40rem) {
+    .art { width: 130vw; top: 46%; }
+    .l1 { top: 12svh; }
+    .l2 { bottom: 24svh; }
+    .side { bottom: 3svh; right: 1.25rem; }
+  }
+</style></head>
+<body>
+<header class="bar">
+  <a class="brand" href="#"><img src="logo.svg" alt="">Systems</a>
+  <div class="bar-end"><nav class="lang"><a aria-current="true" href="#">EN</a><a href="#">PT</a></nav><a class="pill pill-lime pill-sm" href="#">Contact us</a></div>
+</header>
+<main class="hero">
+  <div class="art"><img src="fibre.webp" alt="" width="2000" height="1333"></div>
+  <h1 class="l1 rise">Your operations,</h1>
+  <div class="l2">
+    <h1 class="rise lime">automated.</h1>
+  </div>
+  <div class="side rise">
+    <p class="lead">Built by two engineers from Técnico. We find what's still manual in your operations and build tailored software to automate it.</p>
+    <div><a class="pill pill-lime" href="#">Contact us <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
+  </div>
+</main>
+<script>
+  addEventListener('pointermove', (e) => { document.documentElement.style.setProperty('--mx', (e.clientX / innerWidth - 0.5).toFixed(3)); document.documentElement.style.setProperty('--my', (e.clientY / innerHeight - 0.5).toFixed(3)) }, { passive: true })
+</script>
+</body></html>

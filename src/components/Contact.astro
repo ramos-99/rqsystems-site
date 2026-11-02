@@ -1,0 +1,30 @@
+---
+import '../styles/contact.css'
+import type { Lang } from '../i18n'
+import { email, shared } from '../drafts'
+import { glyph } from '../glyph'
+
+// The contact, at headline grade: the address with a copy button, and the
+// one action. subject, when given, marks the button as one that carries
+// the visitor's task (scripts/typed.ts).
+interface Props { lang: Lang; send: string; subject?: string; class?: string }
+const { lang, send, subject, class: cls } = Astro.props
+const t = shared[lang]
+const [user, domain] = email.split('@')
+---
+
+<div class:list={['contact', cls]}>
+  <p class="mail-label">{t.write}</p>
+  <div class="mail-row">
+    <a class="mail" href={`mailto:${email}`}>{user}<span class="mail-at">@{domain}</span></a>
+    <button class="mail-copy" type="button" data-copy={email} data-copied={t.copied} aria-label={t.copyLabel} hidden>
+      <Fragment set:html={glyph('copy')} /><Fragment set:html={glyph('check')} />
+    </button>
+  </div>
+  <a class="btn btn-lime" href={`mailto:${email}`} data-mail data-subject={subject}><span>{send}</span><Fragment set:html={glyph('arrow-up-right')} /></a>
+  <p class="contact-note sr" aria-live="polite"></p>
+</div>
+
+<script>
+  import '../scripts/contact'
+</script>
