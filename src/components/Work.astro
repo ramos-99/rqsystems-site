@@ -12,7 +12,11 @@ const { lang } = Astro.props
 const copy = {
   en: {
     title: ['One click', ' files every email in the right Dropbox folder.'],
-    body: 'Our client sorted project emails, invoices and contracts into a deep folder structure by hand. We built them an Outlook add-in that saves three files for each email: the email itself, a PDF copy and its attachments.',
+    body: [
+      'Our client sorted project emails, invoices and contracts into a deep folder structure by hand. We built them an Outlook add-in that files the email, a PDF copy and its attachments in the right project folder, named by date.',
+      'For an invoice, an AI model reads the PDF, pulls out the number, the total and the payment deadline, and drafts the reply.',
+      'Their tools were Outlook and Dropbox. We build into whatever yours are.',
+    ],
     send: 'Send us a task',
     addin: 'Save to Dropbox',
     filed: 'Filed',
@@ -25,7 +29,11 @@ const copy = {
   },
   pt: {
     title: ['Um clique', ' arquiva cada e-mail na pasta certa do Dropbox.'],
-    body: 'O nosso cliente arrumava à mão e-mails de projeto, faturas e contratos numa estrutura de pastas com muitos níveis. Criámos um suplemento para o Outlook que guarda três ficheiros por cada e-mail: o próprio e-mail, uma cópia em PDF e os anexos.',
+    body: [
+      'O nosso cliente arrumava à mão e-mails de projeto, faturas e contratos numa estrutura de pastas com muitos níveis. Criámos um suplemento para o Outlook que guarda o e-mail, uma cópia em PDF e os anexos na pasta certa do projeto, com a data no nome.',
+      'Numa fatura, um modelo de IA lê o PDF, retira o número, o total e o prazo de pagamento, e prepara a resposta.',
+      'As ferramentas deles eram o Outlook e o Dropbox. Nós integramos nas suas, sejam elas quais forem.',
+    ],
     send: 'Envie-nos uma tarefa',
     addin: 'Guardar no Dropbox',
     filed: 'Arquivado',
@@ -45,33 +53,27 @@ const folders = [
   { name: 'Escritório Oeiras', count: 6 },
 ]
 const initials = (name: string) => name.split(' ').map((w) => w[0]).join('')
-// What the add-in writes: the email itself, a PDF of it, and the attachment.
-const stem = (subject: string) => subject.replaceAll('/', '-').replaceAll(',', '')
-const files = (m: (typeof copy.mails)[number]) => [`${stem(m.subject)}.eml`, `${stem(m.subject)}.pdf`, m.file[0]]
-const kinds = ['mail', 'file-text', 'paperclip']
 ---
 
 <section class="work" id="work" aria-labelledby="work-title">
   <div class="work-copy">
     <h2 id="work-title"><span class="lime">{copy.title[0]}</span>{copy.title[1]}</h2>
-    <p class="work-body">{copy.body}</p>
-    <a class="pill pill-lime" href={`mailto:${email}`} data-mail><span>{copy.send}</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
+    {copy.body.map((p) => <p class="work-body">{p}</p>)}
+    <a class="btn btn-lime" href={`mailto:${email}`} data-mail><span>{copy.send}</span><Fragment set:html={glyph('arrow-up-right')} /></a>
   </div>
 
   <figure class="flow" aria-hidden="true">
     <div class="flow-fit">
       <div class="flow-stage">
-        <svg class="flow-wire"><path class="glow" pathLength="1" /><path class="wire" pathLength="1" /></svg>
-        {kinds.map((k) => <div class="tile"><Fragment set:html={glyph(k)} /><span></span></div>)}
 
         <div class="card fm-card">
           <div class="card-top">
             <span class="app"><Fragment set:html={glyph('mail')} />Outlook</span>
-            <span class="addin"><Fragment set:html={glyph('brands/dropbox')} />{copy.addin}</span>
+            <span class="addin on"><Fragment set:html={glyph('brands/dropbox')} />{copy.addin}</span>
           </div>
           <div class="fm-view">
-            {copy.mails.map((m) => (
-              <article class="fm" data-folder={m.folder} data-files={JSON.stringify(files(m))}>
+            {copy.mails.slice(0, 1).map((m) => (
+              <article class="fm on filed">
                 <div class="fm-from">
                   <span class="avatar">{initials(m.from)}</span>
                   <b>{m.from}</b>
@@ -92,11 +94,11 @@ const kinds = ['mail', 'file-text', 'paperclip']
         <div class="card db-card">
           <div class="card-top"><span class="app"><span class="db-mark" set:html={glyph('brands/dropbox')} />Dropbox</span></div>
           <div class="crumb">{copy.projects}</div>
-          {folders.map((f) => (
-            <div class="ff" data-count={f.count}>
+          {folders.map((f, i) => (
+            <div class={`ff${i === copy.mails[0].folder ? ' target' : ''}`}>
               <Fragment set:html={glyph('folder')} />
               <span class="ff-name">{f.name}</span>
-              <span class="ff-n">{f.count}</span>
+              <span class="ff-n">{i === copy.mails[0].folder ? f.count + 3 : f.count}</span>
             </div>
           ))}
         </div>
@@ -104,7 +106,3 @@ const kinds = ['mail', 'file-text', 'paperclip']
     </div>
   </figure>
 </section>
-
-<script>
-  import '../scripts/work'
-</script>

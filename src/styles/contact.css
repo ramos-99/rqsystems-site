@@ -1,0 +1,41 @@
+/* The contact block and the two of us, shared by both designs. */
+.contact { display: grid; gap: 1rem; justify-items: start; min-width: 0; }
+.contact > .btn { margin-top: 0.25rem; }
+.mail-label { margin: 0 0 -0.25rem; font-size: 0.875rem; font-weight: 500; color: var(--fg-2); }
+
+.mail-row { display: flex; align-items: center; gap: 0.75rem; }
+.mail { position: relative; padding-bottom: 0.1em; font-size: clamp(1.75rem, 3.4vw, 3.5rem); font-weight: 600; line-height: 1; letter-spacing: -0.035em; color: var(--fg); text-decoration: none; white-space: nowrap; }
+.mail-at { color: color-mix(in oklab, var(--fg) 58%, transparent); transition: color 300ms var(--ease-out); }
+.mail::before, .mail::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--rule); }
+.mail::after { height: 2px; background: var(--fg); transform: scaleX(0); transform-origin: left; transition: transform 420ms var(--ease-out); }
+.mail-copy { display: grid; place-items: center; flex: none; width: 3rem; height: 3rem; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: none; color: var(--fg-2); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 120ms var(--ease-out); }
+.mail-copy[hidden] { display: none; }
+.mail-copy svg { grid-area: 1 / 1; width: 1.125rem; height: 1.125rem; fill: none; stroke: currentColor; stroke-width: 1.75; transition: opacity 160ms var(--ease-out), transform 220ms var(--ease-out); }
+.mail-copy svg + svg, .mail-copy.is-done svg:first-child { opacity: 0; transform: scale(0.6); }
+.mail-copy.is-done svg + svg { opacity: 1; transform: none; }
+.mail-copy.is-done { border-color: var(--lime); color: var(--lime); }
+.mail-copy:active { transform: scale(0.94); }
+
+
+.crew { display: flex; align-items: center; gap: 1rem; }
+.crew-faces { display: flex; flex: none; }
+.crew-faces img { width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; background: #0c1630; border: 2px solid var(--night); }
+.crew-faces img + img { margin-left: -0.625rem; }
+.crew-text { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--fg-2); text-wrap: pretty; }
+.crew-text a { color: var(--fg); font-weight: 500; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 0.25em; transition: text-decoration-color 160ms var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .mail:hover::after { transform: none; }
+  .mail:hover .mail-at { color: var(--fg); }
+  .mail-copy:hover { border-color: var(--fg); color: var(--fg); }
+  .crew-text a:hover { text-decoration-color: currentColor; }
+}
+@media (max-width: 40rem) {
+  .contact { justify-items: stretch; }
+  .contact .mail-row { justify-self: start; }
+  .crew { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mail::after { transition: none; }
+  .mail-copy:active { transform: none; }
+}

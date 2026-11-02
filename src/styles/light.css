@@ -1,0 +1,95 @@
+/* The home page's light theme. An Apple-grey desk with the hero as a white
+   sheet laid on it, washed with the faintest cobalt and lime light. Ink and
+   Apple's greys for text, electric cobalt for the software's marks and the
+   action, lime only as a highlighter once a line is read. The demo's app
+   windows are light, like macOS windows. */
+:root[data-theme='light'] {
+  --night: #f5f5f7;
+  --surface: #ffffff;
+  --fg: #1d1d1f;
+  --fg-2: #515154;
+  --dim: #6e6e73;
+  --rule: rgb(0 0 0 / 0.1);
+  --accent: var(--cobalt);
+  --trace: var(--cobalt);
+  --line: rgb(0 0 0 / 0.08);
+  --line-2: rgb(0 0 0 / 0.05);
+  --graphite: rgb(60 60 67 / 0.6);
+  --mark: color-mix(in oklab, var(--lime) 78%, #fff);
+  color-scheme: light;
+}
+
+[data-theme='light'] .brand img { filter: none; }
+[data-theme='light'] .lime { color: var(--cobalt); }
+
+/* The sheet: the hero, inset from the edges, rounded, lifted a hair off
+   the desk. Two very large, very faint washes keep the white from going
+   flat. */
+[data-theme='light'] .typed {
+  margin: 0.75rem;
+  min-height: calc(100svh - 1.5rem);
+  /* Snap to the desk's edge, not the sheet's, so its margin shows. */
+  scroll-margin-top: 0.75rem;
+  border-radius: 28px;
+  background:
+    radial-gradient(60% 70% at 92% 8%, rgb(31 75 255 / 0.07), transparent 70%),
+    radial-gradient(50% 60% at 4% 100%, rgb(196 255 26 / 0.12), transparent 70%),
+    var(--surface);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.04), 0 1px 2px rgb(0 0 0 / 0.04), 0 30px 60px -40px rgb(20 24 48 / 0.18);
+}
+[data-theme='light'] .bar { padding-inline: calc(var(--gutter) + 0.75rem); padding-top: 1.4rem; }
+@media (max-width: 40rem) {
+  [data-theme='light'] .typed { margin: 0.5rem; min-height: calc(100svh - 1rem); border-radius: 22px; }
+}
+
+/* The headline: pencil, then the software's cobalt marks, then ink. */
+[data-theme='light'] .slot { color: var(--fg); }
+[data-theme='light'] .hand { color: var(--graphite); }
+[data-theme='light'] .scribble path { stroke: rgb(60 60 67 / 0.7); }
+[data-theme='light'] .sweep { background: var(--cobalt); }
+[data-theme='light'] .sweep::before { background: linear-gradient(90deg, transparent, rgb(31 75 255 / 0.12)); }
+[data-theme='light'] .found { --c: var(--cobalt); box-shadow: inset 0 0 0 1px rgb(31 75 255 / 0.12); }
+[data-theme='light'] .found.ignored { --c: rgb(0 0 0 / 0.3); box-shadow: none; }
+[data-theme='light'] .tag { background: var(--cobalt); color: #fff; }
+[data-theme='light'] .found.ignored .tag { background: rgb(0 0 0 / 0.06); color: var(--fg-2); }
+[data-theme='light'] .read { color: var(--cobalt); }
+[data-theme='light'] .try-hint { color: var(--fg-2); }
+[data-theme='light'] .try-hint svg { stroke: var(--cobalt); }
+
+/* The highlighter: a soft lime stroke along the foot of each word once the
+   line is read. */
+[data-theme='light'] .ink .word { background: linear-gradient(var(--mark), var(--mark)) 0 90% / 0 0.24em no-repeat; transition: background-size 560ms var(--ease-out); }
+[data-theme='light'] .slot.marked .ink .word { background-size: 100% 0.24em; }
+
+/* The action is cobalt; its "found" brackets too. */
+[data-theme='light'] .btn-lime { background: var(--cobalt); color: #fff; }
+[data-theme='light'] .btn-lime::before { --c: var(--cobalt); }
+@media (hover: hover) and (pointer: fine) {
+  [data-theme='light'] .btn-lime:hover { background: #1a3fe0; }
+}
+[data-theme='light'] .btn-line { background: var(--surface); }
+[data-theme='light'] .mail-at { color: #86868b; }
+[data-theme='light'] .mail-copy { background: var(--surface); }
+[data-theme='light'] .mail-copy.is-done { border-color: var(--cobalt); color: var(--cobalt); }
+[data-theme='light'] .crew-faces img { background: #e8e8ed; border-color: var(--surface); }
+[data-theme='light'] .crew-text { color: var(--fg-2); }
+
+/* The case study, on the desk: light app windows with a window's soft
+   shadow and three quiet window dots, the files and the wire in cobalt. */
+[data-theme='light'] .card {
+  background: var(--surface);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06), 0 2px 4px rgb(0 0 0 / 0.03), 0 24px 48px -24px rgb(20 24 48 / 0.22);
+}
+[data-theme='light'] .card-top { background: #fbfbfd; }
+[data-theme='light'] .app::before { content: ""; width: 44px; height: 10px; margin-right: 6px; background: radial-gradient(circle at 5px 5px, #d2d2d7 4.5px, transparent 5px) 0 0 / 17px 10px repeat-x; }
+[data-theme='light'] .addin { box-shadow: inset 0 0 0 1px rgb(31 75 255 / 0.35); color: var(--cobalt); }
+[data-theme='light'] .addin.on { background: var(--cobalt); color: #fff; }
+[data-theme='light'] .fm-body { color: var(--fg-2); }
+[data-theme='light'] .avatar { background: rgb(31 75 255 / 0.1); color: var(--cobalt); }
+[data-theme='light'] .fm-att-icon { background: rgb(0 0 0 / 0.04); }
+[data-theme='light'] .fm-filed { color: var(--cobalt); }
+[data-theme='light'] .ff.target svg, [data-theme='light'] .ff.target .ff-n { color: var(--cobalt); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='light'] .ink .word { transition: none; }
+}

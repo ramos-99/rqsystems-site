@@ -47,7 +47,13 @@ Visitors are evaluating, not operating anything. They arrive cold or by referral
 
 ## Evidence on Hand
 
-- One case study: an Outlook-to-Dropbox automation, a custom Outlook add-in that archives the .eml, a generated PDF and all attachments to the correct Dropbox folder in one click. Its real stats are **3 files per email** and **1 click to archive**.
+- One case study, the Outlook-to-Dropbox add-in (details from the project README the user shared on 2026-11-02):
+  - The user opens an email, clicks the add-in, and picks the project, the document type and the entity. The add-in files the `.eml`, a generated PDF of the email and all attachments into the right Dropbox project folder. Folders are named by date (YYMMDD), marked as sent (ENV) or received (REC), and created when missing.
+  - For invoices, an AI model (Claude) reads the attached PDF and extracts the invoice number, total, payment deadline, withholding, reverse charge and a PT/EN work description. The pane returns a reply text ready to copy.
+  - For adjudications, it generates the Word letter from the extracted proposal reference, amount and description, converts it to PDF and merges it with the proposal.
+  - The user always chooses the document type; the AI only extracts fields and never decides where anything is filed.
+  - The real stats are **3 files per email** (for plain filing) and **1 click to archive**.
+  - The README names the client; keep it unnamed on the site until the user confirms it can be named.
 - Founder portraits: originals in `assets/`, shipped in full colour with the background removed (the user's request, 2026-10-29) in `public/founders/`.
 - There are no testimonials, client logos, press coverage, hours-saved figures or ROI figures. **Never invent metrics** or other proof.
 - The user has not said whether the case-study client can be named. Keep it unnamed until they confirm.

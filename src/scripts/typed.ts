@@ -23,6 +23,7 @@ if (slot) {
     for (const a of links) a.href = `${a.href.split('?')[0]}?subject=${encodeURIComponent(`${prefix} ${task}`)}`
   }
   const tasks: string[] = JSON.parse(slot.dataset.tasks!)
+  const finale = slot.dataset.finale!
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) hint.textContent = hint.dataset.tap!
   if (new URLSearchParams(location.search).get('hand') === 'pen') main.dataset.hand = 'pen'
@@ -101,10 +102,10 @@ if (slot) {
     return Math.random() < 0.6 ? w.slice(0, i) + w[i + 1] + w[i] + w.slice(i + 2) : w.slice(0, i + 1) + w[i] + w.slice(i + 1)
   }
 
-  async function write(task: string, id: number) {
+  async function write(task: string, id: number, slips = true) {
     const words = task.split(' ')
     const long = words.map((w, i) => i).filter((i) => words[i].length >= 5 && /^\p{L}+$/u.test(words[i]))
-    const wrong = long[Math.floor(Math.random() * long.length)] ?? -1
+    const wrong = slips ? (long[Math.floor(Math.random() * long.length)] ?? -1) : -1
     // Size the writing for the whole line, slip included, before the pen
     // starts, so it never runs past its two lines.
     const slipped = wrong < 0 ? '' : slip(words[wrong])
@@ -174,16 +175,22 @@ if (slot) {
     }
   }
 
-  function setClean(text: string) {
-    ink.textContent = ''
+  // Letters as their own spans, grouped by word, so each can decode.
+  function letters(el: HTMLElement, text: string) {
+    el.textContent = ''
     text.split(' ').forEach((t, i) => {
-      if (i > 0) ink.append(' ')
+      if (i > 0) el.append(' ')
       const w = span('word')
       for (const c of t) w.append(span('ch', c))
-      ink.append(w)
+      el.append(w)
     })
+    return [...el.querySelectorAll<HTMLElement>('.ch')]
+  }
+
+  function setClean(text: string) {
+    const chars = letters(ink, text)
     wrapLong('.word')
-    return [...ink.querySelectorAll<HTMLElement>('.ch')]
+    return chars
   }
 
   // The software reads the line, visibly. First it finds each handwritten
@@ -233,10 +240,12 @@ if (slot) {
 
   async function read(text: string) {
     caret.remove()
+    slot!.classList.remove('marked')
     if (reduced) {
       setClean(`${text}.`)
       clearHand()
       hand.append(caret)
+      slot!.classList.add('marked')
       return
     }
     slot!.classList.add('reading')
@@ -286,11 +295,14 @@ if (slot) {
     }
     await wait(dur + 420)
     for (const b of boxes) b.remove()
+    // Read: the line is marked (the highlighter, in the light theme).
+    slot!.classList.add('marked')
     clearHand()
     hand.append(caret)
   }
 
   async function fade() {
+    slot!.classList.remove('marked')
     await ink.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(6px)' }], { duration: 280, easing: OUT }).finished
     ink.textContent = ''
   }
@@ -304,15 +316,17 @@ if (slot) {
       check()
     })
 
-  async function auto(id: number) {
-    for (let n = 0; ; n = (n + 1) % tasks.length) {
+  // Two tasks, then the point: "anything", written cleanly, which it rests on.
+  async function auto(id: number, seq = [...tasks.slice(0, 2), finale]) {
+    for (const [n, task] of seq.entries()) {
       await ready()
       if (id !== run) return
-      if (!(await write(tasks[n], id))) return
+      if (!(await write(task, id, task !== finale))) return
       await wait(650)
       if (id !== run) return
-      await read(tasks[n])
-      subject(tasks[n])
+      await read(task)
+      subject(task)
+      if (n === seq.length - 1) return
       await wait(2600)
       if (id !== run) return
       await fade()
@@ -327,11 +341,25 @@ if (slot) {
     run++
     clearTimeout(resume)
     for (const e of slot.querySelectorAll('.found, .sweep')) e.remove()
-    slot.classList.remove('reading')
-    ink.textContent = ''
+    slot.classList.remove('reading', 'marked')
+    // The caret answers at once; the old line fades out underneath it
+    // rather than vanishing in one frame.
+    if (ink.textContent) {
+      const out = ink.animate(
+        reduced ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(4px)' }],
+        { duration: reduced ? 120 : 150, easing: OUT, fill: 'forwards' },
+      )
+      out.finished
+        .then(() => {
+          if (slot.classList.contains('typing')) ink.textContent = ''
+          out.cancel()
+        })
+        .catch(() => {})
+    }
     clearHand()
     hand.append(caret)
     slot.classList.add('typing')
+    send.classList.remove('is-found')
     before = input.value
     drawHand(input.value, false)
   })
@@ -351,17 +379,25 @@ if (slot) {
       input.blur()
     }
   })
+  const send = document.querySelector<HTMLElement>('.band .btn-lime')!
+
   input.addEventListener('blur', () => {
     slot.classList.remove('typing')
     const task = input.value.trim().replace(/\s+/g, ' ').replace(/\.$/, '')
     if (!task) {
       clearHand()
-      resume = window.setTimeout(() => auto(++run), 2400)
+      resume = window.setTimeout(() => auto(++run, [finale]), 2400)
       return
     }
+    // The visitor's task: read, and then the button is found, since it
+    // now carries their task as the email's subject.
     subject(task)
-    note.textContent = note.dataset.done!
-    read(task)
+    const id = run
+    read(task).then(() => {
+      if (id !== run) return
+      send.classList.add('is-found')
+      note.textContent = note.dataset.done!
+    })
   })
 
   if (!reduced) {

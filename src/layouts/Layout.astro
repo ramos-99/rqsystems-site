@@ -2,24 +2,53 @@
 import '@fontsource-variable/familjen-grotesk/wght.css'
 import '../styles/global.css'
 import familjenUrl from '@fontsource-variable/familjen-grotesk/files/familjen-grotesk-latin-wght-normal.woff2?url'
-import { copy, paths, type Lang } from '../i18n'
+import { copy, type Lang } from '../i18n'
 
-// A draft is a variant page under its own paths: it is not indexed and
-// doesn't preload the long page's hero photo.
-interface Props { lang: Lang; draft?: Record<Lang, string> }
-const { lang, draft } = Astro.props
-const urls = draft ?? paths
+// paths: this page in each language. A page still in the running as an
+// alternative design is kept out of search.
+// theme: 'light' sets the light palette (styles/light.css).
+interface Props { lang: Lang; paths: Record<Lang, string>; noindex?: boolean; theme?: 'light' }
+const { lang, paths: urls, noindex, theme } = Astro.props
 const t = copy[lang]
 const site = 'https://rqsystems.pt'
+const other: Lang = lang === 'en' ? 'pt' : 'en'
+
+// Who the business is, for search engines. The founders are current
+// students, so IST is their affiliation, not alumniOf.
+const ist = { '@type': 'CollegeOrUniversity', '@id': 'https://tecnico.ulisboa.pt/#org', name: 'Instituto Superior Técnico', url: 'https://tecnico.ulisboa.pt/' }
+const founder = (name: string, sameAs: string) => ({ '@type': 'Person', name, jobTitle: 'Co-founder, software engineer', sameAs, affiliation: { '@id': ist['@id'] } })
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site}/#org`,
+      name: 'RQ Systems',
+      url: `${site}/`,
+      logo: `${site}/logo.png`,
+      image: `${site}/og-image.png`,
+      email: 'contact@rqsystems.pt',
+      description: t.about,
+      address: { '@type': 'PostalAddress', addressLocality: 'Lisboa', addressCountry: 'PT' },
+      areaServed: { '@type': 'Country', name: 'Portugal' },
+      knowsLanguage: ['en', 'pt-PT'],
+      contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: 'contact@rqsystems.pt', availableLanguage: ['English', 'Portuguese'] },
+      founder: [founder('Martim Ramos', 'https://www.linkedin.com/in/martim-c-ramos/'), founder('Afonso Quintas', 'https://www.linkedin.com/in/afonsoquintas/')],
+    },
+    ist,
+    { '@type': 'WebSite', '@id': `${site}/#site`, url: `${site}/`, name: 'RQ Systems', publisher: { '@id': `${site}/#org` }, inLanguage: ['en', 'pt-PT'] },
+    { '@type': 'WebPage', url: site + urls[lang], name: t.title, inLanguage: t.htmlLang, isPartOf: { '@id': `${site}/#site` }, about: { '@id': `${site}/#org` } },
+  ],
+}
 ---
 
-<html lang={t.htmlLang}>
+<html lang={t.htmlLang} data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#020308" />
+    <meta name="theme-color" content={theme === 'light' ? '#f5f5f7' : '#020308'} />
     <link rel="preload" as="font" type="font/woff2" href={familjenUrl} crossorigin />
-    {draft ? <meta name="robots" content="noindex" /> : <link rel="preload" as="image" href="/hero/chip-2000.webp" imagesrcset="/hero/chip-1100.webp 1100w, /hero/chip-2000.webp 2000w" imagesizes="(max-width: 40rem) 140vw, 70vw" />}
+    {noindex && <meta name="robots" content="noindex" />}
     <title>{t.title}</title>
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
@@ -35,14 +64,16 @@ const site = 'https://rqsystems.pt'
     <meta property="og:url" content={site + urls[lang]} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={copy[other].ogLocale} />
     <meta property="og:image" content="https://rqsystems.pt/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={t.ogTitle} />
-    <meta name="twitter:description" content={t.twitterDescription} />
+    <meta name="twitter:description" content={t.description} />
     <meta name="twitter:image" content="https://rqsystems.pt/og-image.png" />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
   </head>
   <body>
     <slot />

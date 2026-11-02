@@ -1,12 +1,14 @@
 ---
 import Draft from './Draft.astro'
-import Duo from './Duo.astro'
 import Work from './Work.astro'
+import Contact from './Contact.astro'
+import Crew from './Crew.astro'
 import '@fontsource/reenie-beanie/latin-400.css'
 import '@fontsource/nanum-pen-script/latin-400.css'
 import '../styles/typed.css'
+import '../styles/light.css'
 import type { Lang } from '../i18n'
-import { email, shared } from '../drafts'
+import { shared } from '../drafts'
 import { glyph } from '../glyph'
 
 interface Props { lang: Lang }
@@ -18,31 +20,27 @@ const t = shared[lang]
 const copy = {
   en: {
     verb: 'We automate',
-    tasks: ['logging invoices in Excel', 'filing emails in Dropbox', 'weekly timesheets', 'payment reminders', 'sending quotes'],
-    lead: 'Custom software that runs inside the tools your team already uses.',
-    role: 'Computer Science and Engineering students at Instituto Superior Técnico, Lisbon. We write and maintain your software ourselves.',
+    tasks: ['moving data between apps', 'logging supplier invoices'],
+    finale: 'anything',
     label: 'Type a task your team does by hand',
     hint: 'Click to write your own.',
     tap: 'Tap to write your own.',
-    send: 'Send us this task',
+    send: 'Tell us what to automate',
     done: 'Your task is now the subject of the email.',
     subject: 'Automate:',
-    next: 'A real project',
     read: 'Read automatically',
     ignored: 'ignored',
   },
   pt: {
     verb: 'Automatizamos',
-    tasks: ['o registo de faturas', 'o arquivamento de e-mails', 'as folhas de horas', 'os lembretes de pagamento', 'o envio de orçamentos'],
-    lead: 'Software à medida, dentro das ferramentas que a sua equipa já utiliza.',
-    role: 'Estudantes de Engenharia Informática e de Computadores no Instituto Superior Técnico, em Lisboa. Somos nós os dois que escrevemos e mantemos o seu software.',
+    tasks: ['a cópia de encomendas', 'o registo de faturas'],
+    finale: 'tudo',
     label: 'Escreva uma tarefa que a sua equipa faz à mão',
     hint: 'Clique para escrever a sua.',
     tap: 'Toque para escrever a sua.',
-    send: 'Envie-nos esta tarefa',
+    send: 'Diga-nos o que automatizar',
     done: 'A sua tarefa é agora o assunto do e-mail.',
     subject: 'Automatizar:',
-    next: 'Um caso real',
     read: 'Lido automaticamente',
     ignored: 'ignorado',
   },
@@ -53,34 +51,31 @@ const copy = {
   <main>
   <section class="typed">
     <div class="say-wrap rise">
-    <h1 class="say">
-      <span class="sr">{t.title}</span>
-      <span class="say-verb" aria-hidden="true">{copy.verb}</span>
-      <span class="slot" aria-hidden="true" data-tasks={JSON.stringify(copy.tasks)} data-ignored={copy.ignored}>
-        <span class="ink">{copy.tasks[0]}.</span>
+    <div class="say">
+      <!-- The heading is the verb and the line it stands for; the animated
+           task beside it is a picture of that line, hidden from readers. -->
+      <h1 class="say-verb">{copy.verb}<span class="sr">{t.title.slice(copy.verb.length)}</span></h1>
+      <span class="slot" aria-hidden="true" data-tasks={JSON.stringify(copy.tasks)} data-finale={copy.finale} data-ignored={copy.ignored}>
+        <span class="ink">{copy.finale}.</span>
         <span class="hand"><span class="caret"></span></span>
         <span class="read">{copy.read}</span>
-        <span class="try-hint"><Fragment set:html={glyph('pencil-line')} /><span data-tap={copy.tap}>{copy.hint}</span></span>
+        <label class="try-hint" for="task"><Fragment set:html={glyph('pencil-line')} /><span data-tap={copy.tap}>{copy.hint}</span></label>
       </span>
-    </h1>
-    <input class="try" type="text" name="task" maxlength="40" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-label={copy.label} />
+    </div>
+    <input class="try" id="task" type="text" name="task" maxlength="40" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-label={copy.label} />
     </div>
 
-    <div class="under">
-      <div class="who rise">
-        <p class="lead">{copy.lead}</p>
-        <div class="crew">
-          <Duo />
-          <p class="role">{copy.role}</p>
-        </div>
+    <!-- The foot of the hero: the contact at headline grade, then who we
+         are. The way down sits on the rule like a tab. -->
+    <div class="band rise">
+      <Contact lang={lang} send={copy.send} subject={copy.subject} />
+      <div class="band-who">
+        <p class="band-lead">{t.lead}</p>
+        <Crew lang={lang} />
       </div>
-      <div class="reach rise">
-        <a class="pill pill-lime" href={`mailto:${email}`} data-mail data-subject={copy.subject}><span>{copy.send}</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
-        <a class="addr" href={`mailto:${email}`} data-mail>{email}</a>
-        <p class="note" data-done={copy.done} aria-live="polite"></p>
-      </div>
+      <a class="btn btn-line band-next" href="#work"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
+      <p class="note sr" aria-live="polite" data-done={copy.done}></p>
     </div>
-    <a class="pill pill-down pill-sm next" href="#work"><span>{copy.next}</span><span class="pill-node" set:html={glyph('arrow-down')} /></a>
   </section>
   <Work lang={lang} />
   </main>

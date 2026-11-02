@@ -1,16 +1,16 @@
-/* The headline types itself by hand, crooked and with typos, then a sweep
-   sets every letter straight (scripts/typed.ts). The visitor can type their
-   own task into it. */
+/* The home page. The headline's task is written by hand, then read by
+   software into clean type (scripts/typed.ts); the visitor can write their
+   own. The band at the foot carries the contact. */
 .typed {
   position: relative;
   min-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  align-content: center;
-  gap: clamp(2.5rem, 7vh, 5.5rem);
-  /* Room at the foot for the way down. */
-  padding: 6rem var(--gutter) 7rem;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+  padding: 6rem var(--gutter) clamp(1.75rem, 5vh, 3rem);
 }
+.say-wrap { align-self: center; }
 
 .say {
   position: relative;
@@ -20,7 +20,7 @@
   line-height: 0.92;
   letter-spacing: -0.05em;
 }
-.say-verb { display: block; }
+.say-verb { display: block; font: inherit; letter-spacing: inherit; }
 /* Two lines of room for the task, so the page never jumps. */
 .slot { position: relative; display: block; max-width: 100%; min-height: 1.84em; color: var(--lime); cursor: text; }
 .ink { display: block; }
@@ -74,7 +74,11 @@
 .read { position: absolute; left: 0; top: 100%; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.35rem; font-family: var(--font); font-size: 0.8125rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; color: var(--lime); opacity: 0; white-space: nowrap; }
 .read::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 /* The invitation sits in the same spot, and steps aside while it reads. */
-.try-hint { position: absolute; left: 0; top: 100%; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.6rem; font-family: var(--font); font-size: 0.875rem; font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg-2); white-space: nowrap; transition: opacity 0.25s var(--ease-out); }
+.try-hint { position: absolute; z-index: 1; left: 0; top: 100%; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.6rem; font-family: var(--font); font-size: 0.875rem; font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg-2); white-space: nowrap; transition: opacity 0.25s var(--ease-out); }
+.try-hint span { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 0.3em; transition: text-decoration-color 160ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .try-hint:hover span { text-decoration-color: currentColor; }
+}
 .try-hint svg { width: 15px; height: 15px; fill: none; stroke: var(--lime); stroke-width: 1.75; }
 .slot.reading .try-hint, .slot.typing .try-hint { opacity: 0; }
 
@@ -85,30 +89,21 @@
 /* The caret in the slot is the field's focus indicator. */
 .try:focus-visible { outline: none; }
 
-/* Under the headline: who we are, beside the one action. The two faces
-   sit right under the line that says who they are. */
-.under { display: grid; gap: 2.5rem 4rem; align-items: end; }
-.who { display: grid; gap: 1.5rem; max-width: 40rem; }
-.lead { margin: 0; color: var(--fg); font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.5; text-wrap: pretty; }
-.crew { display: grid; gap: 0.85rem; }
-.crew .duo { flex-wrap: nowrap; gap: 0.75rem 1.5rem; }
-.crew .duo img { width: 3.5rem; height: 3.5rem; background: #0c1630; outline: 1px solid var(--rule); outline-offset: -1px; }
-.role { margin: 0; max-width: 38rem; color: var(--fg-2); font-size: 0.9375rem; line-height: 1.55; text-wrap: pretty; }
-.reach { display: grid; gap: 0.75rem; justify-items: start; }
-.addr { font-size: 0.875rem; color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 0.3em; transition: text-decoration-color 0.2s, color 0.2s; }
-.addr:hover { color: var(--fg); text-decoration-color: currentColor; }
-.note { margin: 0; min-height: 1.4em; font-size: 0.875rem; color: var(--lime); }
+/* The foot of the hero: a hairline strip pinned to the bottom. The contact
+   is set at headline grade on the left; who we are sits on the right; the
+   way down is a tab on the rule. */
+.band { position: relative; display: grid; gap: 2rem; padding-top: clamp(1.75rem, 4vh, 2.5rem); border-top: 1px solid var(--rule); }
 @media (min-width: 64rem) {
-  .under { grid-template-columns: minmax(0, 40rem) auto; justify-content: space-between; }
+  .band { grid-template-columns: auto minmax(0, 32rem); justify-content: space-between; align-items: end; column-gap: clamp(3rem, 6vw, 6rem); }
 }
+.band-who { display: grid; gap: 1.125rem; align-content: end; }
+.band-lead { margin: 0; max-width: 34ch; font-size: clamp(1.0625rem, 1.4vw, 1.3125rem); line-height: 1.4; letter-spacing: -0.01em; color: var(--fg); text-wrap: pretty; }
+.band-next { position: absolute; top: 0; left: 50%; translate: -50% -50%; }
 
 @media (max-width: 40rem) {
-  .typed { align-content: start; padding-top: 7rem; }
-  .crew .duo { gap: 1rem; font-size: 0.8125rem; }
-  .crew .duo img { width: 2.75rem; height: 2.75rem; }
-  .typed .next { position: static; justify-self: start; }
-  .typed .next > span:first-child { position: static; width: auto; height: auto; clip-path: none; }
-  .typed .next::after { display: block; }
+  .typed { grid-template-rows: none; align-content: start; gap: 3rem; padding-top: 7rem; padding-bottom: 2.5rem; }
+  .band { gap: 1.75rem; padding-top: 1.5rem; }
+  .band-next { position: static; translate: none; justify-self: start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
