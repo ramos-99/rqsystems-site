@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/draft.css'
+import type { Lang } from '../i18n'
+import { drafts, draftPaths, shared, type Draft } from '../drafts'
+
+interface Props { lang: Lang; id: Draft }
+const { lang, id } = Astro.props
+const paths = draftPaths(id)
+const t = shared[lang]
+const year = new Date().getFullYear()
+---
+
+<Layout lang={lang} draft={paths}>
+  <header class="bar">
+    <a class="brand" href={paths[lang]} aria-label={t.home}>
+      <img src="/logo.svg" alt="" width="28" height="28" />
+      <span>Systems</span>
+    </a>
+    <nav class="drafts" aria-label={t.variants}>
+      {drafts.map((d, i) => (
+        <a href={draftPaths(d.id)[lang]} aria-current={d.id === id ? 'page' : undefined}><span>{i + 1}</span>{d.name}</a>
+      ))}
+    </nav>
+    <nav class="lang" aria-label={t.language}>
+      <a href={paths.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={paths.pt} hreflang="pt-PT" lang="pt-PT" aria-current={lang === 'pt' ? 'true' : undefined}>PT</a>
+    </nav>
+  </header>
+
+  <slot />
+
+  <footer class="tiny">
+    <span>{t.location}</span>
+    <span>© {year} RQ Systems</span>
+  </footer>
+</Layout>

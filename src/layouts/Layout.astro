@@ -4,8 +4,11 @@ import '../styles/global.css'
 import familjenUrl from '@fontsource-variable/familjen-grotesk/files/familjen-grotesk-latin-wght-normal.woff2?url'
 import { copy, paths, type Lang } from '../i18n'
 
-interface Props { lang: Lang }
-const { lang } = Astro.props
+// A draft is a variant page under its own paths: it is not indexed and
+// doesn't preload the long page's hero photo.
+interface Props { lang: Lang; draft?: Record<Lang, string> }
+const { lang, draft } = Astro.props
+const urls = draft ?? paths
 const t = copy[lang]
 const site = 'https://rqsystems.pt'
 ---
@@ -16,20 +19,20 @@ const site = 'https://rqsystems.pt'
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#020308" />
     <link rel="preload" as="font" type="font/woff2" href={familjenUrl} crossorigin />
-    <link rel="preload" as="image" href="/hero/chip-2000.webp" imagesrcset="/hero/chip-1100.webp 1100w, /hero/chip-2000.webp 2000w" imagesizes="(max-width: 40rem) 140vw, 70vw" />
+    {draft ? <meta name="robots" content="noindex" /> : <link rel="preload" as="image" href="/hero/chip-2000.webp" imagesrcset="/hero/chip-1100.webp 1100w, /hero/chip-2000.webp 2000w" imagesizes="(max-width: 40rem) 140vw, 70vw" />}
     <title>{t.title}</title>
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
     <meta name="description" content={t.description} />
-    <link rel="canonical" href={site + paths[lang]} />
-    <link rel="alternate" hreflang="en" href={site + paths.en} />
-    <link rel="alternate" hreflang="pt-PT" href={site + paths.pt} />
-    <link rel="alternate" hreflang="x-default" href={site + paths.en} />
+    <link rel="canonical" href={site + urls[lang]} />
+    <link rel="alternate" hreflang="en" href={site + urls.en} />
+    <link rel="alternate" hreflang="pt-PT" href={site + urls.pt} />
+    <link rel="alternate" hreflang="x-default" href={site + urls.en} />
 
     <meta property="og:site_name" content="RQ Systems" />
     <meta property="og:title" content={t.ogTitle} />
     <meta property="og:description" content={t.description} />
-    <meta property="og:url" content={site + paths[lang]} />
+    <meta property="og:url" content={site + urls[lang]} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:image" content="https://rqsystems.pt/og-image.png" />

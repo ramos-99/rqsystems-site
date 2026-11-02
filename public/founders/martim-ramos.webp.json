@@ -1,4 +1,4 @@
 {
-  "prompt": "Origin: founder's own photo assets/ramos-perfil.jpg, square crop 1560x1560 at +300+418 (head scale matched to the other portrait), 480x480, full colour. Background not yet removed (needs a segmentation model).",
+  "prompt": "Origin: founder's own photo assets/ramos-perfil.jpg, square crop 1190x1190 at +485+660 (tight on the face, head scale matched to the other portrait), 480x480, full colour. Background not yet removed (needs a segmentation model).",
   "createdAt": "2026-10-29T18:40:00Z"
 }

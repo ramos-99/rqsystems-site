@@ -1,0 +1,37 @@
+---
+import Draft from './Draft.astro'
+import Duo from './Duo.astro'
+import '../styles/sort.css'
+import type { Lang } from '../i18n'
+import { email, shared } from '../drafts'
+import { glyph } from '../glyph'
+
+interface Props { lang: Lang }
+const { lang } = Astro.props
+const t = shared[lang]
+const hint = { en: 'Run the pointer through the mess.', pt: 'Passe o cursor pela confusão.' }[lang]
+
+// The office's paperwork, one Lucide icon per kind of task. Each becomes a
+// column once the field is sorted.
+const kinds = ['mail', 'file-text', 'receipt-euro', 'sheet', 'calendar', 'paperclip', 'clipboard-list', 'phone', 'euro', 'stamp', 'printer', 'clock', 'signature', 'calculator', 'folder', 'inbox']
+---
+
+<Draft lang={lang} id="sort">
+  <main class="sorted">
+    <canvas class="mess" aria-hidden="true"></canvas>
+    <template class="kinds">{kinds.map((k) => <Fragment set:html={glyph(k)} />)}</template>
+    <div class="copy">
+      <h1 class="rise">{t.title}</h1>
+      <p class="lead rise">{t.lead}</p>
+      <div class="reach rise">
+        <a class="pill pill-lime" href={`mailto:${email}`}><span>{email}</span><span class="pill-node" set:html={glyph('arrow-right')} /></a>
+        <p class="hint">{hint}</p>
+      </div>
+      <Duo class="rise" />
+    </div>
+  </main>
+
+  <script>
+    import '../scripts/sort'
+  </script>
+</Draft>
