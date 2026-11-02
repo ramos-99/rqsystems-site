@@ -6,8 +6,8 @@ export type Lang = 'en' | 'pt'
 const en = {
   htmlLang: 'en',
   ogLocale: 'en_GB',
-  title: 'Custom automation software for SMEs in Lisbon | RQ Systems',
-  ogTitle: 'RQ Systems: process automation for SMEs in Lisbon',
+  title: 'RQ Systems',
+  ogTitle: 'RQ Systems',
   description:
     'Custom automation built into the software your business already runs, whatever the stack. Made and maintained by two IST students in Lisbon.',
   // What the business is, for search engines (JSON-LD in the layout).
@@ -17,8 +17,8 @@ const en = {
 const pt: typeof en = {
   htmlLang: 'pt-PT',
   ogLocale: 'pt_PT',
-  title: 'Automação de processos para PME em Lisboa | RQ Systems',
-  ogTitle: 'RQ Systems: software à medida para PME, em Lisboa',
+  title: 'RQ Systems',
+  ogTitle: 'RQ Systems',
   description:
     'Automação à medida, integrada no software que a sua empresa já utiliza, seja ele qual for. Feita e mantida por dois estudantes do Técnico, em Lisboa.',
   about: 'Automação à medida, integrada no software que uma PME já utiliza, seja ele qual for. Feita e mantida pelos dois fundadores, estudantes de Engenharia Informática e de Computadores no Instituto Superior Técnico.',
