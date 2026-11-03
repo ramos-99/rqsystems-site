@@ -5,8 +5,7 @@ import { email, shared } from '../drafts'
 import { glyph } from '../glyph'
 
 // The contact, at headline grade: the address with a copy button, and the
-// one action. subject, when given, marks the button as one that carries
-// the visitor's task (scripts/typed.ts).
+// one action. subject, when given, prefills the email's subject line.
 interface Props { lang: Lang; send: string; subject?: string; class?: string }
 const { lang, send, subject, class: cls } = Astro.props
 const t = shared[lang]

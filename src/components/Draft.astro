@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import '../styles/draft.css'
 import type { Lang } from '../i18n'
-import { design, shared, type Draft } from '../drafts'
+import { design, email, shared, type Draft } from '../drafts'
 
 interface Props { lang: Lang; id: Draft }
 const { lang, id } = Astro.props
@@ -27,6 +27,7 @@ const year = new Date().getFullYear()
 
   <footer class="tiny">
     <span>{t.location}</span>
+    <a href={`mailto:${email}`}>{email}</a>
     <span>© {year} RQ Systems</span>
   </footer>
 </Layout>

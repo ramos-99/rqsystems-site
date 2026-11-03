@@ -1,17 +1,23 @@
 ---
 import type { Lang } from '../i18n'
 import { founders, shared } from '../drafts'
+import { glyph } from '../glyph'
 
-// The two of us: overlapping faces and one sentence, the first names
-// linking to LinkedIn.
+// The two of us: face, name and role each, then one line we share.
 interface Props { lang: Lang; class?: string }
 const { lang, class: cls } = Astro.props
 const t = shared[lang]
-const [a, b] = founders
-const link = (f: (typeof founders)[number]) => ({ href: f.href, target: '_blank', rel: 'noopener noreferrer' })
 ---
 
 <div class:list={['crew', cls]}>
-  <span class="crew-faces">{founders.map((f) => <img src={f.photo} alt="" width="480" height="480" decoding="async" />)}</span>
-  <p class="crew-text">{t.we[0]}<a {...link(a)}>{a.first}</a>{t.we[1]}<a {...link(b)}>{b.first}</a>{t.we[2]}</p>
+  <ul class="crew-people">
+    {founders.map((f) => (
+      <li class="crew-person">
+        <img src={f.photo} alt="" width="480" height="480" decoding="async" />
+        <span class="crew-id"><strong>{f.name}</strong><span>{t.role}</span></span>
+        <a class="crew-in" href={f.href} target="_blank" rel="noopener noreferrer" aria-label={`${f.name}, LinkedIn`} set:html={glyph('linkedin')} />
+      </li>
+    ))}
+  </ul>
+  <p class="crew-text">{t.crew}</p>
 </div>

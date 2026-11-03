@@ -1,18 +1,18 @@
 /* The second screen: the one piece of previous work, shown working
    (scripts/work.ts). One email, one click, three files along one trace
    into one folder. */
-.work { min-height: calc(100svh - 3rem); display: grid; align-content: center; gap: clamp(2.5rem, 5vw, 4rem); padding: 5rem var(--gutter) 2rem; }
+.work { display: grid; align-content: center; gap: clamp(2.5rem, 5vw, 4rem); padding: clamp(3rem, 6vw, 5rem) var(--gutter) clamp(3rem, 6vw, 5rem); }
 @media (min-width: 64rem) {
   .work { grid-template-columns: minmax(18rem, 26rem) minmax(0, 1fr); align-items: center; }
 }
 .work-copy { display: grid; gap: 1.5rem; justify-items: start; }
 .work h2 { margin: 0; font-size: clamp(2.25rem, 3.6vw, 3.5rem); font-weight: 600; line-height: 1; letter-spacing: -0.04em; text-wrap: balance; }
-.work-body { margin: 0; max-width: 30rem; color: var(--fg-2); text-wrap: pretty; }
+.work-body { margin: 0; max-width: 30rem; color: var(--fg-2); font-size: 1.125rem; line-height: 1.55; text-wrap: pretty; }
 .work-body + .work-body { margin-top: -0.5rem; }
 /* The line that matters past this one client. */
-.work-body:last-of-type { color: var(--fg); font-weight: 500; }
-/* Room for the button's brackets. */
-.work-copy > .btn { margin-top: 1rem; }
+.work-body:nth-of-type(3) { color: var(--fg); font-weight: 500; }
+/* The ask, set off from the story by a rule, right above its button. */
+.work-ask { margin: 0.75rem 0 0; max-width: 30rem; font-size: 1.125rem; line-height: 1.55; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--fg-2); text-wrap: pretty; }
 
 /* Two plain windows side by side, stacked on narrow screens. */
 .flow { margin: 0; min-width: 0; }
@@ -60,15 +60,18 @@
    button. */
 @media (max-width: 63.99rem) {
   .work-copy { display: contents; }
-  .work > .work-copy > .btn { order: 2; justify-self: start; }
+  .work > .work-copy > .btn, .work-ask { order: 2; }
+  .work > .work-copy > .btn { justify-self: start; }
   .flow { order: 1; }
+  .work { row-gap: 1.25rem; }
+  .flow { margin-block: 1.5rem 0.75rem; }
   .work h2, .work-body { margin: 0; }
+  .work h2 { margin-bottom: 0.5rem; }
   .work-copy > .btn { margin-top: 0; }
 }
 
 
-/* One snap between the two screens. */
-@media (min-width: 64rem) and (min-height: 40rem) {
-  html:has(.work) { scroll-snap-type: y mandatory; }
-  .typed, .work { scroll-snap-align: start; }
+@media (max-width: 40rem) {
+  .fm { min-height: 0; }
+  .work > .work-copy > .btn { justify-self: stretch; }
 }

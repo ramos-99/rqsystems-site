@@ -9,9 +9,9 @@ const en = {
   title: 'RQ Systems',
   ogTitle: 'RQ Systems',
   description:
-    'Custom automation built into the software your business already runs, whatever the stack. Made and maintained by two IST students in Lisbon.',
+    'Automation built into whatever software your business already runs, with AI where it makes a difference. Designed and built by two Master’s students at Instituto Superior Técnico, Lisbon.',
   // What the business is, for search engines (JSON-LD in the layout).
-  about: 'Custom automation built into whatever software a small business already runs. Built and maintained by its two founders, Computer Science and Engineering students at Instituto Superior Técnico.',
+  about: 'Custom automation built into whatever software a small or medium business already runs, with AI where it makes a difference. Designed, built and maintained by its two founders, Master’s students in Computer Science and Engineering at Instituto Superior Técnico.',
 }
 
 const pt: typeof en = {
@@ -20,8 +20,8 @@ const pt: typeof en = {
   title: 'RQ Systems',
   ogTitle: 'RQ Systems',
   description:
-    'Automação à medida, integrada no software que a sua empresa já utiliza, seja ele qual for. Feita e mantida por dois estudantes do Técnico, em Lisboa.',
-  about: 'Automação à medida, integrada no software que uma PME já utiliza, seja ele qual for. Feita e mantida pelos dois fundadores, estudantes de Engenharia Informática e de Computadores no Instituto Superior Técnico.',
+    'Automação integrada no software que a sua empresa já usa, seja ele qual for, com IA onde faz diferença. Feita por dois mestrandos do Instituto Superior Técnico, em Lisboa.',
+  about: 'Automação à medida, integrada no software que uma PME já utiliza, seja ele qual for, com IA onde faz diferença. Desenhada, construída e mantida pelos dois fundadores, mestrandos em Engenharia Informática e de Computadores no Instituto Superior Técnico.',
 }
 
 export const copy: Record<Lang, typeof en> = { en, pt }

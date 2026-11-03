@@ -1,0 +1,18 @@
+/* What we automate, by area: four ruled columns of large type, like a spec
+   sheet. No boxes, no icons. */
+.services { display: grid; gap: clamp(2.25rem, 4.5vw, 3.5rem); padding: clamp(4.5rem, 10vw, 8rem) var(--gutter) clamp(2rem, 5vw, 4rem); }
+.sv-head { display: grid; gap: 1rem; max-width: 40rem; }
+.services h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.05; letter-spacing: -0.04em; }
+.sv-head p { color: var(--fg-2); font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); line-height: 1.5; text-wrap: pretty; }
+
+.sv-areas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem clamp(1.5rem, 3vw, 2.5rem); }
+@media (min-width: 40rem) { .sv-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 64rem) { .sv-areas { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.sv-areas li { display: grid; align-content: start; gap: 0.75rem; padding-top: 1.25rem; border-top: 2px solid var(--fg); }
+.sv-areas h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+.sv-areas p { max-width: 22rem; color: var(--fg-2); font-size: 1.0625rem; line-height: 1.5; text-wrap: pretty; }
+
+@media (max-width: 40rem) {
+  .sv-areas { gap: 1.75rem; }
+  .sv-areas li { gap: 0.5rem; padding-top: 1rem; }
+}
