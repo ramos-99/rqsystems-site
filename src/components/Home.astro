@@ -1,0 +1,44 @@
+---
+import Draft from './Draft.astro'
+import Work from './Work.astro'
+import Contact from './Contact.astro'
+import Crew from './Crew.astro'
+import Services from './Services.astro'
+import '../styles/home.css'
+import '../styles/light.css'
+import type { Lang } from '../i18n'
+import { shared } from '../drafts'
+import { glyph } from '../glyph'
+
+interface Props { lang: Lang }
+const { lang } = Astro.props
+const t = shared[lang]
+
+// The headline says it plainly; the band at the foot of the sheet carries
+// the contact and who we are.
+const copy = {
+  en: { lead: 'We automate', rest: ' the repetitive work in your business.', send: 'Talk to us' },
+  pt: { lead: 'Automatizamos', rest: ' o trabalho repetitivo da sua empresa.', send: 'Falar connosco' },
+}[lang]
+---
+
+<Draft lang={lang} id="type">
+  <main>
+    <section class="typed">
+      <div class="say-wrap">
+        <h1 class="say"><span>{copy.lead}</span><span class="say-rest">{copy.rest}</span></h1>
+        <p class="say-sub">{t.lead}</p>
+      </div>
+
+      <div class="band">
+        <Contact lang={lang} send={copy.send} />
+        <div class="band-who">
+          <Crew lang={lang} />
+        </div>
+        <a class="btn btn-line band-next" href="#servicos"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
+      </div>
+    </section>
+    <Services lang={lang} />
+    <Work lang={lang} />
+  </main>
+</Draft>

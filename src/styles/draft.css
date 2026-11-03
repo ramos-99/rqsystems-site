@@ -12,4 +12,4 @@
 /* One screen: the bar scrolls away with the page instead of floating. */
 .bar { position: absolute; }
 
-.tiny { display: flex; justify-content: space-between; gap: 1rem; padding: 0 var(--gutter) 1.5rem; font-size: 0.8125rem; color: var(--dim); }
+.tiny { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; padding: 0 var(--gutter) 1.5rem; font-size: 0.8125rem; color: var(--dim); }

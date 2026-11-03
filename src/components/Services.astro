@@ -1,0 +1,47 @@
+---
+import '../styles/services.css'
+import type { Lang } from '../i18n'
+
+// What we automate, by area of the business rather than task by task:
+// every process belongs to one of them, so no one's work is missing.
+interface Props { lang: Lang }
+const { lang } = Astro.props
+
+const copy = {
+  en: {
+    title: 'In every part of the business',
+    lead: 'If it is repetitive and follows rules, we automate it, inside the software you already use, whatever it is.',
+    areas: [
+      ['Finance', 'Invoices, payments and reconciliations, without anyone typing them in.'],
+      ['Operations', 'Orders, stock and documents moving between systems on their own.'],
+      ['Sales', 'Quotes, clients and follow-ups, without doing the same work twice.'],
+      ['Admin and HR', 'Hours, holidays, expenses and filing, without the paperwork.'],
+    ],
+  },
+  pt: {
+    title: 'Em todas as áreas da empresa',
+    lead: 'Se é repetitivo e segue regras, automatizamos, dentro do software que já usa, seja ele qual for.',
+    areas: [
+      ['Finanças', 'Faturas, pagamentos e reconciliações, sem ninguém ter de os digitar.'],
+      ['Operações', 'Encomendas, stock e documentos a passar sozinhos entre sistemas.'],
+      ['Comercial', 'Propostas, clientes e seguimento, sem fazer o mesmo trabalho duas vezes.'],
+      ['Administração e RH', 'Horas, férias, despesas e arquivo, sem papelada.'],
+    ],
+  },
+}[lang]
+---
+
+<section class="services" id="servicos" aria-labelledby="servicos-t">
+  <div class="sv-head">
+    <h2 id="servicos-t">{copy.title}</h2>
+    <p>{copy.lead}</p>
+  </div>
+  <ul class="sv-areas">
+    {copy.areas.map(([name, text]) => (
+      <li>
+        <h3>{name}</h3>
+        <p>{text}</p>
+      </li>
+    ))}
+  </ul>
+</section>
