@@ -1,38 +1,48 @@
-/* The home page's hero: a plain headline and what we do, then the band at
-   the foot of the sheet with the contact and who we are. */
+/* The home page's hero: the headline, what we do and the contact on the
+   left; the two of us on the right. Stacked on narrow screens. */
 .typed {
   position: relative;
   min-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: clamp(2.5rem, 6vh, 4.5rem);
-  padding: 6rem var(--gutter) clamp(1.75rem, 5vh, 3rem);
+  align-content: center;
+  gap: 3rem;
+  padding: 6.5rem var(--gutter) 4rem;
 }
-.say-wrap { align-self: center; display: grid; gap: clamp(1.25rem, 2.5vh, 2rem); }
+.hero-main { display: grid; gap: clamp(2.25rem, 5vh, 3.5rem); align-content: center; }
+.say-wrap { display: grid; gap: clamp(1.25rem, 2.5vh, 2rem); }
 .say {
   max-width: 16ch;
-  font-size: min(clamp(2.5rem, 6.4vw, 7rem), 12vh);
+  font-size: min(clamp(2.5rem, 6vw, 7rem), 12vh);
   font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.05em;
 }
 .say-sub { max-width: 38ch; font-size: clamp(1.125rem, 1.6vw, 1.4375rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--fg-2); }
 
-/* The foot of the hero: a hairline strip. The contact on the left, who we
-   are on the right, the way down a tab on the rule. */
-.band { position: relative; display: grid; gap: 2rem; padding-top: clamp(1.75rem, 4vh, 2.5rem); border-top: 1px solid var(--rule); }
-@media (min-width: 64rem) {
-  .band { grid-template-columns: auto minmax(0, 30rem); justify-content: space-between; align-items: end; column-gap: clamp(3rem, 6vw, 6rem); }
-}
-.band-who { display: grid; align-content: end; }
-.band-next { position: absolute; top: 0; left: 50%; translate: -50% -50%; }
+/* The way down: a tab on the sheet's bottom edge. */
+.band-next { position: absolute; bottom: 0; left: 50%; translate: -50% 50%; z-index: 1; }
 
-/* On a phone: no empty sheet. Headline, what we do, then straight to the
-   contact, with a full-width button. */
+/* Side by side: the founders get the right column, set large. */
+@media (min-width: 64rem) {
+  .typed { grid-template-columns: minmax(0, 1fr) minmax(22rem, min(34vw, 44rem)); column-gap: clamp(3rem, 7vw, 8rem); align-items: center; }
+  .hero-side .crew { gap: 1.75rem; }
+  .hero-side .crew-people { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .hero-side .crew-person { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: start; row-gap: 1rem; column-gap: 0.5rem; }
+  .hero-side .crew-photo { grid-column: 1 / -1; width: 100%; height: auto; aspect-ratio: 1; border-radius: 24px; }
+  .hero-side .crew-id strong { font-size: 1.125rem; }
+  .hero-side .crew-in { margin-top: -0.4rem; }
+  .hero-side .crew-text { font-size: 1.0625rem; }
+}
+
+/* On a phone: headline, what we do, the contact with a full-width button,
+   then the two of us under a rule. */
 @media (max-width: 40rem) {
-  .typed { min-height: 0; grid-template-rows: none; align-content: start; gap: 2.5rem; padding-top: 6.5rem; padding-bottom: 2rem; }
+  .typed { min-height: 0; align-content: start; gap: 2.5rem; padding-top: 6.5rem; padding-bottom: 2.25rem; }
   .say { font-size: clamp(2.375rem, 11vw, 3.25rem); line-height: 1.02; letter-spacing: -0.045em; }
-  .band { gap: 1.75rem; padding-top: 1.75rem; }
+  .hero-side { padding-top: 2rem; border-top: 1px solid var(--rule); }
   .band-next { display: none; }
+}
+@media (min-width: 40.01rem) and (max-width: 63.99rem) {
+  .hero-side { padding-top: 2.5rem; border-top: 1px solid var(--rule); }
 }

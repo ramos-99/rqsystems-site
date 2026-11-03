@@ -13,7 +13,7 @@ const t = shared[lang]
   <ul class="crew-people">
     {founders.map((f) => (
       <li class="crew-person">
-        <img src={f.photo} alt="" width="480" height="480" decoding="async" />
+        <span class="crew-photo"><img src={f.photo} alt="" width="640" height="640" decoding="async" /></span>
         <span class="crew-id"><strong>{f.name}</strong><span>{t.role}</span></span>
         <a class="crew-in" href={f.href} target="_blank" rel="noopener noreferrer" aria-label={`${f.name}, LinkedIn`} set:html={glyph('linkedin')} />
       </li>

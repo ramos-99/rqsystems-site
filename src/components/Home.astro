@@ -14,8 +14,8 @@ interface Props { lang: Lang }
 const { lang } = Astro.props
 const t = shared[lang]
 
-// The headline says it plainly; the band at the foot of the sheet carries
-// the contact and who we are.
+// The headline says it plainly, with the contact under it; who we are
+// sits beside it, the two of us side by side.
 const copy = {
   en: { lead: 'We automate', rest: ' the repetitive work in your business.', send: 'Talk to us' },
   pt: { lead: 'Automatizamos', rest: ' o trabalho repetitivo da sua empresa.', send: 'Falar connosco' },
@@ -25,18 +25,17 @@ const copy = {
 <Draft lang={lang} id="type">
   <main>
     <section class="typed">
-      <div class="say-wrap">
-        <h1 class="say"><span>{copy.lead}</span><span class="say-rest">{copy.rest}</span></h1>
-        <p class="say-sub">{t.lead}</p>
-      </div>
-
-      <div class="band">
-        <Contact lang={lang} send={copy.send} />
-        <div class="band-who">
-          <Crew lang={lang} />
+      <div class="hero-main">
+        <div class="say-wrap">
+          <h1 class="say"><span>{copy.lead}</span><span class="say-rest">{copy.rest}</span></h1>
+          <p class="say-sub">{t.lead}</p>
         </div>
-        <a class="btn btn-line band-next" href="#servicos"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
+        <Contact lang={lang} send={copy.send} />
       </div>
+      <div class="hero-side">
+        <Crew lang={lang} />
+      </div>
+      <a class="btn btn-line band-next" href="#servicos"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
     </section>
     <Services lang={lang} />
     <Work lang={lang} />

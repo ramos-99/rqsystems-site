@@ -48,7 +48,6 @@
 [data-theme='light'] .mail-at { color: #86868b; }
 [data-theme='light'] .mail-copy { background: var(--surface); }
 [data-theme='light'] .mail-copy.is-done { border-color: var(--cobalt); color: var(--cobalt); }
-[data-theme='light'] .crew-person img { background: #e8e8ed; }
 
 /* The case study, on the desk: light app windows with a window's soft
    shadow and three quiet window dots, the files and the wire in cobalt. */
