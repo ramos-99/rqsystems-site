@@ -13,9 +13,8 @@ const { lang } = Astro.props
 // and folder names are illustrative.
 const copy = {
   en: {
-    eyebrow: 'Case study · Alphalink',
     clientUrl: 'https://www.alphalink.pt/en/',
-    title: 'Filing emails to Dropbox in one click.',
+    title: ['Alphalink case study:', ' filing emails to Dropbox in one click.'],
     stats: [['3,000+', 'emails filed'], ['90+', 'hours saved']],
     body: [
       'Alphalink, a construction project management firm, filed emails, invoices and contracts by hand across dozens of Dropbox folders. We built an Outlook add-in that saves the email, a PDF copy and the attachments to the correct folder.',
@@ -35,9 +34,8 @@ const copy = {
     ],
   },
   pt: {
-    eyebrow: 'Caso de estudo · Alphalink',
     clientUrl: 'https://www.alphalink.pt/',
-    title: 'Arquivo de e‑mails na Dropbox com um clique.',
+    title: ['Caso Alphalink:', ' arquivo de e‑mails na Dropbox com um clique.'],
     stats: [['3000+', 'e‑mails arquivados'], ['90+', 'horas poupadas']],
     body: [
       'A Alphalink, empresa de gestão de projetos de construção, arquivava manualmente e‑mails, faturas e contratos em dezenas de pastas da Dropbox. Desenvolvemos um suplemento para o Outlook que guarda o e‑mail, uma cópia em PDF e os anexos na pasta correta.',
@@ -72,8 +70,7 @@ const [before, after] = [copy.body[0].slice(0, copy.body[0].indexOf(client)), co
 
 <section class="work" id="work" aria-labelledby="work-title">
   <div class="work-copy">
-    <p class="work-eyebrow">{copy.eyebrow}</p>
-    <h2 id="work-title">{copy.title}</h2>
+    <h2 id="work-title"><span class="lime">{copy.title[0]}</span>{copy.title[1]}</h2>
     <dl class="work-stats">
       {copy.stats.map(([n, label]) => (
         <div><dt>{label}</dt><dd>{n}</dd></div>
@@ -90,7 +87,7 @@ const [before, after] = [copy.body[0].slice(0, copy.body[0].indexOf(client)), co
 
         <div class="card fm-card">
           <div class="card-top">
-            <span class="app"><Fragment set:html={glyph('mail')} />Outlook</span>
+            <span class="app"><Fragment set:html={glyph('mail')} /><span class="app-name">Outlook</span></span>
             <span class="addin on"><Fragment set:html={glyph('brands/dropbox')} />{copy.addin}</span>
           </div>
           <div class="fm-view">

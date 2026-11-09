@@ -18,7 +18,7 @@ const t = shared[lang]
 // sits beside it, the two of us side by side.
 const copy = {
   en: { lead: 'We automate', rest: ' repetitive business processes.', send: 'Contact us' },
-  pt: { lead: 'Automatizamos', rest: ' os processos repetitivos das empresas.', send: 'Contacte-nos' },
+  pt: { lead: 'Automatizamos', rest: ' processos repetitivos para empresas.', send: 'Contacte-nos' },
 }[lang]
 ---
 
@@ -35,7 +35,7 @@ const copy = {
       <div class="hero-side">
         <Crew lang={lang} />
       </div>
-      <a class="btn btn-line band-next" href="#servicos"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
+      <a class="btn btn-line band-next" href="#areas"><span>{t.next}</span><Fragment set:html={glyph('arrow-down')} /></a>
     </section>
     <Services lang={lang} />
     <Work lang={lang} />

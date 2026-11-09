@@ -7,7 +7,7 @@
   --surface: #ffffff;
   --fg: #1d1d1f;
   --fg-2: #515154;
-  --dim: #6e6e73;
+  --dim: #636366;
   --rule: rgb(0 0 0 / 0.1);
   --accent: var(--cobalt);
   --trace: var(--cobalt);
@@ -50,13 +50,12 @@
 [data-theme='light'] .mail-copy.is-done { border-color: var(--cobalt); color: var(--cobalt); }
 
 /* The case study, on the desk: light app windows with a window's soft
-   shadow and three quiet window dots, the files and the wire in cobalt. */
+   shadow, no platform chrome, the files and the wire in cobalt. */
 [data-theme='light'] .card {
   background: var(--surface);
   box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06), 0 2px 4px rgb(0 0 0 / 0.03), 0 24px 48px -24px rgb(20 24 48 / 0.22);
 }
 [data-theme='light'] .card-top { background: #fbfbfd; }
-[data-theme='light'] .app::before { content: ""; width: 44px; height: 10px; margin-right: 6px; background: radial-gradient(circle at 5px 5px, #d2d2d7 4.5px, transparent 5px) 0 0 / 17px 10px repeat-x; }
 [data-theme='light'] .addin { box-shadow: inset 0 0 0 1px rgb(31 75 255 / 0.35); color: var(--cobalt); }
 [data-theme='light'] .addin.on { background: var(--cobalt); color: #fff; }
 [data-theme='light'] .fm-body { color: var(--fg-2); }

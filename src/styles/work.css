@@ -11,8 +11,7 @@
 .work-body + .work-body { margin-top: -0.5rem; }
 .work-client { color: var(--fg); font-weight: 500; text-decoration: underline; text-decoration-color: var(--rule); text-decoration-thickness: 1px; text-underline-offset: 0.2em; transition: text-decoration-color 160ms var(--ease); }
 @media (hover: hover) { .work-client:hover { text-decoration-color: currentColor; } }
-/* Case study: the label, the outcome, then its numbers before the story. */
-.work-eyebrow { margin: 0 0 -0.75rem; color: var(--accent); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+/* Case study: the client and the outcome, then its numbers before the story. */
 .work-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; width: 100%; margin: 0; }
 .work-stats > div { display: flex; flex-direction: column-reverse; gap: 0.25rem; }
 .work-stats > div + div { padding-left: 1.5rem; border-left: 1px solid var(--rule); }
@@ -75,7 +74,21 @@
 
 @media (max-width: 40rem) {
   .fm { min-height: 0; }
+  /* Narrow: the filed badge drops under the subject instead of over the
+     sender, and the add-in pill keeps its label on one line. */
+  .fm-from { order: 0; }
+  .fm-subj { order: 1; }
+  .fm-filed { position: static; order: 2; align-self: start; }
+  .fm-body { order: 3; }
+  .fm-att { order: 4; margin-top: 0.25rem; max-width: 100%; }
+  .addin { white-space: nowrap; }
   .work-cta > .btn { justify-self: stretch; }
   /* The Outlook card already shows where the email went. */
   .db-card { display: none; }
+}
+
+/* Very narrow: the mail icon alone names the app, leaving room for the pill. */
+@media (max-width: 22.5rem) {
+  .app-name { display: none; }
+  .card-top { padding: 0 10px 0 14px; }
 }

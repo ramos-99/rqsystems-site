@@ -30,7 +30,7 @@ export const shared = {
     home: 'RQ Systems home',
   },
   pt: {
-    title: 'Automatizamos os processos repetitivos das empresas.',
+    title: 'Automatizamos processos repetitivos para empresas.',
     lead: 'Automação à medida, integrada no software que a empresa já utiliza. Quando se justifica, a inteligência artificial lê faturas, e‑mails e outros documentos.',
     crew: 'Mestrandos em Engenharia Informática e de Computadores no Instituto Superior Técnico. Acompanhamos cada projeto diretamente, do primeiro contacto ao suporte.',
     write: 'Contacto',

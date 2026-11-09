@@ -13,3 +13,5 @@
 .bar { position: absolute; }
 
 .tiny { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; padding: 0 var(--gutter) 1.5rem; font-size: 0.8125rem; color: var(--dim); }
+/* The address keeps a full-size tap target without moving the line. */
+.tiny a { display: inline-block; padding-block: 0.75rem; margin-block: -0.75rem; }
