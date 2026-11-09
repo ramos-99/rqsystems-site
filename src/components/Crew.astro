@@ -3,7 +3,8 @@ import type { Lang } from '../i18n'
 import { founders, shared } from '../drafts'
 import { glyph } from '../glyph'
 
-// The two of us: face, name and role each, then one line we share.
+// The two of us: face and name each, then the line we share (what we
+// study, where, and how we work).
 interface Props { lang: Lang; class?: string }
 const { lang, class: cls } = Astro.props
 const t = shared[lang]
@@ -14,7 +15,7 @@ const t = shared[lang]
     {founders.map((f) => (
       <li class="crew-person">
         <span class="crew-photo"><img src={f.photo} alt="" width="640" height="640" decoding="async" /></span>
-        <span class="crew-id"><strong>{f.name}</strong><span>{t.role}</span></span>
+        <span class="crew-id"><strong>{f.name}</strong></span>
         <a class="crew-in" href={f.href} target="_blank" rel="noopener noreferrer" aria-label={`${f.name}, LinkedIn`} set:html={glyph('linkedin')} />
       </li>
     ))}

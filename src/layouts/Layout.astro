@@ -16,7 +16,7 @@ const other: Lang = lang === 'en' ? 'pt' : 'en'
 // Who the business is, for search engines. The founders are current
 // students, so IST is their affiliation, not alumniOf.
 const ist = { '@type': 'CollegeOrUniversity', '@id': 'https://tecnico.ulisboa.pt/#org', name: 'Instituto Superior Técnico', url: 'https://tecnico.ulisboa.pt/' }
-const founder = (name: string, sameAs: string) => ({ '@type': 'Person', name, jobTitle: 'Co-founder, software engineer', sameAs, affiliation: { '@id': ist['@id'] } })
+const founder = (name: string, sameAs: string) => ({ '@type': 'Person', name, jobTitle: t.jobTitle, sameAs, affiliation: { '@id': ist['@id'] } })
 const ld = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -29,6 +29,7 @@ const ld = {
       image: `${site}/og-image.png`,
       email: 'contact@rqsystems.pt',
       description: t.about,
+      knowsAbout: t.knowsAbout,
       address: { '@type': 'PostalAddress', addressLocality: 'Lisboa', addressCountry: 'PT' },
       areaServed: { '@type': 'Country', name: 'Portugal' },
       knowsLanguage: ['en', 'pt-PT'],
@@ -56,7 +57,7 @@ const ld = {
     <link rel="canonical" href={site + urls[lang]} />
     <link rel="alternate" hreflang="en" href={site + urls.en} />
     <link rel="alternate" hreflang="pt-PT" href={site + urls.pt} />
-    <link rel="alternate" hreflang="x-default" href={site + urls.en} />
+    <link rel="alternate" hreflang="x-default" href={site + urls.pt} />
 
     <meta property="og:site_name" content="RQ Systems" />
     <meta property="og:title" content={t.ogTitle} />
@@ -65,14 +66,14 @@ const ld = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:locale:alternate" content={copy[other].ogLocale} />
-    <meta property="og:image" content="https://rqsystems.pt/og-image.png?v=2" />
+    <meta property="og:image" content="https://rqsystems.pt/og-image.png?v=3" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={t.ogTitle} />
     <meta name="twitter:description" content={t.description} />
-    <meta name="twitter:image" content="https://rqsystems.pt/og-image.png?v=2" />
+    <meta name="twitter:image" content="https://rqsystems.pt/og-image.png?v=3" />
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
   </head>
   <body>

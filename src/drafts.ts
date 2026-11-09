@@ -2,7 +2,7 @@ import type { Lang } from './i18n'
 
 // The one design: Type, in the light theme.
 export const drafts = [
-  { id: 'type', name: 'Type', paths: { en: '/', pt: '/pt/' }, index: true, theme: 'light' },
+  { id: 'type', name: 'Type', paths: { en: '/en/', pt: '/' }, index: true, theme: 'light' },
 ] as const
 export type Draft = (typeof drafts)[number]['id']
 export const design = (id: Draft) => drafts.find((d) => d.id === id)!
@@ -18,11 +18,10 @@ export const founders = [
 // automation into whatever software a business already runs.
 export const shared = {
   en: {
-    title: 'We automate the repetitive work in your business.',
-    lead: 'We connect to the software you already use, whatever it is, and automate what is still done by hand, with AI where it makes a difference.',
-    role: 'Master’s student in Computer Science and Engineering',
-    crew: 'Both at Instituto Superior Técnico. You talk directly to us, from the first email to support after launch.',
-    write: 'Write to us',
+    title: 'We automate repetitive business processes.',
+    lead: 'Custom automation, built into the software a business already uses. Where it is useful, artificial intelligence reads invoices, emails and other documents.',
+    crew: 'Master’s students in Computer Science and Engineering at Instituto Superior Técnico. We handle every project ourselves, from first contact to ongoing support.',
+    write: 'Contact',
     copyLabel: 'Copy address',
     copied: 'Address copied.',
     next: 'What we do',
@@ -31,11 +30,10 @@ export const shared = {
     home: 'RQ Systems home',
   },
   pt: {
-    title: 'Automatizamos o trabalho repetitivo da sua empresa.',
-    lead: 'Ligamo-nos ao software que já usa, seja ele qual for, e automatizamos o que hoje é feito à mão, com IA onde faz diferença.',
-    role: 'Mestrando em Engenharia Informática e de Computadores',
-    crew: 'Ambos no Instituto Superior Técnico. Fala diretamente connosco, do primeiro e-mail à manutenção.',
-    write: 'Escreva-nos',
+    title: 'Automatizamos os processos repetitivos das empresas.',
+    lead: 'Automação à medida, integrada no software que a empresa já utiliza. Quando se justifica, a inteligência artificial lê faturas, e‑mails e outros documentos.',
+    crew: 'Mestrandos em Engenharia Informática e de Computadores no Instituto Superior Técnico. Acompanhamos cada projeto diretamente, do primeiro contacto ao suporte.',
+    write: 'Contacto',
     copyLabel: 'Copiar endereço',
     copied: 'Endereço copiado.',
     next: 'O que fazemos',

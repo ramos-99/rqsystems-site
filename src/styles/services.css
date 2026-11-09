@@ -3,7 +3,6 @@
 .services { display: grid; gap: clamp(2.25rem, 4.5vw, 3.5rem); padding: clamp(4.5rem, 10vw, 8rem) var(--gutter) clamp(2rem, 5vw, 4rem); }
 .sv-head { display: grid; gap: 1rem; max-width: 40rem; }
 .services h2 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.05; letter-spacing: -0.04em; }
-.sv-head p { color: var(--fg-2); font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); line-height: 1.5; text-wrap: pretty; }
 
 .sv-areas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem clamp(1.5rem, 3vw, 2.5rem); }
 @media (min-width: 40rem) { .sv-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

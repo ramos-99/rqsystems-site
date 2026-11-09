@@ -7,43 +7,53 @@ import { email } from '../drafts'
 interface Props { lang: Lang }
 const { lang } = Astro.props
 
-// Our latest project, as a still picture: an email filed, as three files,
-// into the right Dropbox folder. The client stays unnamed.
+// One client's case, as a still picture: an email filed into the right
+// Dropbox folder. Framed as a case study, numbers first, with how the hours
+// were estimated; then the offer, under its own heading. The mock-up emails
+// and folder names are illustrative.
 const copy = {
   en: {
-    title: ['Our latest project:', ' one click files every email in the right folder.'],
+    eyebrow: 'Case study · Alphalink',
+    clientUrl: 'https://www.alphalink.pt/en/',
+    title: 'Filing emails to Dropbox in one click.',
+    stats: [['3,000+', 'emails filed'], ['90+', 'hours saved']],
     body: [
-      'The client filed emails, invoices and contracts by hand into dozens of Dropbox folders. We built a button in Outlook that saves the email, a PDF copy and the attachments in the right folder, dated.',
-      'For invoices, AI reads the PDF, picks out the number, the total and the deadline, and drafts the reply.',
-      'They used Outlook and Dropbox. We work with whatever you use.',
+      'Alphalink, a construction project management firm, filed emails, invoices and contracts by hand across dozens of Dropbox folders. We built an Outlook add-in that saves the email, a PDF copy and the attachments to the correct folder.',
+      'For invoices, artificial intelligence reads the PDF, extracts the number, total and due date, and prepares a draft reply.',
     ],
-    ask: 'Tell us what your team does by hand. We reply with what can be automated, the cost and the timeline.',
-    send: 'Talk to us',
+    method: 'Hours saved: estimated at about 2 minutes per email filed by hand, versus 10 seconds with the add-in.',
+    askTitle: 'We start with a conversation.',
+    ask: 'To understand how the business works and the problems it faces. Only then do we propose a solution.',
+    send: 'Contact us',
     addin: 'Save to Dropbox',
     filed: 'Filed',
     projects: 'Projects',
     mails: [
-      { from: 'Ana Ferreira', time: '09:41', subject: 'Revised plan, level 2', body: 'The level 2 plan with the changes from Tuesday’s meeting is attached.', file: ['Planta_P2_rev3.pdf', '1.2 MB'], folder: 0 },
-      { from: 'João Matos', time: '09:12', subject: 'Invoice 2026/418', body: 'Please find attached the invoice for the October works on site.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
-      { from: 'Rita Lopes', time: '08:55', subject: 'Signed contract', body: 'The lease is now signed by both parties. Your copy is attached.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
+      { from: 'Ana Ferreira', time: '09:41', subject: 'Revised floor plan, level 2', body: 'Attached is the level 2 floor plan with the changes from Tuesday’s meeting.', file: ['Planta_P2_rev3.pdf', '1.2 MB'], folder: 0 },
+      { from: 'João Matos', time: '09:12', subject: 'Invoice 2026/418', body: 'Attached is the invoice for the October site work.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
+      { from: 'Rita Lopes', time: '08:55', subject: 'Signed contract', body: 'The lease has been signed by both parties. Your copy is attached.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
     ],
   },
   pt: {
-    title: ['O nosso último projeto:', ' um clique arquiva cada e‑mail na pasta certa.'],
+    eyebrow: 'Caso de estudo · Alphalink',
+    clientUrl: 'https://www.alphalink.pt/',
+    title: 'Arquivo de e‑mails no Dropbox com um clique.',
+    stats: [['3000+', 'e‑mails arquivados'], ['90+', 'horas poupadas']],
     body: [
-      'O cliente arquivava à mão e-mails, faturas e contratos em dezenas de pastas do Dropbox. Criámos um botão no Outlook que guarda o e-mail, um PDF e os anexos na pasta certa, com data.',
-      'Nas faturas, a IA lê o PDF, retira o número, o total e o prazo, e prepara a resposta.',
-      'Eles usavam Outlook e Dropbox. Trabalhamos com o que usar.',
+      'A Alphalink, empresa de gestão de projetos de construção, arquivava manualmente e‑mails, faturas e contratos em dezenas de pastas do Dropbox. Desenvolvemos um suplemento para o Outlook que guarda o e‑mail, uma cópia em PDF e os anexos na pasta correta.',
+      'Nas faturas, a inteligência artificial lê o PDF, identifica o número, o valor total e a data de vencimento, e prepara um rascunho da resposta.',
     ],
-    ask: 'Diga-nos o que a sua equipa faz à mão. Respondemos com o que dá para automatizar, o custo e o prazo.',
-    send: 'Falar connosco',
+    method: 'Horas poupadas: estimativa de cerca de 2 minutos por e‑mail arquivado manualmente, contra 10 segundos com o suplemento.',
+    askTitle: 'Começamos por uma conversa.',
+    ask: 'Para compreender o funcionamento da empresa e os problemas que enfrenta. Só depois propomos uma solução.',
+    send: 'Contacte-nos',
     addin: 'Guardar no Dropbox',
     filed: 'Arquivado',
     projects: 'Projetos',
     mails: [
-      { from: 'Ana Ferreira', time: '09:41', subject: 'Planta revista, piso 2', body: 'Segue em anexo a planta do piso 2 com as alterações da reunião de terça.', file: ['Planta_P2_rev3.pdf', '1,2 MB'], folder: 0 },
-      { from: 'João Matos', time: '09:12', subject: 'Fatura 2026/418', body: 'Envio em anexo a fatura dos trabalhos de outubro em obra.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
-      { from: 'Rita Lopes', time: '08:55', subject: 'Contrato assinado', body: 'O contrato de arrendamento já está assinado pelas duas partes. Segue a sua cópia.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
+      { from: 'Ana Ferreira', time: '09:41', subject: 'Planta revista, piso 2', body: 'Segue em anexo a planta do piso 2, com as alterações da reunião de terça-feira.', file: ['Planta_P2_rev3.pdf', '1,2 MB'], folder: 0 },
+      { from: 'João Matos', time: '09:12', subject: 'Fatura 2026/418', body: 'Segue em anexo a fatura dos trabalhos de outubro.', file: ['Fatura_2026-418.pdf', '86 KB'], folder: 1 },
+      { from: 'Rita Lopes', time: '08:55', subject: 'Contrato assinado', body: 'O contrato de arrendamento já foi assinado pelas duas partes. Segue em anexo a sua cópia.', file: ['Contrato_Chiado.pdf', '340 KB'], folder: 2 },
     ],
   },
 }[lang]
@@ -55,14 +65,23 @@ const folders = [
   { name: 'Escritório Oeiras', count: 6 },
 ]
 const initials = (name: string) => name.split(' ').map((w) => w[0]).join('')
+// The first paragraph links the client's name to its site.
+const client = 'Alphalink'
+const [before, after] = [copy.body[0].slice(0, copy.body[0].indexOf(client)), copy.body[0].slice(copy.body[0].indexOf(client) + client.length)]
 ---
 
 <section class="work" id="work" aria-labelledby="work-title">
   <div class="work-copy">
-    <h2 id="work-title"><span class="lime">{copy.title[0]}</span>{copy.title[1]}</h2>
-    {copy.body.map((p) => <p class="work-body">{p}</p>)}
-    <p class="work-ask">{copy.ask}</p>
-    <a class="btn btn-lime" href={`mailto:${email}`} data-mail><span>{copy.send}</span><Fragment set:html={glyph('arrow-up-right')} /></a>
+    <p class="work-eyebrow">{copy.eyebrow}</p>
+    <h2 id="work-title">{copy.title}</h2>
+    <dl class="work-stats">
+      {copy.stats.map(([n, label]) => (
+        <div><dt>{label}</dt><dd>{n}</dd></div>
+      ))}
+    </dl>
+    <p class="work-body">{before}<a class="work-client" href={copy.clientUrl} target="_blank" rel="noopener">{client}</a>{after}</p>
+    {copy.body.slice(1).map((p) => <p class="work-body">{p}</p>)}
+    <p class="work-method">{copy.method}</p>
   </div>
 
   <figure class="flow" aria-hidden="true">
@@ -108,4 +127,10 @@ const initials = (name: string) => name.split(' ').map((w) => w[0]).join('')
       </div>
     </div>
   </figure>
+
+  <div class="work-cta">
+    <h2>{copy.askTitle}</h2>
+    <p class="work-ask">{copy.ask}</p>
+    <a class="btn btn-lime" href={`mailto:${email}`} data-mail><span>{copy.send}</span><Fragment set:html={glyph('arrow-up-right')} /></a>
+  </div>
 </section>
